@@ -1,5 +1,29 @@
+import Footer from "@/components/footer";
+import Navbar from "@/components/navbar";
+import Newsletter from "@/components/newsletter";
+import Showroom from "@/components/showroom";
+import Testimonials from "@/components/testimonials";
+import Banner from "@/ui/home/banner";
+import BestSellers from "@/ui/home/best-sellers";
+import FeaturedCollections from "@/ui/home/featured-collection";
+import Hero from "@/ui/home/hero";
+import NewArrivals from "@/ui/home/new-arrivals";
+
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <div>
+      <Navbar />
+      <Banner />
+      <Hero />
+      <BestSellers />
+      <FeaturedCollections />
+      <NewArrivals />
+      <Showroom />
+      <Testimonials />
+      <Newsletter />
+      <Footer />
+    </div>
+  );
 };
 
 export default Home;

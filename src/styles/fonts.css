@@ -1,0 +1,31 @@
+@font-face {
+  font-family: InterReg;
+  src: url("../../public/fonts/Inter-Regular.otf");
+}
+
+@font-face {
+  font-family: InterMed;
+  src: url("../../public/fonts/Inter-Medium.otf");
+}
+
+@font-face {
+  font-family: InterBold;
+  src: url("../../public/fonts/Inter-Bold.otf");
+}
+
+@font-face {
+  font-family: InterBlack;
+  src: url("../../public/fonts/Inter-Black.otf");
+}
+
+.font-medium {
+  font-family: InterMed;
+}
+
+.font-bold {
+  font-family: InterBold;
+}
+
+.font-black {
+  font-family: InterBlack;
+}
