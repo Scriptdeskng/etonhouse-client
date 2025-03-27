@@ -1,0 +1,50 @@
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+
+interface Props {
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const Pagination = ({ page, setPage }: Props) => {
+  return (
+    <div className="w-full flex items-center justify-end gap-6">
+      {page !== 1 && (
+        <button
+          className="cursor-pointer text-black"
+          onClick={() => setPage(page - 1)}
+        >
+          <FiChevronLeft size={20} />
+        </button>
+      )}
+
+      <div className="flex items-center gap-6">
+        {new Array(8).fill("").map((_, index) => {
+          return (
+            <button
+              key={index}
+              className={`text-lg ${
+                page === index + 1
+                  ? "text-black-400 cursor-default font-medium"
+                  : "text-black-100 cursor-pointer"
+              }`}
+              onClick={() => setPage(index + 1)}
+            >
+              {index + 1}
+            </button>
+          );
+        })}
+      </div>
+
+      {page !== 8 && (
+        <button
+          className="cursor-pointer text-black"
+          onClick={() => setPage(page + 1)}
+        >
+          <FiChevronRight size={20} />
+        </button>
+      )}
+    </div>
+  );
+};
+
+export default Pagination;

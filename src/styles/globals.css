@@ -1,5 +1,49 @@
 @import "tailwindcss";
+@import "./fonts.css";
 
 @theme {
-  --color-black-100: #000000;
+  /* Black */
+  --color-black-100: #616161;
+  --color-black-200: #141414;
+  --color-black-300: #1e1e1e;
+  --color-black-400: #333333;
+
+  /* Beige */
+  --color-beige-100: #d6ddd6;
+
+  /* Blue */
+  --color-blue-100: #0d1b39;
+  --color-blue-200: #1F2C51;
+
+  /* Gray */
+  --color-grey-50: #fafafa;
+  --color-grey-100: #f0f0f0;
+  --color-grey-200: #8d8d8d;
+  --color-grey-300: #f7f7f7;
+}
+
+body {
+  font-family: InterReg;
+}
+
+/* Category Bgs */
+.cat1 {
+  background-image: url("../../public/assets/bg/cat1.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.cat2 {
+  background-image: url("../../public/assets/bg/cat2.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.cat3 {
+  background-image: url("../../public/assets/bg/cat3.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.cat4 {
+  background-image: url("../../public/assets/bg/cat4.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
