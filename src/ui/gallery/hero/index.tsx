@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Tabs from "../tabs";
 import Image from "next/image";
-import Pagination from "../pagination";
+import Pagination from "@/components/pagination";
 
 const GalleryHero = () => {
   const [active, setActive] = useState("All");
