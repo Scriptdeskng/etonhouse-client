@@ -1,5 +1,5 @@
 import PageTitle from "@/utils/page-title";
-import Image from "next/image";
+import ProductCard from "@/utils/product/product-card";
 
 interface Props {
   image: string;
@@ -36,20 +36,12 @@ const NewArrivals = () => {
       <div className="w-full grid grid-cols-4 gap-10 pb-8 border-b border-black">
         {arrive.map((item) => {
           return (
-            <div className="w-full space-y-4" key={item.name}>
-              <div className="w-full h-[400px] relative">
-                <Image
-                  src={`/assets/webp/${item.image}.webp`}
-                  alt={item.name}
-                  fill
-                  quality={100}
-                />
-              </div>
-
-              <p className="text-black">{item.name}</p>
-
-              <p className="text-blue-100">₦{item.price}</p>
-            </div>
+            <ProductCard
+              name={item.name}
+              image={item.image}
+              price={item.price}
+              key={item.name}
+            />
           );
         })}
       </div>

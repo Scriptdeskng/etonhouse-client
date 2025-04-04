@@ -5,7 +5,7 @@ const Showroom = () => {
   return (
     <PageTitle
       title="VISIT OUR SHOWROOM"
-      button={{ exists: true, text: "GET STARTED", path: "/" }}
+      button={{ exists: true, text: "GET DIRECTIONS", path: "/" }}
     >
       <div className="p-3">
         <div
