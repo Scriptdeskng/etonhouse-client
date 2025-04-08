@@ -8,8 +8,8 @@ interface Props {
   price: string;
 }
 
-const NewArrivals = () => {
-  const arrive: Props[] = [
+const RecentlyViewed = () => {
+  const products: Props[] = [
     {
       id: 5,
       image: "new1",
@@ -37,9 +37,14 @@ const NewArrivals = () => {
   ];
 
   return (
-    <PageTitle title="NEW ARRIVALS" background="bg-white" path="/shop">
-      <div className="w-full grid grid-cols-4 gap-10 pb-8 border-b border-black">
-        {arrive.map((item) => {
+    <PageTitle
+      title="RECENTLY VIEWED"
+      background="bg-white !px-0 !py-0"
+      path="/shop"
+      className="px-16"
+    >
+      <div className="px-16 w-full grid grid-cols-4 gap-10 pb-20 border-b border-black">
+        {products.map((item) => {
           return (
             <ProductCard
               id={item.id}
@@ -55,4 +60,4 @@ const NewArrivals = () => {
   );
 };
 
-export default NewArrivals;
+export default RecentlyViewed;

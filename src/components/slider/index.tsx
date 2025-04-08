@@ -7,14 +7,33 @@ import Product from "@/utils/product";
 
 const products = [
   {
+    id: 1,
     title: "Chair",
     name: "Sakarias Armchair",
     image: "chair1",
     price: "150,000",
   },
-  { title: "Chair", name: "Baltsar Chair", image: "chair2", price: "150,000" },
-  { title: "Chair", name: "Anjay Chair", image: "chair3", price: "150,000" },
-  { title: "Chair", name: "Nyantuy Chair", image: "chair4", price: "150,000" },
+  {
+    id: 2,
+    title: "Chair",
+    name: "Baltsar Chair",
+    image: "chair2",
+    price: "150,000",
+  },
+  {
+    id: 3,
+    title: "Chair",
+    name: "Anjay Chair",
+    image: "chair3",
+    price: "150,000",
+  },
+  {
+    id: 4,
+    title: "Chair",
+    name: "Nyantuy Chair",
+    image: "chair4",
+    price: "150,000",
+  },
 ];
 
 function ProductSlider() {
@@ -42,6 +61,7 @@ function ProductSlider() {
         {products.map((product) => (
           <div key={product.name} className="p-5">
             <Product
+              id={product.id}
               image={product.image}
               title={product.title}
               name={product.name}

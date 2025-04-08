@@ -1,4 +1,4 @@
-import Button from "@/utils/button";
+import ButtonLink from "@/utils/button/button-link";
 import Image from "next/image";
 
 const Hero = () => {
@@ -13,7 +13,7 @@ const Hero = () => {
           Discover handcrafted pieces designed for modern living
         </p>
 
-        <Button text="Shop now" className="px-20" />
+        <ButtonLink text="Shop now" className="px-20" path="/shop" />
       </div>
 
       <div className="relative w-[558px] h-[558px]">

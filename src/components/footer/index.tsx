@@ -31,7 +31,7 @@ const Footer = () => {
 
             <div className="flex flex-col gap-5">
               <Link href="/">🏠 Home</Link>
-              <Link href="/">🛒 Shop Furniture</Link>
+              <Link href="/shop">🛒 Shop Furniture</Link>
               <Link href="/">🏢 Showrooms & In Situ</Link>
               <Link href="/">🎁 Gift Cards</Link>
               <Link href="/">🆘 Help & FAQs</Link>

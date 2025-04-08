@@ -8,16 +8,19 @@ const ShopProducts = () => {
 
   const products = [
     {
+      id: 5,
       image: "new1",
       name: "New Product 1",
       price: "150,000",
     },
     {
+      id: 6,
       image: "new2",
       name: "New Product 2",
       price: "150,000",
     },
     {
+      id: 7,
       image: "new3",
       name: "New Product 3",
       price: "150,000",
@@ -41,6 +44,7 @@ const ShopProducts = () => {
           {products.map((item) => {
             return (
               <ProductCard
+                id={item.id}
                 name={item.name}
                 image={item.image}
                 price={item.price}
@@ -51,6 +55,7 @@ const ShopProducts = () => {
           {products.map((item) => {
             return (
               <ProductCard
+                id={item.id}
                 name={item.name}
                 image={item.image}
                 price={item.price}
@@ -61,6 +66,7 @@ const ShopProducts = () => {
           {products.map((item) => {
             return (
               <ProductCard
+                id={item.id}
                 name={item.name}
                 image={item.image}
                 price={item.price}
@@ -71,6 +77,7 @@ const ShopProducts = () => {
           {products.map((item) => {
             return (
               <ProductCard
+                id={item.id}
                 name={item.name}
                 image={item.image}
                 price={item.price}

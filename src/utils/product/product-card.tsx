@@ -1,14 +1,16 @@
 import Image from "next/image";
+import Link from "next/link";
 
 interface Props {
+  id: number;
   name: string;
   image: string;
   price: string;
 }
 
-const ProductCard = ({ name, image, price }: Props) => {
+const ProductCard = ({ id, name, image, price }: Props) => {
   return (
-    <div className="w-full space-y-4">
+    <Link href={`/product/${id}`} className="w-full space-y-4">
       <div className="w-full h-[400px] relative">
         <Image
           src={`/assets/webp/${image}.webp`}
@@ -21,7 +23,7 @@ const ProductCard = ({ name, image, price }: Props) => {
       <p className="text-black">{name}</p>
 
       <p className="text-blue-100">₦{price}</p>
-    </div>
+    </Link>
   );
 };
 

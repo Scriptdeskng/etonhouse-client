@@ -9,7 +9,11 @@ const FeaturedCollections = () => {
   ];
 
   return (
-    <PageTitle title="FEATURED COLLECTION" background="bg-grey-300">
+    <PageTitle
+      title="FEATURED COLLECTION"
+      background="bg-grey-300"
+      path="/shop"
+    >
       <div className="w-full grid grid-cols-2 gap-2">
         {category.map((item) => {
           return (

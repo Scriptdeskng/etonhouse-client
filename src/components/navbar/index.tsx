@@ -15,7 +15,7 @@ const Navbar = ({ active = 0 }: Props) => {
   ];
 
   return (
-    <div className="w-full flex items-center justify-between px-20 py-10">
+    <div className="w-full flex items-center justify-between px-20 py-10 border-b border-black">
       <Logo />
 
       <div className="flex items-center gap-15">
@@ -35,7 +35,7 @@ const Navbar = ({ active = 0 }: Props) => {
       <div className="flex items-center gap-10">
         <NavIcon icon="search" path="/" />
         <NavIcon icon="phone" path="/" />
-        <NavIcon icon="cart" path="/" />
+        <NavIcon icon="cart" path="/cart" />
         <NavIcon icon="profile" path="/" />
       </div>
     </div>
