@@ -7,7 +7,7 @@ interface Props {
 
 const CartQuantity = ({ count, setCount }: Props) => {
   return (
-    <div className="w-[100px] h-11 flex items-center justify-between text-[#616161] border border-[#A3A3A3] px-2">
+    <div className="w-[90px] md:w-[100px] h-8 md:h-11 flex items-center justify-between text-[#616161] border border-[#A3A3A3] px-2">
       <button
         className={`${count === 1 ? "cursor-default" : "cursor-pointer"}`}
         onClick={() => setCount((prev) => prev - 1)}
@@ -16,7 +16,9 @@ const CartQuantity = ({ count, setCount }: Props) => {
         <FaMinus size={10} />
       </button>
 
-      <p className="text-lg leading-[100%] text-[#333333]">{count}</p>
+      <p className="text-xs md:text-lg leading-[100%] text-[#333333]">
+        {count}
+      </p>
 
       <button
         className="cursor-pointer"

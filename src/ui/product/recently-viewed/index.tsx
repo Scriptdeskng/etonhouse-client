@@ -1,5 +1,6 @@
 import PageTitle from "@/utils/page-title";
 import ProductCard from "@/utils/product/product-card";
+import ResponsiveProduct from "@/utils/product/responsive-product";
 
 interface Props {
   id: number;
@@ -39,15 +40,28 @@ const RecentlyViewed = () => {
   return (
     <PageTitle
       title="RECENTLY VIEWED"
-      background="bg-white !px-0 !py-0"
+      background="bg-white !px-0 !py-10 xl:py-0"
       path="/shop"
-      className="px-16"
+      className="px-5 xl:px-16"
     >
-      <div className="px-16 w-full grid grid-cols-4 gap-10 pb-20 border-b border-black">
+      <div className="px-5 xl:px-16 w-full hidden lg:grid grid-cols-4 gap-10 pb-20 border-b border-black">
         {products.map((item) => {
           return (
             <ProductCard
               id={item.id}
+              name={item.name}
+              image={item.image}
+              price={item.price}
+              key={item.name}
+            />
+          );
+        })}
+      </div>
+
+      <div className="px-5 w-full lg:hidden grid grid-cols-2 gap-4">
+        {products.slice(0,2).map((item) => {
+          return (
+            <ResponsiveProduct
               name={item.name}
               image={item.image}
               price={item.price}

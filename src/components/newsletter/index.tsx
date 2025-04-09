@@ -8,9 +8,9 @@ const Newsletter = () => {
       title="NEWSLETTER"
       button={{ exists: true, text: "SUBSCRIBE", path: "/" }}
     >
-      <div className="w-full grid grid-cols-2 gap-20 items-center">
-        <div className="w-full flex flex-col gap-7.5 text-black">
-          <h3 className="text-2xl font-bold">
+      <div className="w-full grid lg:grid-cols-2 gap-8 xl:gap-20 items-center">
+        <div className="w-full flex flex-col gap-8 text-black">
+          <h3 className="text-lg sm:text-2xl font-bold">
             📩 Stay Inspired – Join Our Community
           </h3>
 
@@ -22,7 +22,7 @@ const Newsletter = () => {
           <input
             type="email"
             name="email"
-            className="w-full max-w-[570px] rounded-[40px] px-5 h-13.5 bg-transparent border border-[#616161] outline-none"
+            className="w-full max-w-[570px] rounded-[40px] px-5 h-10.5 xl:h-13.5 bg-transparent border border-[#616161] outline-none"
             placeholder="Enter your email address"
           />
 
@@ -31,14 +31,14 @@ const Newsletter = () => {
             className="!py-4 !text-base w-full max-w-[570px]"
           />
 
-          <div className="flex flex-col gap-5">
+          <div className="hidden xl:flex flex-col gap-5">
             <p>✅ Exclusive Discounts – Get special member-only offers</p>
             <p>✅ Design Inspiration – Fresh styling ideas for your space</p>
             <p>✅ Early Access – Shop new collections before anyone else</p>
           </div>
         </div>
 
-        <div className="w-full relative h-[330px]">
+        <div className="w-full relative h-[195px] sm:h-[330px]">
           <Image
             src="/assets/png/newsletter.png"
             alt="Newsletter"

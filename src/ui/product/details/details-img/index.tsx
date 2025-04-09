@@ -6,9 +6,9 @@ interface Props {
 
 const DetailsImg = ({ images }: Props) => {
   return (
-    <div className="w-full border-r border-black py-8 px-5 flex flex-col items-center gap-20">
+    <div className="w-full lg:border-r border-black py-8 px-5 flex lg:flex-col items-center gap-4 lg:gap-20">
       {images.map((item) => (
-        <div className="relative w-full h-30" key={item}>
+        <div className="relative w-full h-16 sm:h-30" key={item}>
           <Image
             src={`/assets/webp/${item}.webp`}
             alt="Product"

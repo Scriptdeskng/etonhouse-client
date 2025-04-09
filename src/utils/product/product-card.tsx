@@ -10,7 +10,10 @@ interface Props {
 
 const ProductCard = ({ id, name, image, price }: Props) => {
   return (
-    <Link href={`/product/${id}`} className="w-full space-y-4">
+    <Link
+      href={`/product/${id}`}
+      className="shrink-0 w-full max-w-[280px] xl:max-w-full space-y-4 mx-auto xl:mx-0"
+    >
       <div className="w-full h-[400px] relative">
         <Image
           src={`/assets/webp/${image}.webp`}

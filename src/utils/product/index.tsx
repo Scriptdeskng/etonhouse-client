@@ -11,15 +11,16 @@ interface Props {
 
 const Product = ({ id, image, title, name, price }: Props) => {
   return (
-    <div className="w-full h-[450px] pt-18 rounded-[20px] grid grid-rows-2">
+    <div className="shrink-0 w-full max-w-[280px] xl:max-w-full h-[450px] pt-18 rounded-[20px] grid grid-rows-2 mx-auto xl:mx-0">
       <div className="bg-grey-50 rounded-t-[20px] relative">
-        <div className="absolute -top-20 left-7">
+        <div className="absolute -top-20 inset-x-0">
           <Image
             src={`/assets/webp/${image}.webp`}
             alt={name}
             width={215}
             height={255}
             quality={100}
+            className="mx-auto"
           />
         </div>
       </div>

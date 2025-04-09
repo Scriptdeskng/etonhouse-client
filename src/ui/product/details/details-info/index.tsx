@@ -4,6 +4,7 @@ import Button from "@/utils/button";
 import Quantity from "@/utils/quantity";
 import Image from "next/image";
 import { useState } from "react";
+import DetailsImg from "../details-img";
 
 interface Props {
   product: Product;
@@ -13,8 +14,8 @@ const DetailsInfo = ({ product }: Props) => {
   const [count, setCount] = useState(1);
 
   return (
-    <div className="grid grid-cols-2 w-full">
-      <div className="p-10 w-full border-r border-black">
+    <div className="grid lg:grid-cols-2 w-full">
+      <div className="p-5 xl:p-10 w-full h-[350px] sm:h-[400px] lg:h-full border-r border-black">
         <div className="w-full relative h-full">
           <Image
             src="/assets/webp/big-product.webp"
@@ -26,12 +27,18 @@ const DetailsInfo = ({ product }: Props) => {
         </div>
       </div>
 
-      <div className="w-full p-10 pb-0 flex flex-col gap-4">
+      <div className="flex lg:hidden w-full border-t border-[#14141499]">
+        <DetailsImg images={product.images} />
+      </div>
+
+      <div className="w-full px-5 lg:py-10 xl:p-10 pb-0 flex flex-col gap-4">
         <p className="text-xl leading-[100%] text-[#333333] font-bold">
           {product.name}
         </p>
 
-        <p className="text-[40px] text-[#333333] font-bold">₦{product.price}</p>
+        <p className="text-2xl sm:text-3xl xl:text-[40px] text-[#333333] font-bold">
+          ₦{product.price}
+        </p>
 
         {product.colors.length >= 1 && (
           <div className="flex gap-5 items-center mb-6">

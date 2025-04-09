@@ -5,7 +5,7 @@ import Checkout from "./checkout";
 const CartItems = () => {
   return (
     <div className="pt-4 pb-24 space-y-[30px]">
-      <div className="w-full h-14 grid grid-cols-[400px_120px_120px_230px] justify-between bg-[#D6DDD6]">
+      <div className="w-full h-14 hidden lg:grid grid-cols-[400px_120px_120px_230px] justify-between bg-[#D6DDD6]">
         <div className="w-full flex items-center pl-[30px] text-[#141414] font-bold">
           PRODUCT
         </div>
@@ -20,25 +20,33 @@ const CartItems = () => {
         </div>
       </div>
 
-      <div className="space-y-[14px]">
+      <div className="lg:space-y-[14px]">
         <CartCard />
         <CartCard />
         <CartCard />
         <CartCard />
       </div>
 
-      <div className="w-full flex items-center justify-between">
-        <p className="text-xl text-[#333333] font-medium">🛒 Total: ₦310,000</p>
+      <div className="w-full flex items-center justify-center md:hidden">
+        <CartCoupon placeholder="Coupon Code" />
+      </div>
 
-        <p className="text-xl text-black font-medium">
+      <div className="w-full flex items-center justify-between">
+        <p className="md:text-xl text-[#333333] font-medium">
+          🛒 Total: ₦310,000
+        </p>
+
+        <p className="hidden md:inline text-xl text-black font-medium">
           💳 Got a discount code?
         </p>
       </div>
 
-      <div className="w-full flex items-start justify-between">
+      <div className="w-full flex items-start gap-2 justify-between">
         <Checkout />
 
-        <CartCoupon />
+        <div className="hidden md:inline">
+          <CartCoupon />
+        </div>
       </div>
     </div>
   );

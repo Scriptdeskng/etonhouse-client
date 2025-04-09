@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FaAngleRight } from "react-icons/fa6";
 
 interface Props {
   history: {
@@ -15,9 +16,9 @@ const Breadcrumbs = ({ history }: Props) => {
           <Link
             href={item.path ?? "/"}
             key={item.name}
-            className="text-lg text-[#414205]"
+            className="text-lg text-[#414205] flex items-center gap-2"
           >
-            {item.name} /
+            {item.name} <FaAngleRight className="w-4 h-4" />
           </Link>
         ) : (
           <p className="text-[#616161AB] text-lg">{item.name}</p>
