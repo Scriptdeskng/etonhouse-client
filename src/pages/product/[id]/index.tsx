@@ -1,3 +1,4 @@
+import Entrance from "@/animated/Entrance";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import Details from "@/ui/product/details";
@@ -29,13 +30,13 @@ const ProductDetails = () => {
   };
 
   return (
-    <div>
+    <Entrance>
       <Navbar active={2} />
       <Details product={details} />
       <RecentlyViewed />
       <Recommended />
       <Footer />
-    </div>
+    </Entrance>
   );
 };
 
