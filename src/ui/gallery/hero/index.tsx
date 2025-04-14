@@ -8,24 +8,27 @@ const GalleryHero = () => {
   const [page, setPage] = useState(1);
 
   return (
-    <div className="px-20 py-10 border-t border-black-200/80 flex flex-col gap-10">
+    <div className="px-5 py-8 xl:px-20 xl:py-10 border-t border-black-200/80 flex flex-col gap-10">
       <div className="flex flex-col gap-7.5 items-start">
-        <h2 className="font-bold text-[32px]">Our Gallery</h2>
-        <p className="text-2xl text-[#616161]">
+        <h2 className="font-bold text-2xl md:text-[32px]">Our Gallery</h2>
+        <p className="text-lg md:text-2xl text-[#616161]">
           Explore beautifully styled spaces featuring our collections
         </p>
         <Tabs active={active} setActive={setActive} />
       </div>
 
-      <div className="grid grid-cols-3 gap-7">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-7">
         {new Array(9).fill("").map((_, index) => {
           return (
-            <div className="group relative w-full h-[480px]" key={index}>
+            <div
+              className="group relative w-full h-[320px] md:h-[400px] xl:h-[480px]"
+              key={index}
+            >
               <Image
                 src="/assets/png/gallery.png"
                 alt="Gallery"
                 fill
-                objectFit="cover"
+                className="object-cover"
                 quality={100}
               />
 

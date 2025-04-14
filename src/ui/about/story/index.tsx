@@ -9,9 +9,9 @@ const Story = () => {
       background="bg-[#F7F7F7]"
       button={{ exists: false }}
     >
-      <div className="w-full grid grid-cols-2 items-center gap-20">
+      <div className="w-full grid lg:grid-cols-2 items-center gap-6 xl:gap-20">
         <div className="flex flex-col items-start gap-7.5">
-          <div className="flex flex-col gap-13 text-black text-xl">
+          <div className="flex flex-col gap-6 lg:gap-13 text-black md:text-xl">
             <p>
               At EtonHouse, we believe that furniture is more than just
               decor—it’s the foundation of a home. What started as a small
@@ -27,14 +27,14 @@ const Story = () => {
             </p>
           </div>
 
-          <Button text="View catalog" className="px-20" />
+          <Button text="View catalog" className="px-6 md:px-20 text-sm hidden xl:flex" />
         </div>
 
-        <div className="w-full h-[505px] relative">
+        <div className="w-full h-[300px] md:h-[505px] relative">
           <Image
             src="/assets/webp/story.webp"
             alt="Story Couch"
-            objectFit="contain"
+            className="object-contain"
             fill
             quality={100}
           />

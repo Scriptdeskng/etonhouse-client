@@ -9,15 +9,19 @@ const FeaturedCollections = () => {
   ];
 
   return (
-    <PageTitle title="FEATURED COLLECTION" background="bg-grey-300">
-      <div className="w-full grid grid-cols-2 gap-2">
+    <PageTitle
+      title="FEATURED COLLECTION"
+      background="bg-grey-300"
+      path="/shop"
+    >
+      <div className="w-full flex gap-3.5 md:grid md:grid-cols-2 md:gap-2 overflow-x-auto">
         {category.map((item) => {
           return (
             <div
-              className={`w-full h-[500px] flex items-center justify-center rounded-lg ${item.bg}`}
+              className={`shrink-0 w-full max-w-[250px] md:max-w-full h-[310px] xl:h-[500px] flex items-center justify-center rounded-lg ${item.bg}`}
               key={item.title}
             >
-              <p className="text-[32px] text-white">{item.title}</p>
+              <p className="text-lg xl:text-[32px] text-white">{item.title}</p>
             </div>
           );
         })}

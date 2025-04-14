@@ -16,11 +16,11 @@ const Tabs = ({
   ];
 
   return (
-    <div className="bg-beige-100 p-1.5 flex items-center rounded-[44px]">
+    <div className="w-full lg:w-fit bg-beige-100 p-1.5 flex items-center rounded-[44px] overflow-x-auto">
       {data.map((item) => {
         return (
           <button
-            className={`w-[140px] h-[45px] flex items-center justify-center text-lg text-black-300 rounded-[32px] ${
+            className={`shrink-0 w-[140px] h-[45px] flex items-center justify-center text-lg text-black-300 rounded-[32px] ${
               active === item ? "bg-white cursor-default" : "cursor-pointer"
             }`}
             key={item}
