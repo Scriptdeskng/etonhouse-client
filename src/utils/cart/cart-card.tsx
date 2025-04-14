@@ -3,7 +3,7 @@ import CartQuantity from "../quantity/cart-quantity";
 import Image from "next/image";
 import { FaTrash } from "react-icons/fa6";
 
-const CartCard = () => {
+const CartCard = ({ disabled }: { disabled?: boolean }) => {
   const [count, setCount] = useState(1);
 
   return (
@@ -22,10 +22,12 @@ const CartCard = () => {
             🛋️ Modern Oak Dining Table
           </p>
 
-          <div className="flex items-center gap-2.5 cursor-pointer text-[#616161]">
-            <FaTrash size={16} />
-            <p className="text-sm">REMOVE</p>
-          </div>
+          {!disabled && (
+            <div className="flex items-center gap-2.5 cursor-pointer text-[#616161]">
+              <FaTrash size={16} />
+              <p className="text-sm">REMOVE</p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -38,7 +40,11 @@ const CartCard = () => {
 
       <div className="w-full flex items-center justify-between lg:justify-start">
         <p className="text-sm md:text-lg text-[#141414] lg:hidden">Quantity:</p>
-        <CartQuantity count={count} setCount={setCount} />
+        {!disabled ? (
+          <CartQuantity count={count} setCount={setCount} />
+        ) : (
+          <p className="text-sm md:text-lg font-medium text-[#333333]">1</p>
+        )}
       </div>
 
       <div className="w-full flex items-center justify-between lg:justify-start">

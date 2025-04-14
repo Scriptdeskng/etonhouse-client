@@ -1,3 +1,4 @@
+import Entrance from "@/animated/Entrance";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import Breadcrumbs from "@/utils/breadcrumbs";
@@ -6,8 +7,8 @@ import { FaCircleInfo } from "react-icons/fa6";
 
 const Cart = () => {
   return (
-    <div>
-      <Navbar />
+    <Entrance>
+      <Navbar active={10}/>
       <div className="px-5 xl:px-20 border-t lg:border-t-0 border-[#14141499]">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center justify-between py-6 lg:border-b-[0.6px] border-[#141414CC]">
           <p className="text-xl font-medium text-black lg:hidden">Cart</p>
@@ -25,7 +26,7 @@ const Cart = () => {
         <CartItems />
       </div>
       <Footer />
-    </div>
+    </Entrance>
   );
 };
 

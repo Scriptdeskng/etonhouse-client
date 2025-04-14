@@ -59,7 +59,7 @@ const Navbar = ({ active = 0 }: Props) => {
         </div>
         <NavIcon icon="cart" path="/cart" />
         <div className="hidden lg:flex">
-          <NavIcon icon="profile" path="/" />
+          <NavIcon icon="profile" path="/account" />
         </div>
         <div
           className="block lg:hidden cursor-pointer"
