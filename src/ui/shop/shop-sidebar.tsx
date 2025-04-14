@@ -5,8 +5,8 @@ import Image from "next/image";
 
 const ShopSidebar = () => {
   return (
-    <div className="w-full">
-      <div className="w-full pl-10 pr-6 py-12.5 border-y border-[#141414CC]">
+    <div className="hidden lg:flex lg:flex-col w-full">
+      <div className="w-full px-5 xl:pl-10 xl:pr-6 py-12.5 border-y border-[#141414CC]">
         <button className="w-full flex items-center gap-2.5 cursor-pointer">
           <Image
             src="/assets/svg/filter.svg"
@@ -19,7 +19,7 @@ const ShopSidebar = () => {
         </button>
       </div>
 
-      <section className="p-10">
+      <section className="p-5 py-8 xl:p-10">
         <Category />
 
         <Range />

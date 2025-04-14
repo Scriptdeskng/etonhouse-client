@@ -22,11 +22,11 @@ const Process = () => {
 
   return (
     <PageTitle title="OUR PROCESS" button={{ exists: false }}>
-      <div className="p-10 gap-20 flex flex-wrap justify-between">
+      <div className="xl:p-10 gap-[30px] xl:gap-20 flex flex-wrap lg:flex-row justify-between">
         {data.map((item) => {
           return (
             <div
-              className="w-[305px] flex flex-col items-center gap-8.75"
+              className="mx-auto w-[305px] flex flex-col items-center gap-5 xl:gap-8.75"
               key={item.title}
             >
               <Image
@@ -37,11 +37,13 @@ const Process = () => {
                 quality={100}
               />
 
-              <h4 className="text-xl font-medium text-black-400">
+              <h4 className="text-lg md:text-xl font-medium text-black-400">
                 {item.title}
               </h4>
 
-              <p className="text-center text-lg text-black-400">{item.text}</p>
+              <p className="text-center md:text-lg text-black-400">
+                {item.text}
+              </p>
             </div>
           );
         })}

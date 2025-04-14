@@ -8,12 +8,12 @@ interface Props {
 
 const NavIcon = ({ path, icon }: Props) => {
   return (
-    <Link href={path}>
+    <Link href={path} className="w-4.5 h-4.5 sm:w-6 sm:h-6 relative">
       <Image
         src={`/assets/svg/${icon}.svg`}
         alt={`${icon} icon`}
-        width={24}
-        height={24}
+        fill
+        className="object-contain"
         quality={100}
       />
     </Link>

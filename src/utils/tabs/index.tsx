@@ -12,7 +12,7 @@ const Tabs = ({ active, setActive }: Props) => {
         return (
           <button
             key={item}
-            className={`w-21 h-[45px] flex items-center justify-center text-lg text-black-300 rounded-4xl ${
+            className={`w-[76px] sm:w-21 h-[45px] flex items-center justify-center xl:text-lg text-black-300 rounded-4xl ${
               active === item ? "bg-white cursor-default" : "cursor-pointer"
             }`}
             onClick={() => setActive(item)}

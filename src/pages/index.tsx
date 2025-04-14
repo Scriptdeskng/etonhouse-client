@@ -1,3 +1,4 @@
+import Entrance from "@/animated/Entrance";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import Newsletter from "@/components/newsletter";
@@ -11,7 +12,7 @@ import NewArrivals from "@/ui/home/new-arrivals";
 
 const Home = () => {
   return (
-    <div>
+    <Entrance>
       <Navbar />
       <Banner />
       <Hero />
@@ -22,7 +23,7 @@ const Home = () => {
       <Testimonials />
       <Newsletter />
       <Footer />
-    </div>
+    </Entrance>
   );
 };
 

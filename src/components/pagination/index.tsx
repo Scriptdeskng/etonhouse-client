@@ -7,7 +7,7 @@ interface Props {
 
 const Pagination = ({ page, setPage }: Props) => {
   return (
-    <div className="w-full flex items-center justify-end gap-6">
+    <div className="w-full flex items-center justify-center lg:justify-end gap-6">
       {page !== 1 && (
         <button
           className="cursor-pointer text-black"

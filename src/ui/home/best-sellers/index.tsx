@@ -7,7 +7,7 @@ const BestSellers = () => {
   const [active, setActive] = useState<string>("Chair");
 
   return (
-    <PageTitle title="BESTSELLERS" background="bg-grey-100">
+    <PageTitle title="BESTSELLERS" background="bg-grey-100" path="/shop">
       <Tabs active={active} setActive={setActive} />
 
       <ProductSlider />

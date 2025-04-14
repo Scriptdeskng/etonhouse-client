@@ -4,13 +4,15 @@ import Link from "next/link";
 const Logo = () => {
   return (
     <Link href="/">
-      <Image
-        src="/assets/webp/logo-black.webp"
-        alt="etonhouse logo"
-        width={177}
-        height={25}
-        quality={100}
-      />
+      <div className="w-[136px] h-5 xl:w-[177px] xl:h-[25px] relative">
+        <Image
+          src="/assets/webp/logo-black.webp"
+          alt="etonhouse logo"
+          fill
+          className="object-contain"
+          quality={100}
+        />
+      </div>
     </Link>
   );
 };
