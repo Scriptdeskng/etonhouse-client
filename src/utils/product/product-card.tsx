@@ -16,14 +16,15 @@ const ProductCard = ({ id, name, image, price }: Props) => {
     >
       <div className="w-full h-[400px] relative">
         <Image
-          src={`/assets/webp/${image}.webp`}
+          src={image}
           alt={name}
           fill
           quality={100}
+          className="object-cover"
         />
       </div>
 
-      <p className="text-black">{name}</p>
+      <p className="text-black font-bold capitalize">{name}</p>
 
       <p className="text-blue-100">₦{price}</p>
     </Link>

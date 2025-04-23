@@ -1,3 +1,4 @@
+import { useAllCategories } from "@/services/category.service";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 
 export const TriggerIcon = ({
@@ -23,24 +24,7 @@ export const TriggerIcon = ({
 };
 
 const Category = () => {
-  const categories = [
-    {
-      name: "Living room",
-      subCategories: ["Sofas", "Chairs", "Tables"],
-    },
-    {
-      name: "Dining room",
-      subCategories: ["Dinner Set", "Dinner Table"],
-    },
-    {
-      name: "Bedroom",
-      subCategories: ["Bed Frame", "Mattress"],
-    },
-    {
-      name: "Accessories",
-      subCategories: ["Decor", "Lighting"],
-    },
-  ];
+  const { data } = useAllCategories();
 
   return (
     <details className="w-full pb-10 border-b border-[#61616199] group">
@@ -51,11 +35,13 @@ const Category = () => {
       </summary>
 
       <div className="mt-3.5 pr-1 flex flex-col gap-5">
-        {categories.map((item) => {
+        {data?.map((item: any) => {
           return (
-            <details className="w-full group/subgroup" key={item.name}>
+            <details className="w-full group/subgroup" key={item?.id}>
               <summary className="w-full flex items-center justify-between cursor-pointer">
-                <h2 className="text-[#616161]">{item.name}</h2>
+                <h2 className="text-[#616161] capitalize">
+                  {item?.name?.split("-").join(" ")}
+                </h2>
 
                 <TriggerIcon
                   size={18}
@@ -65,7 +51,7 @@ const Category = () => {
               </summary>
 
               <div className="mt-3.5 flex flex-col gap-2">
-                {item.subCategories.map((data) => (
+                {[].map((data) => (
                   <p key={data} className="text-sm cursor-pointer">
                     {data}
                   </p>

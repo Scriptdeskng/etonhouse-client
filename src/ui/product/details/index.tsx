@@ -3,12 +3,14 @@ import DetailsImg from "./details-img";
 import DetailsInfo from "./details-info";
 import Link from "next/link";
 import { FaAngleRight } from "react-icons/fa6";
+import Skeleton from "react-loading-skeleton";
 
 interface Props {
   product: Product;
+  isLoading: boolean;
 }
 
-const Details = ({ product }: Props) => {
+const Details = ({ product, isLoading }: Props) => {
   return (
     <div className="w-full border-b-0 lg:border-b border-black grid grid-cols-1 lg:grid-cols-[140px_1fr] pb-14 lg:pb-28">
       <div className="flex flex-col gap-4 py-6 px-5 lg:hidden">
@@ -23,15 +25,19 @@ const Details = ({ product }: Props) => {
             Shop
           </Link>
           <FaAngleRight size={10} />
-          <p className="text-sm text-[#616161]">{product.name}</p>
+          <p className="text-sm text-[#616161]">{product?.name}</p>
         </div>
       </div>
 
       <div className="hidden lg:flex w-full">
-        <DetailsImg images={product.images} />
+        {isLoading ? (
+          <Skeleton height={250} />
+        ) : (
+          <DetailsImg images={product?.images} />
+        )}
       </div>
 
-      <DetailsInfo product={product} />
+      <DetailsInfo product={product} isLoading={isLoading} />
     </div>
   );
 };
