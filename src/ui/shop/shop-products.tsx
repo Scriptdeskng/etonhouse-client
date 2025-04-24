@@ -1,88 +1,13 @@
-import Pagination from "@/components/pagination";
+import { useAllProducts } from "@/services/product.service";
 import ProductCard from "@/utils/product/product-card";
 import ResponsiveProduct from "@/utils/product/responsive-product";
 import Sort from "@/utils/sort";
 import Link from "next/link";
-import { useState } from "react";
 import { FaAngleRight } from "react-icons/fa6";
+import Skeleton from "react-loading-skeleton";
 
 const ShopProducts = () => {
-  const [page, setPage] = useState(1);
-
-  const products = [
-    {
-      id: 5,
-      image: "new1",
-      name: "New Product 1",
-      price: "150,000",
-    },
-    {
-      id: 6,
-      image: "new2",
-      name: "New Product 2",
-      price: "150,000",
-    },
-    {
-      id: 7,
-      image: "new3",
-      name: "New Product 3",
-      price: "150,000",
-    },
-    {
-      id: 5,
-      image: "new1",
-      name: "New Product 1",
-      price: "150,000",
-    },
-    {
-      id: 6,
-      image: "new2",
-      name: "New Product 2",
-      price: "150,000",
-    },
-    {
-      id: 7,
-      image: "new3",
-      name: "New Product 3",
-      price: "150,000",
-    },
-    {
-      id: 5,
-      image: "new1",
-      name: "New Product 1",
-      price: "150,000",
-    },
-    {
-      id: 6,
-      image: "new2",
-      name: "New Product 2",
-      price: "150,000",
-    },
-    {
-      id: 7,
-      image: "new3",
-      name: "New Product 3",
-      price: "150,000",
-    },
-    {
-      id: 5,
-      image: "new1",
-      name: "New Product 1",
-      price: "150,000",
-    },
-    {
-      id: 6,
-      image: "new2",
-      name: "New Product 2",
-      price: "150,000",
-    },
-    {
-      id: 7,
-      image: "new3",
-      name: "New Product 3",
-      price: "150,000",
-    },
-  ];
+  const { data, isLoading } = useAllProducts();
 
   return (
     <div className="w-full min-h-screen lg:border-l lg:border-[#141414CC]">
@@ -99,13 +24,23 @@ const ShopProducts = () => {
               <p className="text-sm text-[#616161]">Shop</p>
             </div>
 
-            <p className="text-sm text-black">1-16/573</p>
+            <p className="text-sm text-black">
+              {isLoading ? (
+                <Skeleton width={150} />
+              ) : (
+                `1-${data?.length}/${data?.length}`
+              )}
+            </p>
           </div>
         </div>
 
         <div className="w-full px-5 pb-4 md:py-8 lg:pl-10 xl:pr-30 lg:py-12.5 flex items-center justify-end md:justify-between gap-2.5">
           <p className="hidden md:inline text-lg font-medium text-black">
-            Showing 1–16 of 573 results
+            {isLoading ? (
+              <Skeleton width={150} />
+            ) : (
+              `Showing 1–${data?.length} of ${data?.length} results`
+            )}
           </p>
 
           <Sort />
@@ -114,35 +49,44 @@ const ShopProducts = () => {
 
       <div className="w-full px-5 pb-14 lg:pb-0 lg:pl-7.5 pt-12.5 lg:pr-4.5">
         <div className="hidden lg:grid grid-cols-3 gap-5">
-          {products.map((item) => {
-            return (
-              <ProductCard
-                id={item.id}
-                name={item.name}
-                image={item.image}
-                price={item.price}
-                key={item.name}
-              />
-            );
-          })}
+          {isLoading
+            ? Array(6)
+                .fill({})
+                .map((_, index) => (
+                  <Skeleton className="w-full h-[400px]" key={index} />
+                ))
+            : data?.map((product: any) => {
+                return (
+                  <ProductCard
+                    key={product?.id}
+                    id={product?.slug}
+                    image={product?.images[0]?.image}
+                    name={product?.name}
+                    price={Number(product?.current_price).toLocaleString(
+                      "en-GB"
+                    )}
+                  />
+                );
+              })}
         </div>
 
         <div className="grid grid-cols-2 lg:hidden gap-4">
-          {products.map((item) => {
+          {data?.map((product: any) => {
             return (
               <ResponsiveProduct
-                name={item.name}
-                image={item.image}
-                price={item.price}
-                key={item.name}
+                id={product?.slug}
+                name={product?.name}
+                image={product?.images[0]?.image}
+                price={Number(product?.current_price).toLocaleString("en-GB")}
+                key={product?.id}
               />
             );
           })}
         </div>
 
-        <div className="w-full mt-8 lg:mt-20 xl:pr-16">
+        {/* <div className="w-full mt-8 lg:mt-20 xl:pr-16">
           <Pagination page={page} setPage={setPage} />
-        </div>
+        </div> */}
       </div>
     </div>
   );

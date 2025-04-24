@@ -14,7 +14,7 @@ const Modal = ({ open, children }: Props) => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6 }}
-          className="w-full h-screen fixed top-0 left-0 bg-black/50 flex items-center justify-center px-5 xl:px-30"
+          className="w-full h-screen fixed top-0 left-0 bg-black/50 flex items-center justify-center px-5 xl:px-30 z-30"
         >
           {children}
         </motion.div>
