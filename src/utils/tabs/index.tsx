@@ -6,8 +6,8 @@ interface Props {
 
 const Tabs = ({ active, setActive, tab }: Props) => {
   return (
-    <div className="px-2 flex items-center">
-      {tab.map((item) => {
+    <div className="px-2 flex items-center gap-3">
+      {tab?.map((item) => {
         return (
           <button
             key={item?.id}

@@ -5,25 +5,33 @@ export const TriggerIcon = ({
   size = 24,
   open,
   close,
+  handleOpen,
+  handleClose,
 }: {
   size?: number;
   open: string;
   close: string;
+  handleOpen?: () => void;
+  handleClose?: () => void;
 }) => {
   return (
     <>
-      <div className={open}>
+      <div role="button" className={open} onClick={handleOpen}>
         <FaPlus size={size} />
       </div>
 
-      <div className={`hidden ${close}`}>
+      <div role="button" className={`hidden ${close}`} onClick={handleClose}>
         <FaMinus size={size} />
       </div>
     </>
   );
 };
 
-const Category = () => {
+const Category = ({
+  handleParams,
+}: {
+  handleParams: (name: string, value: any) => void;
+}) => {
   const { data } = useAllCategories();
 
   return (
@@ -47,14 +55,21 @@ const Category = () => {
                   size={18}
                   open="group-open/subgroup:hidden"
                   close="group-open/subgroup:block"
+                  handleOpen={() => handleParams("category", item?.slug)}
+                  handleClose={() => handleParams("category", undefined)}
                 />
               </summary>
 
               <div className="mt-3.5 flex flex-col gap-2">
-                {[].map((data) => (
-                  <p key={data} className="text-sm cursor-pointer">
-                    {data}
-                  </p>
+                {item?.subcategories?.map((data: any) => (
+                  <div
+                    role="button"
+                    key={data?.id}
+                    className="text-sm cursor-pointer"
+                    onClick={() => handleParams("subcategory", data?.slug)}
+                  >
+                    {data?.name}
+                  </div>
                 ))}
               </div>
             </details>

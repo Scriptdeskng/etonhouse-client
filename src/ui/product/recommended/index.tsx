@@ -14,7 +14,7 @@ const Recommended = () => {
       className="px-5 xl:px-16"
     >
       <div className="px-5 xl:px-16 w-full grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-10 lg:pb-20 lg:border-b border-black">
-        {data?.map((item: any) => {
+        {data?.slice(0, 4).map((item: any) => {
           return (
             <Link
               href={`/product/${item?.slug}`}

@@ -8,6 +8,7 @@ import DetailsImg from "../details-img";
 import Dimensions from "@/components/modal/dimensions";
 import Galleria from "@/components/modal/galleria";
 import Skeleton from "react-loading-skeleton";
+import { useAddToCart } from "@/services/cart.service";
 
 interface Props {
   product: Product;
@@ -16,6 +17,14 @@ interface Props {
 
 const DetailsInfo = ({ product, isLoading }: Props) => {
   const [count, setCount] = useState(1);
+  const mutation = useAddToCart();
+
+  function handleAdd() {
+    mutation.mutate({
+      variant_id: product?.variants?.[0]?.id,
+      quantity: count,
+    });
+  }
 
   // modals
   const [open, setOpen] = useState(false);
@@ -34,7 +43,7 @@ const DetailsInfo = ({ product, isLoading }: Props) => {
                 alt="Product"
                 fill
                 quality={100}
-                className="object-cover"
+                className="object-contain"
               />
             )}
           </div>
@@ -87,6 +96,7 @@ const DetailsInfo = ({ product, isLoading }: Props) => {
               <Button
                 text="Add to Cart"
                 className="h-[46px] rounded-none !py-0 !text-base"
+                handleClick={handleAdd}
               />
             </div>
           )}

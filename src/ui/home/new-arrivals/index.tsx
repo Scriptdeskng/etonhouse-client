@@ -70,7 +70,7 @@ const NewArrivals = () => {
                 <div key={product.name} className="p-5">
                   <ProductCard
                     id={product?.slug}
-                    image={product?.images[0]?.image}
+                    image={product?.images[0]?.image ?? null}
                     name={product?.name}
                     price={Number(product?.current_price).toLocaleString(
                       "en-GB"

@@ -15,13 +15,13 @@ const Breadcrumbs = ({ history }: Props) => {
         return index < history.length - 1 ? (
           <Link
             href={item.path ?? "/"}
-            key={item.name}
+            key={index}
             className="text-lg text-[#414205] flex items-center gap-2"
           >
             {item.name} <FaAngleRight className="w-4 h-4" />
           </Link>
         ) : (
-          <p className="text-[#616161AB] text-lg">{item.name}</p>
+          <p className="text-[#616161AB] text-lg" key={index}>{item.name}</p>
         );
       })}
     </div>

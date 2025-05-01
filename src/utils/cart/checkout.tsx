@@ -1,6 +1,6 @@
 import ButtonLink from "../button/button-link";
 
-const Checkout = () => {
+const Checkout = ({ total }: { total: number }) => {
   return (
     <div className="w-[560px] flex flex-col gap-[30px]">
       <div className="w-full space-y-4">
@@ -9,7 +9,7 @@ const Checkout = () => {
             SUBTOTAL
           </div>
           <div className="w-full h-14 bg-[#F2F2F2] p-2 lg:pl-[30px] flex items-center font-medium">
-            ₦310,000
+            ₦{total?.toLocaleString()}
           </div>
         </div>
 
@@ -18,7 +18,7 @@ const Checkout = () => {
             TOTAL
           </div>
           <div className="w-full h-14 bg-[#F2F2F2] p-2 lg:pl-[30px] flex items-center font-medium">
-            ₦310,000
+            ₦{total?.toLocaleString()}
           </div>
         </div>
 

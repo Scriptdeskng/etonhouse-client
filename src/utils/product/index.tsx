@@ -12,7 +12,7 @@ interface Props {
 }
 
 const Product = ({ id, image, title, name, price, variants }: Props) => {
-  const { mutation } = useAddToCart();
+  const mutation = useAddToCart();
 
   function handleAdd() {
     mutation.mutate({

@@ -1,6 +1,7 @@
 import axios from "axios";
-import { getCookie } from "./cookies";
 import { ApiRequestParams } from "@/types/api";
+import useAuthStore from "@/store/authStore";
+import toast from "react-hot-toast";
 
 const Api = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_SERVER_URL}/api/`,
@@ -27,6 +28,12 @@ Api.interceptors.response.use(
     return response;
   },
   (error) => {
+    if (error?.status === 401) {
+      toast.error("Unauthorized User");
+      const authStore = useAuthStore.getState();
+      authStore.logoutUser();
+      window.location.href = `/account?redirect=shop`;
+    }
     return Promise.reject(error);
   }
 );
@@ -38,12 +45,10 @@ const makeRequest = async ({
   params = {},
   requireToken = false,
   content_type = "application/json",
+  token,
 }: ApiRequestParams): Promise<any> => {
-  if (requireToken) {
-    const token = getCookie("accessToken");
-    if (token) {
-      Api.defaults.headers.Authorization = `Bearer ${token}`;
-    }
+  if (requireToken && token) {
+    Api.defaults.headers.Authorization = `Bearer ${token}`;
   }
 
   const response = await Api({

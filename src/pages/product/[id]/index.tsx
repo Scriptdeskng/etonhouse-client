@@ -15,6 +15,7 @@ export interface Product {
   price: string;
   colors: string[];
   description: string;
+  variants: any[];
 }
 
 const ProductDetails = () => {
@@ -33,6 +34,7 @@ const ProductDetails = () => {
         price: Number(data?.current_price).toLocaleString("en-GB"),
         colors: [],
         description: data?.description,
+        variants: data?.variants
       });
     }
   }, [data]);

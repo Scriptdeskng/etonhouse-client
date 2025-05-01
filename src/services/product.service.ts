@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import makeRequest from "@/config/axios";
 
-export const useAllProducts = () => {
+export const useAllProducts = (params?: any) => {
   return useQuery({
-    queryKey: ["all-products"],
+    queryKey: ["all-products", {params}],
     queryFn: () =>
       makeRequest({
         url: "products/products/",
         requireToken: false,
+        params,
       }),
     retry: 1,
   });
