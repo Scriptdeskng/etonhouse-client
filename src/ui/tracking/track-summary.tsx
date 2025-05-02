@@ -11,8 +11,7 @@ const TrackSummary = () => {
       </div>
 
       <div className="space-y-5 lg:pb-8 lg:border-b-[0.6px] border-[#61616133]">
-        <CartCard disabled />
-        <CartCard disabled />
+        <CartCard product={{}} handleQuantity={() => null} disabled />
 
         <p className="lg:text-lg font-medium text-[#333333]">
           💰 Total Amount Paid: ₦305,000
