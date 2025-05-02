@@ -8,7 +8,7 @@ const CartCard = ({
   handleRemove,
   handleQuantity,
 }: {
-  product: any;
+  product?: any;
   disabled?: boolean;
   handleRemove?: (id: number) => void;
   handleQuantity: (id: number, value: number) => void;
