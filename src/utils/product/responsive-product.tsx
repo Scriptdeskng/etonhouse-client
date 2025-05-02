@@ -4,12 +4,13 @@ import Quantity from "../quantity";
 import { FaRegHeart } from "react-icons/fa6";
 
 interface Props {
+  id?: string;
   name: string;
   image: string;
   price: string;
 }
 
-const ResponsiveProduct = ({ name, image, price }: Props) => {
+const ResponsiveProduct = ({ id, name, image, price }: Props) => {
   const [count, setCount] = useState(1);
 
   return (
@@ -21,7 +22,7 @@ const ResponsiveProduct = ({ name, image, price }: Props) => {
 
       <div className="w-full h-[180px] sm:h-[220px] relative">
         <Image
-          src={`/assets/webp/${image}.webp`}
+          src={image}
           alt={name}
           fill
           className="object-contain"
@@ -36,9 +37,12 @@ const ResponsiveProduct = ({ name, image, price }: Props) => {
       <div className="w-full flex items-end justify-between">
         <Quantity count={count} setCount={setCount} size="sm" />
 
-        <p className="border-b border-black text-black text-[10px] sm:text-xs whitespace-nowrap">
+        <button
+          onClick={() => console.log(id)}
+          className="border-b border-black text-black text-[10px] sm:text-xs whitespace-nowrap"
+        >
           ADD TO CART
-        </p>
+        </button>
       </div>
     </div>
   );

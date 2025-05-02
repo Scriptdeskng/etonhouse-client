@@ -1,85 +1,106 @@
+import { Order } from "@/types/order";
 import Input from "@/utils/inputs/input";
-import { useState } from "react";
+import type { FieldErrors, UseFormRegister } from "react-hook-form";
 
-const CheckUser = () => {
-  const [form, setForm] = useState({
-    email: "",
-    firstName: "",
-    lastName: "",
-    phone: "",
-    country: "",
-    state: "",
-    address: "",
-  });
-
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
-
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  }
-
+const CheckUser = ({
+  register,
+  errors,
+}: {
+  register: UseFormRegister<Order>;
+  errors: FieldErrors<Order>;
+}) => {
   return (
     <div className="space-y-4">
       <Input
         label="Email address"
-        name="email"
         type="email"
         placeholder="Enter your email address"
-        value={form.email}
-        onChange={handleChange}
+        register={register("email", {
+          required: "Email is required",
+          pattern: {
+            value: /^\S+@\S+$/i,
+            message: "Invalid email address",
+          },
+        })}
+        error={errors?.email}
       />
 
       <Input
         label="First Name"
-        name="firstName"
         placeholder="Enter your first name"
-        value={form.firstName}
-        onChange={handleChange}
+        register={register("firstName", {
+          required: "First Name is required",
+        })}
+        error={errors?.firstName}
       />
 
       <Input
         label="Last Name"
-        name="lastName"
         placeholder="Enter your last name"
-        value={form.lastName}
-        onChange={handleChange}
+        register={register("lastName", {
+          required: "First Name is required",
+        })}
+        error={errors?.lastName}
       />
 
       <Input
         label="Phone number"
-        name="phone"
         type="tel"
         placeholder="Enter your phone number"
-        value={form.phone}
-        onChange={handleChange}
+        register={register("phone", {
+          required: "Phone number is required",
+          pattern: {
+            value: /^\+?[0-9\s\-]{7,15}$/,
+            message: "Invalid phone number",
+          },
+        })}
+        error={errors?.phone}
       />
 
       <Input
         label="Country"
-        name="country"
         placeholder="Enter your country"
-        value={form.country}
-        onChange={handleChange}
-      />
-
-      <Input
-        label="State"
-        name="state"
-        placeholder="Enter your state"
-        value={form.state}
-        onChange={handleChange}
+        register={register("country", {
+          required: "Country is required",
+        })}
+        error={errors?.country}
       />
 
       <Input
         label="Street address"
-        name="address"
         type="text"
         placeholder="Enter your street address"
-        value={form.address}
-        onChange={handleChange}
+        register={register("address", {
+          required: "Address is required",
+        })}
+        error={errors?.address}
+      />
+
+      <Input
+        label="State"
+        placeholder="Enter your state"
+        register={register("state", {
+          required: "State is required",
+        })}
+        error={errors?.state}
+      />
+
+      <Input
+        label="City"
+        placeholder="Enter your city"
+        register={register("city", {
+          required: "City is required",
+        })}
+        error={errors?.city}
+      />
+
+      <Input
+        label="Postal Code"
+        placeholder="Enter your postal code"
+        register={register("postalCode", {
+          required: "Postal code is required",
+        })}
+        error={errors?.postalCode}
       />
     </div>
   );

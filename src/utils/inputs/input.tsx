@@ -1,10 +1,14 @@
+import { FieldError, UseFormRegisterReturn } from "react-hook-form";
+
 interface Props {
   label?: string;
-  name: string;
+  name?: string;
   type?: string;
   placeholder: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: FieldError;
+  register?: UseFormRegisterReturn;
 }
 
 const Input = ({
@@ -14,6 +18,8 @@ const Input = ({
   placeholder,
   value,
   onChange,
+  error,
+  register,
 }: Props) => {
   return (
     <div className="w-full flex flex-col gap-3.5">
@@ -23,14 +29,19 @@ const Input = ({
         </label>
       )}
 
-      <input
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        className="w-full border-[0.3px] border-[#616161] bg-[#FDFEFD4D] text-sm md:text-base h-9.5 md:h-14 rounded-[20px] px-5 placeholder:text-[#616161] outline-[#D6DDD6]"
-      />
+      <div>
+        <input
+          name={name}
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          {...register}
+          className="w-full border-[0.3px] border-[#616161] bg-[#FDFEFD4D] text-sm md:text-base h-9.5 md:h-14 rounded-[20px] px-5 placeholder:text-[#616161] outline-[#D6DDD6]"
+        />
+
+        {error && <p className="text-red-500 text-sm mt-1">{error.message}</p>}
+      </div>
     </div>
   );
 };

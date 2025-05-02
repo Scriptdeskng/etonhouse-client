@@ -2,7 +2,7 @@ interface Props {
   type?: "button" | "submit";
   text: string;
   className?: string;
-  handleClick?: () => void;
+  handleClick?: any;
 }
 
 const Button = ({ type = "button", text, className, handleClick }: Props) => {

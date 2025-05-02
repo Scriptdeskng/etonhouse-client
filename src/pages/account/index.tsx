@@ -14,7 +14,7 @@ const Account = () => {
           history={[{ name: "Home", path: "/" }, { name: "Account" }]}
         />
 
-        <div className="w-full grid gap-8 lg:grid-cols-2 xl:gap-10 pb-12 xl:pb-24">
+        <div className="w-full grid gap-8 lg:grid-cols-2 xl:gap-10 pb-12 xl:pb-18">
           <Login />
           <Register />
         </div>

@@ -14,16 +14,17 @@ const ProductCard = ({ id, name, image, price }: Props) => {
       href={`/product/${id}`}
       className="shrink-0 w-full max-w-[280px] xl:max-w-full space-y-4 mx-auto xl:mx-0"
     >
-      <div className="w-full h-[400px] relative">
+      <div className="shadow-xs w-full h-[400px] relative aspect-auto">
         <Image
-          src={`/assets/webp/${image}.webp`}
+          src={image}
           alt={name}
           fill
           quality={100}
+          className="object-contain mix-blend-darken h-full"
         />
       </div>
 
-      <p className="text-black">{name}</p>
+      <p className="text-black font-bold capitalize">{name}</p>
 
       <p className="text-blue-100">₦{price}</p>
     </Link>
