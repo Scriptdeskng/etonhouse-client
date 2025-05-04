@@ -1,4 +1,4 @@
-const Confirm = () => {
+const Confirm = ({ id }: { id: string | null }) => {
   return (
     <div className="lg:pt-10 lg:pb-8 space-y-[30px]">
       <div className="w-full h-21 bg-[#D6DDD6] flex items-center">
@@ -12,7 +12,7 @@ const Confirm = () => {
           Thank you for your purchase! Your order has been successfully placed.
         </p>
         <p className="lg:text-lg font-medium text-[#333333]">
-          📦 Order Number: #ORD-2025001
+          📦 Order Number: {id ?? "-"}
         </p>
         <p className="lg:text-lg font-medium text-[#333333]">
           📅 Order Date: February 5, 2025

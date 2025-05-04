@@ -31,7 +31,9 @@ const Details = ({ product, isLoading }: Props) => {
 
       <div className="hidden lg:flex w-full">
         {isLoading ? (
-          <Skeleton height={250} />
+          <div className="w-full lg:border-r border-black py-8 px-5 flex lg:flex-col items-center gap-4 lg:gap-20">
+            <Skeleton width={100} height={64} count={4} />
+          </div>
         ) : (
           <DetailsImg images={product?.images} />
         )}

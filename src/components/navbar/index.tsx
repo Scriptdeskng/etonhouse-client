@@ -1,4 +1,5 @@
 import EnterFromY from "@/animated/EnterFromY";
+import useAuthStore from "@/store/authStore";
 import Logo from "@/utils/logo";
 import NavIcon from "@/utils/navicon";
 import NavLink from "@/utils/navlink";
@@ -12,6 +13,8 @@ interface Props {
 }
 
 const Navbar = ({ active = 0 }: Props) => {
+  const { isAuthenticated } = useAuthStore();
+
   const links = [
     { text: "Home", path: "/" },
     { text: "About", path: "/about" },
@@ -59,7 +62,10 @@ const Navbar = ({ active = 0 }: Props) => {
         </div>
         <NavIcon icon="cart" path="/cart" />
         <div className="hidden lg:flex">
-          <NavIcon icon="profile" path="/account" />
+          <NavIcon
+            icon="profile"
+            path={isAuthenticated ? "/dashboard" : "/account"}
+          />
         </div>
         <div
           className="block lg:hidden cursor-pointer"

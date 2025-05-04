@@ -1,13 +1,14 @@
+/* eslint-disable @next/next/no-img-element */
 import { TriggerIcon } from "@/components/category";
 import { Product } from "@/pages/product/[id]";
 import Button from "@/utils/button";
 import Quantity from "@/utils/quantity";
-import Image from "next/image";
 import { useState } from "react";
 import DetailsImg from "../details-img";
 import Dimensions from "@/components/modal/dimensions";
 import Galleria from "@/components/modal/galleria";
 import Skeleton from "react-loading-skeleton";
+import { useAddToCart } from "@/services/cart.service";
 
 interface Props {
   product: Product;
@@ -16,6 +17,14 @@ interface Props {
 
 const DetailsInfo = ({ product, isLoading }: Props) => {
   const [count, setCount] = useState(1);
+  const mutation = useAddToCart();
+
+  function handleAdd() {
+    mutation.mutate({
+      variant_id: product?.variants?.[0]?.id,
+      quantity: count,
+    });
+  }
 
   // modals
   const [open, setOpen] = useState(false);
@@ -29,12 +38,11 @@ const DetailsInfo = ({ product, isLoading }: Props) => {
             {isLoading ? (
               <Skeleton className="h-[500px]" />
             ) : (
-              <Image
+              <img
                 src={product?.images?.[0]}
                 alt="Product"
-                fill
-                quality={100}
-                className="object-cover"
+                loading="eager"
+                className="object-contain"
               />
             )}
           </div>
@@ -87,6 +95,7 @@ const DetailsInfo = ({ product, isLoading }: Props) => {
               <Button
                 text="Add to Cart"
                 className="h-[46px] rounded-none !py-0 !text-base"
+                handleClick={handleAdd}
               />
             </div>
           )}
@@ -160,7 +169,7 @@ const DetailsInfo = ({ product, isLoading }: Props) => {
       </div>
 
       <Dimensions open={open} handleClose={() => setOpen(false)} />
-      <Galleria open={view} handleClose={() => setView(false)} />
+      <Galleria open={view} product={product} handleClose={() => setView(false)} />
     </>
   );
 };

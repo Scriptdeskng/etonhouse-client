@@ -3,27 +3,65 @@ import CheckProducts from "./check-products";
 import CheckUser from "./check-user";
 import { useState } from "react";
 import Checkbox from "@/utils/inputs/checkbox";
-import ButtonLink from "@/utils/button/button-link";
+import { useForm } from "react-hook-form";
+import { Order } from "@/types/order";
+import Button from "@/utils/button";
+import toast from "react-hot-toast";
+import { useCreateOrder } from "@/services/order.service";
+
+const methods = [
+  { label: "Credit/Debit Card (Visa, MasterCard, Verve)", value: "Card" },
+  { label: "Bank Transfer", value: "Transfer" },
+  { label: "Pay on Delivery (Available in select locations)", value: "Cash" },
+  { label: "Mobile Wallet (Flutterwave, Paystack, etc.)", value: "Wallet" },
+];
 
 const CheckInfo = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Order>({
+    mode: "onBlur",
+  });
+
+  const order = useCreateOrder();
+
   const [paymentMethod, setPaymentMethod] = useState("");
   const [checked, setChecked] = useState<boolean>(false);
 
-  const methods = [
-    { label: "Credit/Debit Card (Visa, MasterCard, Verve)", value: "Card" },
-    { label: "Bank Transfer", value: "Transfer" },
-    { label: "Pay on Delivery (Available in select locations)", value: "Cash" },
-    { label: "Mobile Wallet (Flutterwave, Paystack, etc.)", value: "Wallet" },
-  ];
+  function onSubmit(data: Order) {
+    if (paymentMethod.trim() === "") {
+      toast.error("Select a payment method!");
+      return;
+    }
 
-  function handleChecked(e: React.ChangeEvent<HTMLInputElement>) {
-    setPaymentMethod(e.target.value);
+    if (!checked) {
+      toast.error("Accept our terms and condition!");
+      return;
+    }
+
+    order.mutate({
+      payment_method: paymentMethod,
+      email: data.email,
+      shipping_address: {
+        address_line1: data.address,
+        city: data.city,
+        country: data.country,
+        first_name: data.firstName,
+        last_name: data.lastName,
+        phone: data.phone,
+        state: data.state,
+        postal_code: data.postalCode,
+      },
+    });
   }
 
-  console.log(paymentMethod, checked);
-
   return (
-    <div className="pt-4 pb-24 space-y-[30px]">
+    <form
+      className="pt-4 pb-24 space-y-[30px]"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className="w-full h-14 bg-[#D6DDD6] flex items-center">
         <p className="pl-[30px] text-[#141414] font-bold">SHIPPING DETAILS</p>
       </div>
@@ -39,7 +77,7 @@ const CheckInfo = () => {
       </div>
 
       <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 xl:gap-10">
-        <CheckUser />
+        <CheckUser register={register} errors={errors} />
 
         <CheckProducts />
       </div>
@@ -60,7 +98,7 @@ const CheckInfo = () => {
             label={item.label}
             name="payment"
             value={item.value}
-            onChecked={handleChecked}
+            onChecked={(e) => setPaymentMethod(e.target.value)}
             key={item.value}
           />
         ))}
@@ -74,12 +112,12 @@ const CheckInfo = () => {
         onChecked={(e) => setChecked(e.target.checked)}
       />
 
-      <ButtonLink
-        text="Place order"
-        path="/confirmation"
-        className="bg-[#333333] text-white !rounded-none !text-sm !h-11 !py-0 flex items-center justify-center max-w-[700px]"
+      <Button
+        type="submit"
+        text={order.isPending ? "Placing..." : "Place order"}
+        className="px-8 bg-[#333333] text-white !rounded-none !text-sm !h-11 !py-0 flex items-center justify-center max-w-[700px]"
       />
-    </div>
+    </form>
   );
 };
 

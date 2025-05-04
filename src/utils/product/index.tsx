@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useAddToCart } from "@/services/cart.service";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,7 +13,7 @@ interface Props {
 }
 
 const Product = ({ id, image, title, name, price, variants }: Props) => {
-  const { mutation } = useAddToCart();
+  const mutation = useAddToCart();
 
   function handleAdd() {
     mutation.mutate({
@@ -25,13 +26,13 @@ const Product = ({ id, image, title, name, price, variants }: Props) => {
     <div className="shrink-0 w-full max-w-[280px] xl:max-w-full h-[450px] pt-18 rounded-[20px] grid grid-rows-2 mx-auto xl:mx-0">
       <div className="bg-grey-50 rounded-t-[20px] relative">
         <div className="absolute -top-20 inset-x-0">
-          <Image
+          <img
             src={image}
             alt={name}
             width={215}
             height={255}
-            quality={100}
             className="mx-auto"
+            loading="eager"
           />
         </div>
       </div>

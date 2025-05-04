@@ -9,12 +9,14 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export interface Product {
-  id: number;
+  id: number | string;
+  slug: string;
   images: string[];
   name: string;
   price: string;
   colors: string[];
   description: string;
+  variants: any[];
 }
 
 const ProductDetails = () => {
@@ -33,6 +35,7 @@ const ProductDetails = () => {
         price: Number(data?.current_price).toLocaleString("en-GB"),
         colors: [],
         description: data?.description,
+        variants: data?.variants
       });
     }
   }, [data]);

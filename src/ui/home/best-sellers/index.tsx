@@ -1,6 +1,9 @@
 import ProductSlider from "@/components/slider";
 import { useAllCategories } from "@/services/category.service";
-import { useProductByCategory } from "@/services/product.service";
+import {
+  useAllProducts,
+  useProductByCategory,
+} from "@/services/product.service";
 import PageTitle from "@/utils/page-title";
 import Tabs from "@/utils/tabs";
 import { useEffect, useState } from "react";
@@ -12,6 +15,7 @@ const BestSellers = () => {
 
   const { data, isLoading } = useProductByCategory(active);
 
+  const { data: all, isLoading: allLoad } = useAllProducts();
   const { data: cats, isLoading: catsLoad } = useAllCategories();
 
   useEffect(() => {
@@ -22,9 +26,13 @@ const BestSellers = () => {
 
   useEffect(() => {
     if (data) {
+      if (data?.length < 1) {
+        setProducts(all);
+        return;
+      }
       setProducts(data);
     }
-  }, [data, active]);
+  }, [data, all, active]);
 
   return (
     <PageTitle title="BESTSELLERS" background="bg-grey-100" path="/shop">
@@ -34,7 +42,10 @@ const BestSellers = () => {
         <Tabs active={active} setActive={setActive} tab={cats} />
       )}
 
-      <ProductSlider products={products} isLoading={isLoading || catsLoad} />
+      <ProductSlider
+        products={products}
+        isLoading={isLoading || catsLoad || allLoad}
+      />
     </PageTitle>
   );
 };

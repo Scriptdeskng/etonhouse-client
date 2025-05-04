@@ -1,4 +1,3 @@
-import { useAllProducts } from "@/services/product.service";
 import ProductCard from "@/utils/product/product-card";
 import ResponsiveProduct from "@/utils/product/responsive-product";
 import Sort from "@/utils/sort";
@@ -6,9 +5,13 @@ import Link from "next/link";
 import { FaAngleRight } from "react-icons/fa6";
 import Skeleton from "react-loading-skeleton";
 
-const ShopProducts = () => {
-  const { data, isLoading } = useAllProducts();
-
+const ShopProducts = ({
+  data,
+  isLoading,
+}: {
+  data: any;
+  isLoading: boolean;
+}) => {
   return (
     <div className="w-full min-h-screen lg:border-l lg:border-[#141414CC]">
       <div className="w-full border-t lg:border-b lg:border-r border-[#141414CC]">
@@ -60,7 +63,7 @@ const ShopProducts = () => {
                   <ProductCard
                     key={product?.id}
                     id={product?.slug}
-                    image={product?.images[0]?.image}
+                    image={product?.images[0]?.image ?? null}
                     name={product?.name}
                     price={Number(product?.current_price).toLocaleString(
                       "en-GB"
@@ -79,6 +82,7 @@ const ShopProducts = () => {
                 image={product?.images[0]?.image}
                 price={Number(product?.current_price).toLocaleString("en-GB")}
                 key={product?.id}
+                variants={product?.variants}
               />
             );
           })}

@@ -66,7 +66,7 @@ function ProductSlider({ products, isLoading }: Props) {
                   />
                 </div>
               ))
-          : products?.map((product) => (
+          : products?.slice(0,8)?.map((product) => (
               <div key={product.name} className="p-5">
                 <Product
                   id={product?.slug}

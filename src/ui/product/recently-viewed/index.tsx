@@ -14,12 +14,12 @@ const RecentlyViewed = () => {
       className="px-5 xl:px-16"
     >
       <div className="px-5 xl:px-16 w-full hidden lg:grid grid-cols-4 gap-10 pb-20 border-b border-black">
-        {data?.map((item: any) => {
+        {data?.slice(0, 4).map((item: any) => {
           return (
             <ProductCard
               id={item?.slug}
               name={item?.name}
-              image={item?.images[0]?.image}
+              image={item?.images[0]?.image ?? null}
               price={Number(item?.current_price).toLocaleString("en-GB")}
               key={item?.id}
             />
@@ -35,6 +35,7 @@ const RecentlyViewed = () => {
               image={item?.images[0]?.image}
               price={Number(item?.current_price).toLocaleString("en-GB")}
               key={item?.name}
+              variants={item?.variants}
             />
           );
         })}

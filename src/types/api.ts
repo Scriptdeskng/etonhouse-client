@@ -5,4 +5,5 @@ export interface ApiRequestParams {
   params?: Record<string, any>;
   requireToken?: boolean;
   content_type?: string;
+  token?: string | null;
 }
