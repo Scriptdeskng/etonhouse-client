@@ -5,7 +5,7 @@ import Link from "next/link";
 import { MdClose } from "react-icons/md";
 
 interface Props {
-  product: Product;
+  product?: Product;
   open: boolean;
   handleClose: () => void;
 }
