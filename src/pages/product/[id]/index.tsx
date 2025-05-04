@@ -9,7 +9,8 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export interface Product {
-  id: number;
+  id: number | string;
+  slug: string;
   images: string[];
   name: string;
   price: string;

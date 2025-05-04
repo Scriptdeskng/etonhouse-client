@@ -1,6 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import { useRecommendedProducts } from "@/services/product.service";
 import PageTitle from "@/utils/page-title";
-import Image from "next/image";
+
 import Link from "next/link";
 
 const Recommended = () => {
@@ -21,12 +22,11 @@ const Recommended = () => {
               className="relative bg-[#FAFAFA] flex items-center justify-center h-[340px] w-full"
               key={item?.id}
             >
-              <Image
+              <img
                 src={item?.images[0]?.image}
                 alt={`Product ${item?.id}`}
-                fill
-                className="object-cover"
-                quality={100}
+                className="object-cove w-full h-full"
+                loading="eager"
               />
             </Link>
           );

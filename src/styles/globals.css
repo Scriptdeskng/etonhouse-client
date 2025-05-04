@@ -13,7 +13,7 @@
 
   /* Blue */
   --color-blue-100: #0d1b39;
-  --color-blue-200: #1F2C51;
+  --color-blue-200: #1f2c51;
 
   /* Gray */
   --color-grey-50: #fafafa;
@@ -46,4 +46,13 @@ body {
   background-image: url("../../public/assets/bg/cat4.webp");
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }

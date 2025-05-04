@@ -82,6 +82,7 @@ const ShopProducts = ({
                 image={product?.images[0]?.image}
                 price={Number(product?.current_price).toLocaleString("en-GB")}
                 key={product?.id}
+                variants={product?.variants}
               />
             );
           })}

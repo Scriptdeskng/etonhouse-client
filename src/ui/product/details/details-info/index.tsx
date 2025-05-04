@@ -1,8 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 import { TriggerIcon } from "@/components/category";
 import { Product } from "@/pages/product/[id]";
 import Button from "@/utils/button";
 import Quantity from "@/utils/quantity";
-import Image from "next/image";
 import { useState } from "react";
 import DetailsImg from "../details-img";
 import Dimensions from "@/components/modal/dimensions";
@@ -38,11 +38,10 @@ const DetailsInfo = ({ product, isLoading }: Props) => {
             {isLoading ? (
               <Skeleton className="h-[500px]" />
             ) : (
-              <Image
+              <img
                 src={product?.images?.[0]}
                 alt="Product"
-                fill
-                quality={100}
+                loading="eager"
                 className="object-contain"
               />
             )}
@@ -170,7 +169,7 @@ const DetailsInfo = ({ product, isLoading }: Props) => {
       </div>
 
       <Dimensions open={open} handleClose={() => setOpen(false)} />
-      <Galleria open={view} handleClose={() => setView(false)} />
+      <Galleria open={view} product={product} handleClose={() => setView(false)} />
     </>
   );
 };
