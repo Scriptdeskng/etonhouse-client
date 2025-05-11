@@ -3,9 +3,7 @@ interface Props {
   setActive: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Tabs = ({ active, setActive }: Props) => {
-  const tab = ["Chair", "Beds", "Sofa", "Lamp"];
-
+const Tabs = ({ active, setActive, tab = [] }: Props) => {
   return (
     <div className="px-2 flex items-center">
       {tab.map((item) => {

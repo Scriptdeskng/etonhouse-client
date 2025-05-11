@@ -1,8 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 import { TriggerIcon } from "@/components/category";
 import { Product } from "@/pages/product/[id]";
 import Button from "@/utils/button";
 import Quantity from "@/utils/quantity";
-import Image from "next/image";
 import { useState } from "react";
 import DetailsImg from "../details-img";
 
@@ -14,18 +14,22 @@ const DetailsInfo = ({ product }: Props) => {
   const [count, setCount] = useState(1);
 
   return (
-    <div className="grid lg:grid-cols-2 w-full">
-      <div className="p-5 xl:p-10 w-full h-[350px] sm:h-[400px] lg:h-full border-r border-black">
-        <div className="w-full relative h-full">
-          <Image
-            src="/assets/webp/big-product.webp"
-            alt="Product"
-            fill
-            quality={100}
-            className="object-cover"
-          />
+    <>
+      <div className="grid lg:grid-cols-2 w-full">
+        <div className="p-5 xl:p-10 w-full h-[350px] sm:h-[400px] lg:h-full border-r border-black">
+          <div className="w-full relative h-full">
+            {isLoading ? (
+              <Skeleton className="h-[500px]" />
+            ) : (
+              <img
+                src={product?.images?.[0]}
+                alt="Product"
+                loading="eager"
+                className="object-contain"
+              />
+            )}
+          </div>
         </div>
-      </div>
 
       <div className="flex lg:hidden w-full border-t border-[#14141499]">
         <DetailsImg images={product.images} />

@@ -85,16 +85,29 @@ const NewArrivals = () => {
         </button>
 
         <Slider {...settings} ref={sliderRef}>
-          {arrive.map((product) => (
-            <div key={product.name} className="p-5">
-              <ProductCard
-                id={product.id}
-                image={product.image}
-                name={product.name}
-                price={product.price}
-              />
-            </div>
-          ))}
+          {isLoading
+            ? Array(4)
+                .fill({})
+                .map((_, index) => (
+                  <div key={index} className="p-5">
+                    <Skeleton
+                      className="w-full max-w-[280px] xl:max-w-full h-[450px] pt-18 rounded-[20px]"
+                      key={index}
+                    />
+                  </div>
+                ))
+            : data?.results?.map((product: any) => (
+                <div key={product.name} className="p-5">
+                  <ProductCard
+                    id={product?.slug}
+                    image={product?.images[0]?.image ?? null}
+                    name={product?.name}
+                    price={Number(product?.current_price).toLocaleString(
+                      "en-GB"
+                    )}
+                  />
+                </div>
+              ))}
         </Slider>
 
         <button

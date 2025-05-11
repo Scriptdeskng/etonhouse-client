@@ -1,4 +1,4 @@
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 import { useState } from "react";
 import Quantity from "../quantity";
 import { FaRegHeart } from "react-icons/fa6";
@@ -20,12 +20,11 @@ const ResponsiveProduct = ({ name, image, price }: Props) => {
       />
 
       <div className="w-full h-[180px] sm:h-[220px] relative">
-        <Image
-          src={`/assets/webp/${image}.webp`}
+        <img
+          src={image}
           alt={name}
-          fill
           className="object-contain"
-          quality={100}
+          loading="eager"
         />
       </div>
 

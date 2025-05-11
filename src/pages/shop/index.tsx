@@ -6,12 +6,41 @@ import ShopProducts from "@/ui/shop/shop-products";
 import ShopSidebar from "@/ui/shop/shop-sidebar";
 
 const Shop = () => {
+  const [params, setParams] = useState<ShopParams>({
+    category: undefined,
+    subcategory: undefined,
+    price_min: undefined,
+    price_max: undefined,
+  });
+
+  const { data, isLoading } = useAllProducts(params);
+
+  function handleParams(name: string, value: number) {
+    setParams((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
+  function handleClear() {
+    setParams({
+      category: undefined,
+      subcategory: undefined,
+      price_min: undefined,
+      price_max: undefined,
+    });
+  }
+
   return (
     <Entrance>
       <Navbar active={2} />
       <div className="w-full grid lg:grid-cols-[300px_auto] items-start">
-        <ShopSidebar />
-        <ShopProducts />
+        <ShopSidebar handleParams={handleParams} />
+        <ShopProducts
+          data={data}
+          isLoading={isLoading}
+          handleClear={handleClear}
+        />
       </div>
       <Showroom />
       <Footer />

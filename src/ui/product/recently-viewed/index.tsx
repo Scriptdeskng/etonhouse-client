@@ -1,41 +1,10 @@
 import PageTitle from "@/utils/page-title";
 import ProductCard from "@/utils/product/product-card";
 import ResponsiveProduct from "@/utils/product/responsive-product";
-
-interface Props {
-  id: number;
-  image: string;
-  name: string;
-  price: string;
-}
+import Skeleton from "react-loading-skeleton";
 
 const RecentlyViewed = () => {
-  const products: Props[] = [
-    {
-      id: 5,
-      image: "new1",
-      name: "New Product 1",
-      price: "150,000",
-    },
-    {
-      id: 6,
-      image: "new2",
-      name: "New Product 2",
-      price: "150,000",
-    },
-    {
-      id: 7,
-      image: "new3",
-      name: "New Product 3",
-      price: "150,000",
-    },
-    {
-      id: 8,
-      image: "new4",
-      name: "New Product 4",
-      price: "150,000",
-    },
-  ];
+  const { data, isLoading } = useAllProducts();
 
   return (
     <PageTitle
@@ -45,30 +14,42 @@ const RecentlyViewed = () => {
       className="px-5 xl:px-16"
     >
       <div className="px-5 xl:px-16 w-full hidden lg:grid grid-cols-4 gap-10 pb-20 border-b border-black">
-        {products.map((item) => {
-          return (
-            <ProductCard
-              id={item.id}
-              name={item.name}
-              image={item.image}
-              price={item.price}
-              key={item.name}
-            />
-          );
-        })}
+        {isLoading
+          ? Array(4)
+              .fill({})
+              .map((_, index) => (
+                <Skeleton height={380} className="w-full" key={index} />
+              ))
+          : data?.results?.slice(0, 4).map((item: any) => {
+              return (
+                <ProductCard
+                  id={item?.slug}
+                  name={item?.name}
+                  image={item?.images[0]?.image ?? null}
+                  price={Number(item?.current_price).toLocaleString("en-GB")}
+                  key={item?.id}
+                />
+              );
+            })}
       </div>
 
       <div className="px-5 w-full lg:hidden grid grid-cols-2 gap-4">
-        {products.slice(0,2).map((item) => {
-          return (
-            <ResponsiveProduct
-              name={item.name}
-              image={item.image}
-              price={item.price}
-              key={item.name}
-            />
-          );
-        })}
+        {isLoading
+          ? Array(4)
+              .fill({})
+              .map((_, index) => (
+                <Skeleton height={280} className="w-full" key={index} />
+              ))
+          : data?.results?.slice(0, 2).map((item: any) => {
+              return (
+                <ResponsiveProduct
+                  name={item?.name}
+                  image={item?.images[0]?.image}
+                  price={Number(item?.current_price).toLocaleString("en-GB")}
+                  key={item?.name}
+                />
+              );
+            })}
       </div>
     </PageTitle>
   );

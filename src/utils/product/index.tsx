@@ -1,3 +1,5 @@
+// import { useAddToCart } from "@/services/cart.service";
+import { useCartStore } from "@/store/cartStore";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,7 +11,26 @@ interface Props {
   price: string;
 }
 
-const Product = ({ id, image, title, name, price }: Props) => {
+const Product = ({ id, image, title, name, price, variants }: Props) => {
+  // const mutation = useAddToCart();
+
+  const { addToCart } = useCartStore();
+
+  function handleAdd() {
+    // mutation.mutate({
+    //   variant_id: variants?.[0]?.id,
+    //   quantity: 1,
+    // });
+
+    addToCart({
+      id: variants?.[0]?.id,
+      image: image,
+      name,
+      price: Number(price.replace(/,/g, "")),
+      quantity: 1,
+    });
+  }
+
   return (
     <div className="shrink-0 w-full max-w-[280px] xl:max-w-full h-[450px] pt-18 rounded-[20px] grid grid-rows-2 mx-auto xl:mx-0">
       <div className="bg-grey-50 rounded-t-[20px] relative">

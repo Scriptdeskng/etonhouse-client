@@ -51,7 +51,7 @@ const Category = () => {
       </summary>
 
       <div className="mt-3.5 pr-1 flex flex-col gap-5">
-        {categories.map((item) => {
+        {data?.results?.map((item: any) => {
           return (
             <details className="w-full group/subgroup" key={item.name}>
               <summary className="w-full flex items-center justify-between cursor-pointer">
