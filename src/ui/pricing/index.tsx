@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Range } from "react-range";
 
-const Pricing = () => {
+const Pricing = ({
+  handleChange,
+}: {
+  handleChange: (min: number, max: number) => void;
+}) => {
   const [values, setValues] = useState([50000, 500000]);
 
   const minLimit = 50000;
@@ -14,7 +18,10 @@ const Pricing = () => {
         min={minLimit}
         max={maxLimit}
         values={values}
-        onChange={(newValues) => setValues(newValues)}
+        onChange={(newValues) => {
+          setValues(newValues);
+          handleChange(newValues[0], newValues[1]);
+        }}
         renderTrack={({ props, children }) => (
           <div {...props} className="h-1 bg-gray-300 relative rounded">
             <div

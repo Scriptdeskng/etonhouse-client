@@ -7,17 +7,14 @@ import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { useEffect, useRef, useState } from "react";
 import PageTitle from "@/utils/page-title";
 import ProductCard from "@/utils/product/product-card";
-
-interface Props {
-  id: number;
-  image: string;
-  name: string;
-  price: string;
-}
+import { useAllProducts } from "@/services/product.service";
+import Skeleton from "react-loading-skeleton";
 
 const NewArrivals = () => {
   const sliderRef = useRef<Slider | null>(null);
   const [width, setWidth] = useState<number | null>(null);
+
+  const { data, isLoading } = useAllProducts();
 
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
@@ -33,7 +30,7 @@ const NewArrivals = () => {
 
   const settings = {
     dots: false,
-    infinite: true,
+    infinite: data?.length < 4 ? false : true,
     speed: 500,
     slidesToShow:
       Number(width) >= 1280
@@ -46,33 +43,6 @@ const NewArrivals = () => {
     slidesToScroll: 1,
     arrows: false,
   };
-
-  const arrive: Props[] = [
-    {
-      id: 5,
-      image: "new1",
-      name: "New Product 1",
-      price: "150,000",
-    },
-    {
-      id: 6,
-      image: "new2",
-      name: "New Product 2",
-      price: "150,000",
-    },
-    {
-      id: 7,
-      image: "new3",
-      name: "New Product 3",
-      price: "150,000",
-    },
-    {
-      id: 8,
-      image: "new4",
-      name: "New Product 4",
-      price: "150,000",
-    },
-  ];
 
   return (
     <PageTitle title="NEW ARRIVALS" background="bg-white" path="/shop">

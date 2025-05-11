@@ -1,0 +1,157 @@
+import RadioInput from "@/utils/inputs/radio";
+import CheckProducts from "./check-products";
+import CheckUser from "./check-user";
+import { useState } from "react";
+import Checkbox from "@/utils/inputs/checkbox";
+import { useForm } from "react-hook-form";
+import { Order } from "@/types/order";
+import Button from "@/utils/button";
+import toast from "react-hot-toast";
+import { useCreateOrder, usePayment } from "@/services/order.service";
+import clsx from "clsx";
+import { OrderConvert } from "@/helpers/orderConvert";
+import { useCartStore } from "@/store/cartStore";
+
+const methods = [
+  // { label: "Credit/Debit Card (Visa, MasterCard, Verve)", value: "Card" },
+  // { label: "Bank Transfer", value: "Transfer" },
+  // { label: "Pay on Delivery (Available in select locations)", value: "Cash" },
+  // { label: "Mobile Wallet (Flutterwave, Paystack, etc.)", value: "Wallet" },
+  { label: "Flutterwave", value: "flutterwave" },
+  { label: "Paystack", value: "paystack" },
+];
+
+const CheckInfo = () => {
+  const { cart } = useCartStore();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<Order>({
+    mode: "onBlur",
+  });
+
+  const { mutate: createOrder, isPending: orderPending } = useCreateOrder();
+  const { mutate: orderPayment, isPending: payPending } = usePayment();
+
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [checked, setChecked] = useState<boolean>(false);
+
+  function onSubmit(data: Order) {
+    if (paymentMethod.trim() === "") {
+      toast.error("Select a payment method!");
+      return;
+    }
+
+    if (!checked) {
+      toast.error("Accept our terms and condition!");
+      return;
+    }
+
+    const items = OrderConvert(cart, data, paymentMethod);
+
+    createOrder(items, {
+      onSuccess: (res) => {
+        orderPayment(
+          {
+            email: res?.guest_email,
+            order_id: res?.id,
+            reference: res?.order_number,
+          },
+          {
+            onSuccess: (response) => {
+              toast.success(
+                "Order placed successfully, Redirecting to payment page..."
+              );
+              window.location = response?.data?.authorization_url;
+            },
+            onError: () => {
+              toast.error("Error occurred while loading payment method!");
+            },
+          }
+        );
+      },
+      onError: () => {
+        toast.error("Error occurred while creating order!");
+      },
+    });
+  }
+
+  return (
+    <form
+      className="pt-4 pb-24 space-y-[30px]"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <div className="w-full h-14 bg-[#D6DDD6] flex items-center">
+        <p className="pl-[30px] text-[#141414] font-bold">SHIPPING DETAILS</p>
+      </div>
+
+      <div className="w-full flex flex-col gap-[14px]">
+        <p className="md:text-lg font-medium text-[#333333]">
+          📍 Where should we deliver your order?
+        </p>
+        <p className="italic text-[#616161] text-sm">
+          Please ensure delivery address and phone number is correct for
+          adequate delivery rates.
+        </p>
+      </div>
+
+      <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 xl:gap-10">
+        <CheckUser register={register} errors={errors} />
+
+        <CheckProducts />
+      </div>
+
+      <div className="w-full h-14 bg-[#D6DDD6] flex items-center">
+        <p className="pl-2 lg:pl-[30px] text-[#141414] font-bold">
+          PAYMENT METHOD
+        </p>
+      </div>
+
+      <p className="lg:text-lg font-medium text-[#333333]">
+        💳 Choose how you&apos;d like to pay
+      </p>
+
+      <div className="space-y-5">
+        {methods.map((item) => (
+          <RadioInput
+            label={item.label}
+            name="payment"
+            value={item.value}
+            onChecked={(e) => setPaymentMethod(e.target.value)}
+            key={item.value}
+          />
+        ))}
+      </div>
+
+      <Checkbox
+        id="terms"
+        label="I agree to the Terms & Conditions"
+        name="terms"
+        value={checked}
+        onChecked={(e) => setChecked(e.target.checked)}
+      />
+
+      <Button
+        type="submit"
+        text={orderPending || payPending ? "Placing..." : "Place order"}
+        disabled={
+          !isValid ||
+          !checked ||
+          paymentMethod.trim() === "" ||
+          orderPending ||
+          payPending
+        }
+        className={clsx(
+          "px-8  !rounded-none !text-sm !h-11 !py-0 flex items-center justify-center max-w-[700px]",
+          !isValid || !checked || paymentMethod.trim() === ""
+            ? "border border-[#333333] !bg-white !text-[#333333] !cursor-not-allowed"
+            : "bg-[#333333] text-white"
+        )}
+      />
+    </form>
+  );
+};
+
+export default CheckInfo;

@@ -23,7 +23,7 @@ const ProductCard = ({ id, name, image, price }: Props) => {
         />
       </div>
 
-      <p className="text-black">{name}</p>
+      <p className="text-black font-bold capitalize">{name}</p>
 
       <p className="text-blue-100">₦{price}</p>
     </Link>

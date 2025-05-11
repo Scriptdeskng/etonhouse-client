@@ -6,39 +6,14 @@ import "slick-carousel/slick/slick-theme.css";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { useEffect, useRef, useState } from "react";
 import Product from "@/utils/product";
+import Skeleton from "react-loading-skeleton";
 
-const products = [
-  {
-    id: 1,
-    title: "Chair",
-    name: "Sakarias Armchair",
-    image: "chair1",
-    price: "150,000",
-  },
-  {
-    id: 2,
-    title: "Chair",
-    name: "Baltsar Chair",
-    image: "chair2",
-    price: "150,000",
-  },
-  {
-    id: 3,
-    title: "Chair",
-    name: "Anjay Chair",
-    image: "chair3",
-    price: "150,000",
-  },
-  {
-    id: 4,
-    title: "Chair",
-    name: "Nyantuy Chair",
-    image: "chair4",
-    price: "150,000",
-  },
-];
+interface Props {
+  products: any[];
+  isLoading: boolean;
+}
 
-function ProductSlider() {
+function ProductSlider({ products, isLoading }: Props) {
   const sliderRef = useRef<Slider | null>(null);
   const [width, setWidth] = useState<number | null>(null);
 
@@ -56,7 +31,7 @@ function ProductSlider() {
 
   const settings = {
     dots: false,
-    infinite: true,
+    infinite: products?.length < 4 ? false : true,
     speed: 500,
     slidesToShow:
       Number(width) >= 1280
@@ -80,17 +55,29 @@ function ProductSlider() {
       </button>
 
       <Slider {...settings} ref={sliderRef}>
-        {products.map((product) => (
-          <div key={product.name} className="p-5">
-            <Product
-              id={product.id}
-              image={product.image}
-              title={product.title}
-              name={product.name}
-              price={product.price}
-            />
-          </div>
-        ))}
+        {isLoading
+          ? Array(4)
+              .fill({})
+              .map((_, index) => (
+                <div key={index} className="p-5">
+                  <Skeleton
+                    className="w-full max-w-[280px] xl:max-w-full h-[450px] pt-18 rounded-[20px]"
+                    key={index}
+                  />
+                </div>
+              ))
+          : products?.slice(0,8)?.map((product) => (
+              <div key={product.name} className="p-5">
+                <Product
+                  id={product?.slug}
+                  image={product?.images[0]?.image}
+                  title={product?.category?.name?.split("-").join(" ")}
+                  name={product?.name}
+                  price={Number(product?.current_price).toLocaleString("en-GB")}
+                  variants={product?.variants}
+                />
+              </div>
+            ))}
       </Slider>
 
       <button

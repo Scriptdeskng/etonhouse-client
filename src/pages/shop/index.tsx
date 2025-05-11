@@ -2,8 +2,11 @@ import Entrance from "@/animated/Entrance";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import Showroom from "@/components/showroom";
+import { useAllProducts } from "@/services/product.service";
+import { ShopParams } from "@/types/product";
 import ShopProducts from "@/ui/shop/shop-products";
 import ShopSidebar from "@/ui/shop/shop-sidebar";
+import { useState } from "react";
 
 const Shop = () => {
   const [params, setParams] = useState<ShopParams>({

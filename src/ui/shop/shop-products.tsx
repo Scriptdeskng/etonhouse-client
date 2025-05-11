@@ -1,9 +1,7 @@
-import Pagination from "@/components/pagination";
 import ProductCard from "@/utils/product/product-card";
 import ResponsiveProduct from "@/utils/product/responsive-product";
 import Sort from "@/utils/sort";
 import Link from "next/link";
-import { useState } from "react";
 import { FaAngleRight } from "react-icons/fa6";
 import Skeleton from "react-loading-skeleton";
 import EmptyProducts from "../product/empty";
@@ -97,6 +95,7 @@ const ShopProducts = ({
                   name={product?.name}
                   image={product?.images[0]?.image}
                   price={Number(product?.current_price).toLocaleString("en-GB")}
+                  variants={product?.variants}
                   key={product?.id}
                 />
               );
@@ -104,9 +103,9 @@ const ShopProducts = ({
           )}
         </div>
 
-        <div className="w-full mt-8 lg:mt-20 xl:pr-16">
+        {/* <div className="w-full mt-8 lg:mt-20 xl:pr-16">
           <Pagination page={page} setPage={setPage} />
-        </div>
+        </div> */}
       </div>
     </div>
   );

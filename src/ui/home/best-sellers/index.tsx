@@ -1,9 +1,13 @@
 import ProductSlider from "@/components/slider";
-import { useAllProducts, useProductByCategory } from "@/services/product.service";
+import {
+  useAllProducts,
+  useProductByCategory,
+} from "@/services/product.service";
 import PageTitle from "@/utils/page-title";
 import Tabs from "@/utils/tabs";
-import { useState } from "react";
-import { useAllCategories } from '@/services/category.service';
+import { useEffect, useState } from "react";
+import { useAllCategories } from "@/services/category.service";
+import Skeleton from "react-loading-skeleton";
 
 const BestSellers = () => {
   const [active, setActive] = useState<string>("");
@@ -38,7 +42,10 @@ const BestSellers = () => {
         <Tabs active={active} setActive={setActive} tab={cats?.results ?? []} />
       )}
 
-      <ProductSlider />
+      <ProductSlider
+        products={products}
+        isLoading={isLoading || catsLoad || allLoad}
+      />
     </PageTitle>
   );
 };

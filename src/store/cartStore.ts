@@ -1,13 +1,6 @@
+import { CartItem } from "@/types/cart";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
-interface CartItem {
-  id: number;
-  name: string;
-  image: string;
-  price: number;
-  quantity: number;
-}
 
 interface CartStore {
   cart: CartItem[];
@@ -74,7 +67,7 @@ export const useCartStore = create<CartStore>()(
         ),
     }),
     {
-      name: "cart-storage",
+      name: "cart-store",
     }
   )
 );

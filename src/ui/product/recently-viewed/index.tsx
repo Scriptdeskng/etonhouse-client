@@ -1,3 +1,4 @@
+import { useAllProducts } from "@/services/product.service";
 import PageTitle from "@/utils/page-title";
 import ProductCard from "@/utils/product/product-card";
 import ResponsiveProduct from "@/utils/product/responsive-product";
@@ -47,6 +48,7 @@ const RecentlyViewed = () => {
                   image={item?.images[0]?.image}
                   price={Number(item?.current_price).toLocaleString("en-GB")}
                   key={item?.name}
+                  variants={item?.variants}
                 />
               );
             })}
