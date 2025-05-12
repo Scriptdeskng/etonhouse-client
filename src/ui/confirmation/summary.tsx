@@ -10,7 +10,7 @@ const Summary = () => {
       </div>
 
       <div className="space-y-5">
-        <CartCard product={{}} handleQuantity={() => null} disabled />
+        <CartCard product={{}} disabled />
 
         <p className="lg:text-lg font-medium text-[#333333]">
           🔹 Subtotal: ₦310,000

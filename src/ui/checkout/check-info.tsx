@@ -7,25 +7,33 @@ import { useForm } from "react-hook-form";
 import { Order } from "@/types/order";
 import Button from "@/utils/button";
 import toast from "react-hot-toast";
-import { useCreateOrder } from "@/services/order.service";
+import { useCreateOrder, usePayment } from "@/services/order.service";
+import clsx from "clsx";
+import { OrderConvert } from "@/helpers/orderConvert";
+import { useCartStore } from "@/store/cartStore";
 
 const methods = [
-  { label: "Credit/Debit Card (Visa, MasterCard, Verve)", value: "Card" },
-  { label: "Bank Transfer", value: "Transfer" },
-  { label: "Pay on Delivery (Available in select locations)", value: "Cash" },
-  { label: "Mobile Wallet (Flutterwave, Paystack, etc.)", value: "Wallet" },
+  // { label: "Credit/Debit Card (Visa, MasterCard, Verve)", value: "Card" },
+  // { label: "Bank Transfer", value: "Transfer" },
+  // { label: "Pay on Delivery (Available in select locations)", value: "Cash" },
+  // { label: "Mobile Wallet (Flutterwave, Paystack, etc.)", value: "Wallet" },
+  { label: "Flutterwave", value: "flutterwave" },
+  { label: "Paystack", value: "paystack" },
 ];
 
 const CheckInfo = () => {
+  const { cart } = useCartStore();
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<Order>({
     mode: "onBlur",
   });
 
-  const order = useCreateOrder();
+  const { mutate: createOrder, isPending: orderPending } = useCreateOrder();
+  const { mutate: orderPayment, isPending: payPending } = usePayment();
 
   const [paymentMethod, setPaymentMethod] = useState("");
   const [checked, setChecked] = useState<boolean>(false);
@@ -41,18 +49,31 @@ const CheckInfo = () => {
       return;
     }
 
-    order.mutate({
-      payment_method: paymentMethod,
-      email: data.email,
-      shipping_address: {
-        address_line1: data.address,
-        city: data.city,
-        country: data.country,
-        first_name: data.firstName,
-        last_name: data.lastName,
-        phone: data.phone,
-        state: data.state,
-        postal_code: data.postalCode,
+    const items = OrderConvert(cart, data, paymentMethod);
+
+    createOrder(items, {
+      onSuccess: (res) => {
+        orderPayment(
+          {
+            email: res?.guest_email,
+            order_id: res?.id,
+            reference: res?.order_number,
+          },
+          {
+            onSuccess: (response) => {
+              toast.success(
+                "Order placed successfully, Redirecting to payment page..."
+              );
+              window.location = response?.data?.authorization_url;
+            },
+            onError: () => {
+              toast.error("Error occurred while loading payment method!");
+            },
+          }
+        );
+      },
+      onError: () => {
+        toast.error("Error occurred while creating order!");
       },
     });
   }
@@ -114,8 +135,20 @@ const CheckInfo = () => {
 
       <Button
         type="submit"
-        text={order.isPending ? "Placing..." : "Place order"}
-        className="px-8 bg-[#333333] text-white !rounded-none !text-sm !h-11 !py-0 flex items-center justify-center max-w-[700px]"
+        text={orderPending || payPending ? "Placing..." : "Place order"}
+        disabled={
+          !isValid ||
+          !checked ||
+          paymentMethod.trim() === "" ||
+          orderPending ||
+          payPending
+        }
+        className={clsx(
+          "px-8  !rounded-none !text-sm !h-11 !py-0 flex items-center justify-center max-w-[700px]",
+          !isValid || !checked || paymentMethod.trim() === ""
+            ? "border border-[#333333] !bg-white !text-[#333333] !cursor-not-allowed"
+            : "bg-[#333333] text-white"
+        )}
       />
     </form>
   );

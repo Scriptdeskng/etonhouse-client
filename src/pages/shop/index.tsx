@@ -25,12 +25,25 @@ const Shop = () => {
     }));
   }
 
+  function handleClear() {
+    setParams({
+      category: undefined,
+      subcategory: undefined,
+      price_min: undefined,
+      price_max: undefined,
+    });
+  }
+
   return (
     <Entrance>
       <Navbar active={2} />
       <div className="w-full grid lg:grid-cols-[300px_auto] items-start">
         <ShopSidebar handleParams={handleParams} />
-        <ShopProducts data={data} isLoading={isLoading} />
+        <ShopProducts
+          data={data}
+          isLoading={isLoading}
+          handleClear={handleClear}
+        />
       </div>
       <Showroom />
       <Footer />

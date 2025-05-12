@@ -24,4 +24,14 @@ export interface OrderSchema {
     phone: string;
   };
   email: string;
+  items: {
+    variant_id: number;
+    quantity: number;
+  }[];
+}
+
+export interface Payment {
+  email: string;
+  reference: string;
+  order_id: number;
 }

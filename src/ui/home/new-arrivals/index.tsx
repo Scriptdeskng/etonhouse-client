@@ -66,7 +66,7 @@ const NewArrivals = () => {
                     />
                   </div>
                 ))
-            : data?.map((product: any) => (
+            : data?.results?.map((product: any) => (
                 <div key={product.name} className="p-5">
                   <ProductCard
                     id={product?.slug}

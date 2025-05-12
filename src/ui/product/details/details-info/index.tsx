@@ -1,14 +1,15 @@
+/* eslint-disable @next/next/no-img-element */
 import { TriggerIcon } from "@/components/category";
 import { Product } from "@/pages/product/[id]";
 import Button from "@/utils/button";
 import Quantity from "@/utils/quantity";
-import Image from "next/image";
 import { useState } from "react";
 import DetailsImg from "../details-img";
 import Dimensions from "@/components/modal/dimensions";
 import Galleria from "@/components/modal/galleria";
 import Skeleton from "react-loading-skeleton";
-import { useAddToCart } from "@/services/cart.service";
+import { useCartStore } from "@/store/cartStore";
+import toast from "react-hot-toast";
 
 interface Props {
   product: Product;
@@ -17,13 +18,19 @@ interface Props {
 
 const DetailsInfo = ({ product, isLoading }: Props) => {
   const [count, setCount] = useState(1);
-  const mutation = useAddToCart();
+
+  const { addToCart } = useCartStore();
 
   function handleAdd() {
-    mutation.mutate({
-      variant_id: product?.variants?.[0]?.id,
+    addToCart({
+      id: product?.variants?.[0]?.id,
+      image: product?.images?.[0],
+      name: product?.name,
+      price: Number(product?.price.replace(/,/g, "")),
       quantity: count,
     });
+
+    toast.success("Successfully added to cart!");
   }
 
   // modals
@@ -38,11 +45,10 @@ const DetailsInfo = ({ product, isLoading }: Props) => {
             {isLoading ? (
               <Skeleton className="h-[500px]" />
             ) : (
-              <Image
+              <img
                 src={product?.images?.[0]}
                 alt="Product"
-                fill
-                quality={100}
+                loading="eager"
                 className="object-contain"
               />
             )}
@@ -170,7 +176,11 @@ const DetailsInfo = ({ product, isLoading }: Props) => {
       </div>
 
       <Dimensions open={open} handleClose={() => setOpen(false)} />
-      <Galleria open={view} handleClose={() => setView(false)} />
+      <Galleria
+        open={view}
+        product={product}
+        handleClose={() => setView(false)}
+      />
     </>
   );
 };

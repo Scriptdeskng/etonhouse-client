@@ -1,6 +1,8 @@
-import { useAddToCart } from "@/services/cart.service";
+/* eslint-disable @next/next/no-img-element */
+import { useCartStore } from "@/store/cartStore";
 import Image from "next/image";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 interface Props {
   id: number;
@@ -12,26 +14,31 @@ interface Props {
 }
 
 const Product = ({ id, image, title, name, price, variants }: Props) => {
-  const mutation = useAddToCart();
+  const { addToCart } = useCartStore();
 
   function handleAdd() {
-    mutation.mutate({
-      variant_id: variants?.[0]?.id,
+    addToCart({
+      id: variants?.[0]?.id,
+      image: image,
+      name,
+      price: Number(price.replace(/,/g, "")),
       quantity: 1,
     });
+
+    toast.success("Successfully added to cart!");
   }
 
   return (
     <div className="shrink-0 w-full max-w-[280px] xl:max-w-full h-[450px] pt-18 rounded-[20px] grid grid-rows-2 mx-auto xl:mx-0">
       <div className="bg-grey-50 rounded-t-[20px] relative">
         <div className="absolute -top-20 inset-x-0">
-          <Image
+          <img
             src={image}
             alt={name}
             width={215}
             height={255}
-            quality={100}
             className="mx-auto"
+            loading="eager"
           />
         </div>
       </div>

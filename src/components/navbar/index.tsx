@@ -1,5 +1,6 @@
 import EnterFromY from "@/animated/EnterFromY";
 import useAuthStore from "@/store/authStore";
+import { useCartStore } from "@/store/cartStore";
 import Logo from "@/utils/logo";
 import NavIcon from "@/utils/navicon";
 import NavLink from "@/utils/navlink";
@@ -14,6 +15,7 @@ interface Props {
 
 const Navbar = ({ active = 0 }: Props) => {
   const { isAuthenticated } = useAuthStore();
+  const { cart } = useCartStore();
 
   const links = [
     { text: "Home", path: "/" },
@@ -57,16 +59,26 @@ const Navbar = ({ active = 0 }: Props) => {
         duration={active === 0 ? 0.8 : 0}
       >
         <NavIcon icon="search" path="/" />
+
         <div className="hidden lg:flex">
           <NavIcon icon="phone" path="/" />
         </div>
-        <NavIcon icon="cart" path="/cart" />
+
+        <div className="flex relative">
+          <NavIcon icon="cart" path="/cart" />
+
+          <div className="cursor-pointer absolute -top-3 -right-2 bg-[#333333] rounded-full text-white text-[8px] leading-none font-bold w-4 h-4 flex items-center justify-center">
+            {cart.length}
+          </div>
+        </div>
+
         <div className="hidden lg:flex">
           <NavIcon
             icon="profile"
             path={isAuthenticated ? "/dashboard" : "/account"}
           />
         </div>
+
         <div
           className="block lg:hidden cursor-pointer"
           onClick={() => setIsOpen(true)}

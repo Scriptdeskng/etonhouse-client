@@ -3,7 +3,7 @@ import makeRequest from "@/config/axios";
 
 export const useAllProducts = (params?: any) => {
   return useQuery({
-    queryKey: ["all-products", {params}],
+    queryKey: ["all-products", { params }],
     queryFn: () =>
       makeRequest({
         url: "products/products/",
@@ -15,11 +15,13 @@ export const useAllProducts = (params?: any) => {
 };
 
 export const useSingleProduct = (slug: string) => {
+  const id = slug === "undefined" ? "" : slug;
+
   return useQuery({
-    queryKey: ["single-product", { slug }],
+    queryKey: ["single-product", { id }],
     queryFn: () =>
       makeRequest({
-        url: `products/products/${slug}`,
+        url: `products/products/${id}`,
         requireToken: false,
       }),
     enabled: !!slug,
@@ -51,13 +53,14 @@ export const useRecommendedProducts = () => {
   });
 };
 
-export const useProductByCategory = (slug: string) => {
+export const useProductByCategory = (slug: string, params?: any) => {
   return useQuery({
-    queryKey: ["product-by-category", { slug }],
+    queryKey: ["product-by-category", { slug, params }],
     queryFn: () =>
       makeRequest({
         url: `products/categories/${slug}/products/`,
         requireToken: false,
+        params,
       }),
     enabled: !!slug,
     retry: 1,

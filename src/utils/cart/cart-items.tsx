@@ -1,25 +1,19 @@
-import {
-  useDeleteCartItem,
-  useGetCartItems,
-  useUpdateCartItem,
-} from "@/services/cart.service";
 import CartCard from "./cart-card";
 import CartCoupon from "./cart-coupon";
 import Checkout from "./checkout";
-import Skeleton from "react-loading-skeleton";
+import { useCartStore } from "@/store/cartStore";
+import EmptyCart from "./empty-cart";
+import { useEffect, useState } from "react";
 
 const CartItems = () => {
-  const { data, isLoading, refetch } = useGetCartItems();
-  const remove = useDeleteCartItem(refetch);
-  const update = useUpdateCartItem(refetch);
+  const { cart, getTotalPrice } = useCartStore();
 
-  function handleRemove(id: number) {
-    remove.mutate(id);
-  }
+  const [total, setTotal] = useState<number>(0);
 
-  function handleQuantity(id: number, value: number) {
-    update.mutate({ id, data: { quantity: value } });
-  }
+  useEffect(() => {
+    const value = getTotalPrice();
+    setTotal(value);
+  }, [getTotalPrice]);
 
   return (
     <div className="pt-4 pb-24 space-y-[30px]">
@@ -39,17 +33,10 @@ const CartItems = () => {
       </div>
 
       <div className="lg:space-y-[14px]">
-        {isLoading ? (
-          <Skeleton className="w-full h-20" height={200} count={2} />
+        {cart.length < 1 ? (
+          <EmptyCart />
         ) : (
-          data?.items?.map((item: any) => (
-            <CartCard
-              product={item}
-              key={item?.id}
-              handleRemove={handleRemove}
-              handleQuantity={handleQuantity}
-            />
-          ))
+          cart?.map((item: any) => <CartCard product={item} key={item?.id} />)
         )}
       </div>
 
@@ -59,12 +46,7 @@ const CartItems = () => {
 
       <div className="w-full flex items-center justify-between">
         <p className="md:text-xl text-[#333333] font-medium">
-          🛒 Total: ₦{}
-          {isLoading ? (
-            <Skeleton width={150} className="ml-1" />
-          ) : (
-            Number(data?.total).toLocaleString()
-          )}
+          🛒 Total: ₦{total.toLocaleString()}
         </p>
 
         <p className="hidden md:inline text-xl text-black font-medium">
@@ -73,11 +55,7 @@ const CartItems = () => {
       </div>
 
       <div className="w-full flex items-start gap-2 justify-between">
-        {isLoading ? (
-          <Skeleton width={300} height={250} />
-        ) : (
-          <Checkout total={data?.total} />
-        )}
+        <Checkout total={total} count={cart.length} />
 
         <div className="hidden md:inline">
           <CartCoupon />

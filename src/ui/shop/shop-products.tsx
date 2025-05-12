@@ -4,13 +4,16 @@ import Sort from "@/utils/sort";
 import Link from "next/link";
 import { FaAngleRight } from "react-icons/fa6";
 import Skeleton from "react-loading-skeleton";
+import EmptyProducts from "../product/empty";
 
 const ShopProducts = ({
   data,
   isLoading,
+  handleClear,
 }: {
   data: any;
   isLoading: boolean;
+  handleClear: () => void;
 }) => {
   return (
     <div className="w-full min-h-screen lg:border-l lg:border-[#141414CC]">
@@ -31,7 +34,7 @@ const ShopProducts = ({
               {isLoading ? (
                 <Skeleton width={150} />
               ) : (
-                `1-${data?.length}/${data?.length}`
+                `1-${data?.results?.length}/${data?.count}`
               )}
             </p>
           </div>
@@ -42,7 +45,7 @@ const ShopProducts = ({
             {isLoading ? (
               <Skeleton width={150} />
             ) : (
-              `Showing 1–${data?.length} of ${data?.length} results`
+              `Showing 1–${data?.results?.length} of ${data?.count} results`
             )}
           </p>
 
@@ -52,39 +55,52 @@ const ShopProducts = ({
 
       <div className="w-full px-5 pb-14 lg:pb-0 lg:pl-7.5 pt-12.5 lg:pr-4.5">
         <div className="hidden lg:grid grid-cols-3 gap-5">
-          {isLoading
-            ? Array(6)
-                .fill({})
-                .map((_, index) => (
-                  <Skeleton className="w-full h-[400px]" key={index} />
-                ))
-            : data?.map((product: any) => {
-                return (
-                  <ProductCard
-                    key={product?.id}
-                    id={product?.slug}
-                    image={product?.images[0]?.image ?? null}
-                    name={product?.name}
-                    price={Number(product?.current_price).toLocaleString(
-                      "en-GB"
-                    )}
-                  />
-                );
-              })}
+          {isLoading ? (
+            Array(6)
+              .fill({})
+              .map((_, index) => (
+                <Skeleton className="w-full h-[400px]" key={index} />
+              ))
+          ) : data?.results?.length < 1 ? (
+            <EmptyProducts clearFilters={handleClear} />
+          ) : (
+            data?.results?.map((product: any) => {
+              return (
+                <ProductCard
+                  key={product?.id}
+                  id={product?.slug}
+                  image={product?.images[0]?.image ?? null}
+                  name={product?.name}
+                  price={Number(product?.current_price).toLocaleString("en-GB")}
+                />
+              );
+            })
+          )}
         </div>
 
         <div className="grid grid-cols-2 lg:hidden gap-4">
-          {data?.map((product: any) => {
-            return (
-              <ResponsiveProduct
-                id={product?.slug}
-                name={product?.name}
-                image={product?.images[0]?.image}
-                price={Number(product?.current_price).toLocaleString("en-GB")}
-                key={product?.id}
-              />
-            );
-          })}
+          {isLoading ? (
+            Array(6)
+              .fill({})
+              .map((_, index) => (
+                <Skeleton className="w-full h-[280px]" key={index} />
+              ))
+          ) : data?.results?.length < 1 ? (
+            <EmptyProducts clearFilters={handleClear} />
+          ) : (
+            data?.results?.map((product: any) => {
+              return (
+                <ResponsiveProduct
+                  id={product?.slug}
+                  name={product?.name}
+                  image={product?.images[0]?.image}
+                  price={Number(product?.current_price).toLocaleString("en-GB")}
+                  variants={product?.variants}
+                  key={product?.id}
+                />
+              );
+            })
+          )}
         </div>
 
         {/* <div className="w-full mt-8 lg:mt-20 xl:pr-16">

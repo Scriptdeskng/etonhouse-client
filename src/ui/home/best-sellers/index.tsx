@@ -1,5 +1,4 @@
 import ProductSlider from "@/components/slider";
-import { useAllCategories } from "@/services/category.service";
 import {
   useAllProducts,
   useProductByCategory,
@@ -7,6 +6,7 @@ import {
 import PageTitle from "@/utils/page-title";
 import Tabs from "@/utils/tabs";
 import { useEffect, useState } from "react";
+import { useAllCategories } from "@/services/category.service";
 import Skeleton from "react-loading-skeleton";
 
 const BestSellers = () => {
@@ -19,18 +19,18 @@ const BestSellers = () => {
   const { data: cats, isLoading: catsLoad } = useAllCategories();
 
   useEffect(() => {
-    if (cats && cats.length >= 1) {
-      setActive(cats?.[0]?.slug);
+    if (cats && cats.results?.length >= 1) {
+      setActive(cats?.results?.[0]?.slug);
     }
   }, [cats]);
 
   useEffect(() => {
     if (data) {
-      if (data?.length < 1) {
-        setProducts(all);
+      if (data?.results?.length < 1) {
+        setProducts(all?.results);
         return;
       }
-      setProducts(data);
+      setProducts(data?.results);
     }
   }, [data, all, active]);
 
@@ -39,7 +39,7 @@ const BestSellers = () => {
       {catsLoad ? (
         <Skeleton className="w-1/3 lg:w-[45%]" />
       ) : (
-        <Tabs active={active} setActive={setActive} tab={cats} />
+        <Tabs active={active} setActive={setActive} tab={cats?.results ?? []} />
       )}
 
       <ProductSlider
