@@ -1,7 +1,13 @@
 import ButtonLink from "@/utils/button/button-link";
-import CartCard from "@/utils/cart/cart-card";
+import CheckoutCard from "@/utils/cart/checkout-card";
+import Skeleton from "react-loading-skeleton";
 
-const TrackSummary = () => {
+interface Props {
+  data: any;
+  isLoading: boolean;
+}
+
+const TrackSummary = ({ data, isLoading }: Props) => {
   return (
     <div className="lg:pt-10 pb-24 space-y-[30px]">
       <div className="w-full h-14 bg-[#D6DDD6] flex items-center">
@@ -11,10 +17,21 @@ const TrackSummary = () => {
       </div>
 
       <div className="space-y-5 lg:pb-8 lg:border-b-[0.6px] border-[#61616133]">
-        <CartCard product={{}} disabled />
+        {isLoading ? (
+          <Skeleton width="100%" height={200} className="mb-5" />
+        ) : (
+          data?.items.map((item: any) => (
+            <CheckoutCard product={item} key={item?.id} />
+          ))
+        )}
 
         <p className="lg:text-lg font-medium text-[#333333]">
-          💰 Total Amount Paid: ₦305,000
+          💰 Total Amount Paid: ₦
+          {isLoading ? (
+            <Skeleton width={150} height={30} />
+          ) : (
+            Number(data?.total).toLocaleString()
+          )}
         </p>
       </div>
 
@@ -23,7 +40,7 @@ const TrackSummary = () => {
       </p>
 
       <ButtonLink
-        text="Track with courier"
+        text="Continue shopping"
         path="/"
         className="bg-[#333333] text-white !rounded-none !text-sm !h-11 !py-0 flex items-center justify-center max-w-[700px]"
       />
