@@ -50,7 +50,7 @@ const GalleryHero = () => {
           })}
         </div>
 
-        <Pagination page={page} setPage={setPage} />
+        <Pagination page={page} setPage={setPage} total={10}/>
       </div>
 
       <Galleria open={view} handleClose={() => setView(false)} />

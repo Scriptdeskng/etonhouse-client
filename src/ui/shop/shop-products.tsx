@@ -1,19 +1,23 @@
-import ProductCard from "@/utils/product/product-card";
 import ResponsiveProduct from "@/utils/product/responsive-product";
 import Sort from "@/utils/sort";
 import Link from "next/link";
 import { FaAngleRight } from "react-icons/fa6";
 import Skeleton from "react-loading-skeleton";
 import EmptyProducts from "../product/empty";
+import Pagination from "@/components/pagination";
 
 const ShopProducts = ({
   data,
   isLoading,
   handleClear,
+  handleParams,
+  page,
 }: {
   data: any;
   isLoading: boolean;
   handleClear: () => void;
+  handleParams: (name: string, value: number) => void;
+  page: number | undefined;
 }) => {
   return (
     <div className="w-full min-h-screen lg:border-l lg:border-[#141414CC]">
@@ -45,7 +49,11 @@ const ShopProducts = ({
             {isLoading ? (
               <Skeleton width={150} />
             ) : (
-              `Showing 1–${data?.results?.length} of ${data?.count} results`
+              `Showing ${page === 1 ? page : 1 + 18 * (Number(page) - 1)} – ${
+                page === 1
+                  ? data?.results?.length
+                  : data?.results?.length + 18 * (Number(page) - 1)
+              } of ${data?.count} results`
             )}
           </p>
 
@@ -54,33 +62,9 @@ const ShopProducts = ({
       </div>
 
       <div className="w-full px-5 pb-14 lg:pb-0 lg:pl-7.5 pt-12.5 lg:pr-4.5">
-        <div className="hidden lg:grid grid-cols-3 gap-5">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5 lg:pr-16 xl:pr-24">
           {isLoading ? (
-            Array(6)
-              .fill({})
-              .map((_, index) => (
-                <Skeleton className="w-full h-[400px]" key={index} />
-              ))
-          ) : data?.results?.length < 1 ? (
-            <EmptyProducts clearFilters={handleClear} />
-          ) : (
-            data?.results?.map((product: any) => {
-              return (
-                <ProductCard
-                  key={product?.id}
-                  id={product?.slug}
-                  image={product?.images[0]?.image ?? null}
-                  name={product?.name}
-                  price={Number(product?.current_price).toLocaleString("en-GB")}
-                />
-              );
-            })
-          )}
-        </div>
-
-        <div className="grid grid-cols-2 lg:hidden gap-4">
-          {isLoading ? (
-            Array(6)
+            Array(18)
               .fill({})
               .map((_, index) => (
                 <Skeleton className="w-full h-[280px]" key={index} />
@@ -103,9 +87,15 @@ const ShopProducts = ({
           )}
         </div>
 
-        {/* <div className="w-full mt-8 lg:mt-20 xl:pr-16">
-          <Pagination page={page} setPage={setPage} />
-        </div> */}
+        {!isLoading && (
+          <div className="w-full mt-8 lg:mt-20 xl:pr-16">
+            <Pagination
+              page={page ?? 1}
+              setPage={(value) => handleParams("page", value)}
+              total={Math.ceil(data?.count / 18)}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

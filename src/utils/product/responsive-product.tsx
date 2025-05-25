@@ -37,18 +37,18 @@ const ResponsiveProduct = ({ name, image, price, variants }: Props) => {
         className="absolute top-3 right-3 text-black cursor-pointer z-50"
       />
 
-      <div className="w-full h-[180px] sm:h-[220px] relative">
+      <div className="w-full h-[180px] sm:h-[220px] lg:h-[330px] relative">
         <img
           src={image}
           alt={name}
-          className="object-contain h-[180px] sm:h-[220px] mx-auto"
+          className="object-contain h-[180px] sm:h-[220px] lg:h-[330px] mx-auto"
           loading="eager"
         />
       </div>
 
-      <p className="text-sm font-medium">{name}</p>
+      <p className="text-sm lg:text-base font-medium">{name}</p>
 
-      <p className="text-sm text-black-400">₦{price}</p>
+      <p className="text-sm lg:text-base text-black-400">₦{price}</p>
 
       <div className="w-full flex items-end justify-between">
         <Quantity count={count} setCount={setCount} size="sm" />

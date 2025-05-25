@@ -12,7 +12,7 @@ const Breadcrumbs = ({ history }: Props) => {
   return (
     <div className="flex items-center gap-1">
       {history.map((item, index) => {
-        return index < history.length - 1 ? (
+        return index < history?.length - 1 ? (
           <Link
             href={item.path ?? "/"}
             key={index}

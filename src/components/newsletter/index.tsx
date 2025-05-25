@@ -31,14 +31,14 @@ const Newsletter = () => {
             className="!py-4 !text-base w-full max-w-[570px]"
           />
 
-          <div className="hidden xl:flex flex-col gap-5">
+          <div className="hidden lg:flex flex-col gap-5">
             <p>✅ Exclusive Discounts – Get special member-only offers</p>
             <p>✅ Design Inspiration – Fresh styling ideas for your space</p>
             <p>✅ Early Access – Shop new collections before anyone else</p>
           </div>
         </div>
 
-        <div className="w-full relative h-[195px] sm:h-[330px]">
+        <div className="w-full max-w-[550px] lg:max-w-full relative h-[195px] sm:h-[330px]">
           <Image
             src="/assets/png/newsletter.png"
             alt="Newsletter"
