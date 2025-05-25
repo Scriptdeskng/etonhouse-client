@@ -68,7 +68,7 @@ const Navbar = ({ active = 0 }: Props) => {
           <NavIcon icon="cart" path="/cart" />
 
           <div className="cursor-pointer absolute -top-3 -right-2 bg-[#333333] rounded-full text-white text-[8px] leading-none font-bold w-4 h-4 flex items-center justify-center">
-            {cart.length}
+            {cart?.length}
           </div>
         </div>
 

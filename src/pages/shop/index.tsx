@@ -10,6 +10,7 @@ import { useState } from "react";
 
 const Shop = () => {
   const [params, setParams] = useState<ShopParams>({
+    page: 1,
     category: undefined,
     subcategory: undefined,
     price_min: undefined,
@@ -27,6 +28,7 @@ const Shop = () => {
 
   function handleClear() {
     setParams({
+      page: 1,
       category: undefined,
       subcategory: undefined,
       price_min: undefined,
@@ -43,6 +45,8 @@ const Shop = () => {
           data={data}
           isLoading={isLoading}
           handleClear={handleClear}
+          handleParams={handleParams}
+          page={params.page}
         />
       </div>
       <Showroom />

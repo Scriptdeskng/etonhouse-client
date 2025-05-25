@@ -17,8 +17,8 @@ const methods = [
   // { label: "Bank Transfer", value: "Transfer" },
   // { label: "Pay on Delivery (Available in select locations)", value: "Cash" },
   // { label: "Mobile Wallet (Flutterwave, Paystack, etc.)", value: "Wallet" },
-  { label: "Flutterwave", value: "flutterwave" },
-  { label: "Paystack", value: "paystack" },
+  // { label: "Flutterwave", value: "flutterwave" },
+  { label: "Mobile Wallet (Paystack, etc.)", value: "paystack" },
 ];
 
 const CheckInfo = () => {
@@ -27,7 +27,7 @@ const CheckInfo = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors},
   } = useForm<Order>({
     mode: "onBlur",
   });
@@ -35,7 +35,7 @@ const CheckInfo = () => {
   const { mutate: createOrder, isPending: orderPending } = useCreateOrder();
   const { mutate: orderPayment, isPending: payPending } = usePayment();
 
-  const [paymentMethod, setPaymentMethod] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("paystack");
   const [checked, setChecked] = useState<boolean>(false);
 
   function onSubmit(data: Order) {
@@ -136,18 +136,9 @@ const CheckInfo = () => {
       <Button
         type="submit"
         text={orderPending || payPending ? "Placing..." : "Place order"}
-        disabled={
-          !isValid ||
-          !checked ||
-          paymentMethod.trim() === "" ||
-          orderPending ||
-          payPending
-        }
         className={clsx(
           "px-8  !rounded-none !text-sm !h-11 !py-0 flex items-center justify-center max-w-[700px]",
-          !isValid || !checked || paymentMethod.trim() === ""
-            ? "border border-[#333333] !bg-white !text-[#333333] !cursor-not-allowed"
-            : "bg-[#333333] text-white"
+          "bg-[#333333] text-white"
         )}
       />
     </form>

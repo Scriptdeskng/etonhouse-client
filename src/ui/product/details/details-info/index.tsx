@@ -72,13 +72,13 @@ const DetailsInfo = ({ product, isLoading }: Props) => {
             {isLoading ? <Skeleton width={200} /> : `₦${product?.price}`}
           </p>
 
-          {product?.colors?.length >= 1 && (
+          {product?.variants?.length >= 1 && (
             <div className="flex gap-5 items-center mb-6">
-              {product?.colors?.map((color) => (
+              {product?.variants?.map((item) => (
                 <div
                   className="w-[30px] h-[30px]"
-                  style={{ backgroundColor: color }}
-                  key={color}
+                  style={{ backgroundColor: item?.color?.name }}
+                  key={item?.color?.name}
                 />
               ))}
             </div>

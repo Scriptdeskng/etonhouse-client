@@ -39,7 +39,7 @@ export const usePayment = () => {
   });
 };
 
-export const useGetOrderById = (id: string) => {
+export const useGetOrderById = (id: string | null) => {
   const { token } = useAuthStore();
 
   return useQuery({

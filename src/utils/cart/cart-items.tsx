@@ -13,7 +13,7 @@ const CartItems = () => {
   useEffect(() => {
     const value = getTotalPrice();
     setTotal(value);
-  }, [getTotalPrice]);
+  }, [cart, getTotalPrice]);
 
   return (
     <div className="pt-4 pb-24 space-y-[30px]">
@@ -33,7 +33,7 @@ const CartItems = () => {
       </div>
 
       <div className="lg:space-y-[14px]">
-        {cart.length < 1 ? (
+        {cart?.length < 1 ? (
           <EmptyCart />
         ) : (
           cart?.map((item: any) => <CartCard product={item} key={item?.id} />)
@@ -55,7 +55,7 @@ const CartItems = () => {
       </div>
 
       <div className="w-full flex items-start gap-2 justify-between">
-        <Checkout total={total} count={cart.length} />
+        <Checkout total={total} count={cart?.length} />
 
         <div className="hidden md:inline">
           <CartCoupon />

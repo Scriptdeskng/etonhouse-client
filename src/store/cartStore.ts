@@ -50,10 +50,11 @@ export const useCartStore = create<CartStore>()(
             .filter((item) => item.quantity > 0),
         })),
 
-      removeCartItem: (id: number) =>
+      removeCartItem: (id: number) => {
         set((state) => ({
           cart: state.cart.filter((item) => !(item.id === id)),
-        })),
+        }));
+      },
 
       clearCart: () => set({ cart: [] }),
 
