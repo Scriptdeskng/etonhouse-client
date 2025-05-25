@@ -10,6 +10,7 @@ import Galleria from "@/components/modal/galleria";
 import Skeleton from "react-loading-skeleton";
 import { useCartStore } from "@/store/cartStore";
 import toast from "react-hot-toast";
+import { useRouter } from "next/router";
 
 interface Props {
   product: Product;
@@ -18,6 +19,7 @@ interface Props {
 
 const DetailsInfo = ({ product, isLoading }: Props) => {
   const [count, setCount] = useState(1);
+  const router = useRouter();
 
   const { addToCart } = useCartStore();
 
@@ -31,6 +33,12 @@ const DetailsInfo = ({ product, isLoading }: Props) => {
     });
 
     toast.success("Successfully added to cart!");
+  }
+
+  function handleBuy() {
+    handleAdd();
+
+    router.push("/checkout");
   }
 
   // modals
@@ -97,6 +105,7 @@ const DetailsInfo = ({ product, isLoading }: Props) => {
               <Button
                 text="Buy now"
                 className="h-[46px] rounded-none !py-0 !text-base !bg-white !text-black border border-black"
+                handleClick={handleBuy}
               />
 
               <Button

@@ -1,4 +1,12 @@
-const Shipping = () => {
+import { convertDate } from "@/helpers/convertDate";
+import Skeleton from "react-loading-skeleton";
+
+interface Props {
+  data: any;
+  isLoading: boolean;
+}
+
+const Shipping = ({ data, isLoading }: Props) => {
   return (
     <div className="lg:pt-10 lg:pb-8 space-y-[30px]">
       <div className="w-full h-14 bg-[#D6DDD6] flex items-center">
@@ -11,13 +19,39 @@ const Shipping = () => {
         <p className="lg:text-lg font-medium text-[#333333]">
           📍 Shipping Address
         </p>
-        <p className="lg:text-lg text-[#333333]">John Doe</p>
+
         <p className="lg:text-lg text-[#333333]">
-          12B Victoria Island, Lagos, Nigeria
+          {isLoading ? (
+            <Skeleton width={150} height={30} />
+          ) : (
+            `${data?.shipping_address?.first_name} ${data?.shipping_address?.last_name}`
+          )}
         </p>
-        <p className="lg:text-lg text-[#333333]">📞 +234 800 123 4567</p>
+
         <p className="lg:text-lg text-[#333333]">
-          🚚 Estimated Delivery: February 10 - 12, 2025
+          {isLoading ? (
+            <Skeleton width={150} height={30} />
+          ) : (
+            `${data?.shipping_address?.address_line1}, ${data?.shipping_address?.city} ${data?.shipping_address?.state} ${data?.shipping_address?.postal_code}`
+          )}
+        </p>
+
+        <p className="lg:text-lg text-[#333333]">
+          📞{" "}
+          {isLoading ? (
+            <Skeleton width={150} height={30} />
+          ) : (
+            data?.shipping_address?.phone
+          )}
+        </p>
+
+        <p className="lg:text-lg text-[#333333]">
+          🚚 Estimated Delivery:{" "}
+          {isLoading ? (
+            <Skeleton width={150} height={30} />
+          ) : (
+            convertDate(data?.estimated_delivery)
+          )}
         </p>
       </div>
     </div>

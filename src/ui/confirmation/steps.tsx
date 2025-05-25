@@ -1,6 +1,10 @@
 import ButtonLink from "@/utils/button/button-link";
 
-const Steps = () => {
+interface Props {
+  id: string | null;
+}
+
+const Steps = ({ id }: Props) => {
   return (
     <div className="pt-10 pb-24 space-y-[30px]">
       <div className="w-full h-14 bg-[#D6DDD6] flex items-center">
@@ -24,7 +28,7 @@ const Steps = () => {
       <div className="max-w-[700px] grid grid-cols-2 gap-4">
         <ButtonLink
           text="Track my order"
-          path="/track"
+          path={`/track?orderId=${id}`}
           className="text-white !rounded-none !text-sm !h-11 !py-0 flex items-center justify-center"
         />
 

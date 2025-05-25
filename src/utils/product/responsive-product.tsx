@@ -4,6 +4,7 @@ import Quantity from "../quantity";
 import { FaRegHeart } from "react-icons/fa6";
 import { useCartStore } from "@/store/cartStore";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 interface Props {
   id?: string;
@@ -13,7 +14,7 @@ interface Props {
   variants: any[];
 }
 
-const ResponsiveProduct = ({ name, image, price, variants }: Props) => {
+const ResponsiveProduct = ({ id, name, image, price, variants }: Props) => {
   const [count, setCount] = useState(1);
 
   const { addToCart } = useCartStore();
@@ -37,16 +38,24 @@ const ResponsiveProduct = ({ name, image, price, variants }: Props) => {
         className="absolute top-3 right-3 text-black cursor-pointer z-50"
       />
 
-      <div className="w-full h-[180px] sm:h-[220px] lg:h-[330px] relative">
+      <Link
+        href={`/product/${id}`}
+        className="w-full h-[180px] sm:h-[220px] lg:h-[330px] relative"
+      >
         <img
           src={image}
           alt={name}
           className="object-contain h-[180px] sm:h-[220px] lg:h-[330px] mx-auto"
           loading="eager"
         />
-      </div>
+      </Link>
 
-      <p className="text-sm lg:text-base font-medium">{name}</p>
+      <Link
+        href={`/product/${id}`}
+        className="text-sm lg:text-base font-medium"
+      >
+        {name}
+      </Link>
 
       <p className="text-sm lg:text-base text-black-400">₦{price}</p>
 

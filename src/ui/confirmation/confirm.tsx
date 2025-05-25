@@ -1,4 +1,12 @@
-const Confirm = ({ id }: { id: string | null }) => {
+import Skeleton from "react-loading-skeleton";
+import { convertDate } from "../../helpers/convertDate";
+
+interface Props {
+  data: any;
+  isLoading: boolean;
+}
+
+const Confirm = ({ data, isLoading }: Props) => {
   return (
     <div className="lg:pt-10 lg:pb-8 space-y-[30px]">
       <div className="w-full h-21 bg-[#D6DDD6] flex items-center">
@@ -12,10 +20,21 @@ const Confirm = ({ id }: { id: string | null }) => {
           Thank you for your purchase! Your order has been successfully placed.
         </p>
         <p className="lg:text-lg font-medium text-[#333333]">
-          📦 Order Number: {id ?? "-"}
+          📦 Order Number:{" "}
+          {isLoading ? (
+            <Skeleton width={150} height={30} />
+          ) : (
+            data?.order_number
+          )}
         </p>
+
         <p className="lg:text-lg font-medium text-[#333333]">
-          📅 Order Date: February 5, 2025
+          📅 Order Date:{" "}
+          {isLoading ? (
+            <Skeleton width={150} height={30} />
+          ) : (
+            convertDate(data?.created_at)
+          )}
         </p>
       </div>
     </div>

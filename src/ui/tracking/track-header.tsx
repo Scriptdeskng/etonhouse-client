@@ -1,4 +1,12 @@
-const TrackHeader = () => {
+import { convertDate } from "@/helpers/convertDate";
+import Skeleton from "react-loading-skeleton";
+
+interface Props {
+  data: any;
+  isLoading: boolean;
+}
+
+const TrackHeader = ({ data, isLoading }: Props) => {
   return (
     <div className="lg:pt-10 lg:pb-8 space-y-[30px]">
       <div className="w-full h-21 bg-[#D6DDD6] flex items-center">
@@ -9,23 +17,55 @@ const TrackHeader = () => {
 
       <div className="space-y-5 pb-8 lg:border-b-[0.6px] lg:border-[#61616133]">
         <p className="lg:text-lg font-medium text-[#333333]">
-          📦 Order Number: #ORD-2025001
+          📦 Order Number:{" "}
+          {isLoading ? (
+            <Skeleton width={150} height={30} />
+          ) : (
+            data?.order_number
+          )}
         </p>
+
         <p className="lg:text-lg font-medium text-[#333333]">
-          📅 Order Date: February 5, 2025
+          📅 Order Date:{" "}
+          {isLoading ? (
+            <Skeleton width={150} height={30} />
+          ) : (
+            convertDate(data?.created_at)
+          )}
         </p>
+
         <p className="lg:text-lg font-medium text-[#333333]">
-          💳 Payment Status: ✅ Paid
+          💳 Payment Status:{" "}
+          {isLoading ? <Skeleton width={150} height={30} /> : "✅ Paid"}
         </p>
+
         <p className="lg:text-lg font-medium text-[#333333]">
           📍 Shipping Address
         </p>
-        <p className="lg:text-lg text-[#333333]">John Doe</p>
+
         <p className="lg:text-lg text-[#333333]">
-          12B Victoria Island, Lagos, Nigeria
+          {isLoading ? (
+            <Skeleton width={150} height={30} />
+          ) : (
+            `${data?.shipping_address?.first_name} ${data?.shipping_address?.last_name}`
+          )}
         </p>
+
+        <p className="lg:text-lg text-[#333333]">
+          {isLoading ? (
+            <Skeleton width={150} height={30} />
+          ) : (
+            `${data?.shipping_address?.address_line1}, ${data?.shipping_address?.city} ${data?.shipping_address?.state} ${data?.shipping_address?.postal_code}`
+          )}
+        </p>
+
         <p className="lg:text-lg font-medium text-[#333333]">
-          📞 +234 800 123 4567
+          📞{" "}
+          {isLoading ? (
+            <Skeleton width={150} height={30} />
+          ) : (
+            data?.shipping_address?.phone
+          )}
         </p>
       </div>
     </div>
