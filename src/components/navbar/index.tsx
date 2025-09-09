@@ -22,12 +22,15 @@ const Navbar = ({ active = 0 }: Props) => {
     { text: "About", path: "/about" },
     { text: "Shop", path: "/shop" },
     { text: "Gallery", path: "/gallery" },
+    { text: "Packages", path: "/packages" },
+    { text: "Registry", path: "/registry" },
   ];
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
-    <div className="w-full flex items-center justify-between px-5 py-10 xl:px-20 xl:py-10 lg:border-b lg:border-black">
+    <div className="w-full lg:border-b lg:border-black">
+    <div className="w-full flex items-center justify-between px-5 py-10 xl:px-20 xl:py-10 max-w-[1536px] mx-auto">
       <EnterFromY
         initial={active === 0 ? -30 : 0}
         duration={active === 0 ? 0.8 : 0}
@@ -96,7 +99,7 @@ const Navbar = ({ active = 0 }: Props) => {
             transition={{ duration: 0.5 }}
             className="fixed top-0 left-0 w-full h-screen bg-black/50 z-50 p-5"
           >
-            <EnterFromY className="lg:hidden relative flex flex-col items-center gap-6 py-12 bg-white rounded-lg">
+            <EnterFromY className="lg:hidden relative flex flex-col items-center gap-3 py-12 bg-white rounded-lg">
               <button
                 className="absolute top-4 right-4 cursor-pointer"
                 onClick={() => setIsOpen(false)}
@@ -119,6 +122,7 @@ const Navbar = ({ active = 0 }: Props) => {
           </motion.div>
         )}
       </AnimatePresence>
+    </div>
     </div>
   );
 };
