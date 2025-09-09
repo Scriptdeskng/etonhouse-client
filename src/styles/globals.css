@@ -56,3 +56,17 @@ body {
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  background-color: #d1d5db !important;
+  opacity: 1 !important;
+  margin: 0 6px;
+}
+
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  background-color: #111827 !important;
+  transform: scale(1.15);
+}
