@@ -3,7 +3,8 @@ import Image from "next/image";
 
 const Banner = () => {
   return (
-    <div className="w-full bg-beige-100 px-5 xl:px-20 py-3 flex items-center justify-between">
+    <div className="w-full bg-beige-100">
+    <div className="max-w-[1536px] mx-auto px-5 xl:px-20 py-3 flex items-center justify-between">
       <div className="flex items-center gap-3">
         <Image
           src="/assets/svg/phone.svg"
@@ -24,6 +25,7 @@ const Banner = () => {
         <NavIcon icon="twitter" path="https://x.com" />
         <NavIcon icon="instagram" path="https://instagram.com" />
       </div>
+    </div>
     </div>
   );
 };
