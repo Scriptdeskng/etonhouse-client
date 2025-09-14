@@ -29,7 +29,7 @@ const Navbar = ({ active = 0 }: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
-    <div className="w-full lg:border-b lg:border-black">
+    <div className="w-full border-b border-black">
     <div className="w-full flex items-center justify-between px-5 py-10 xl:px-20 xl:py-10 max-w-[1536px] mx-auto">
       <EnterFromY
         initial={active === 0 ? -30 : 0}
