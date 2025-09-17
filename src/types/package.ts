@@ -1,22 +1,21 @@
-import { StaticImageData } from "next/image";
-
-export interface Product {
-  id: string;
-  image: StaticImageData | string;
-  name: string;
-  description: string;
-  amount: number;
-  status: 'In stock' | 'out of stock';
+export interface PackageItem {
+  id: number;
+  product: string;
+  product_image: string;
   quantity: number;
 }
 
 export interface Package {
-  id: string;
-  image: StaticImageData | string;
-  title: string;
+  id: number;
+  name: string;
+  slug: string;
   description: string;
-  amount: number;
-  discount: number;
-  bundlesInStock: number;
-  products: Product[];
+  image: string;
+  discount_percent: string;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+  items: PackageItem[];
+  total_price: string;
+  discounted_price: string;
 }

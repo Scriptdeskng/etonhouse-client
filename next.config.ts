@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   reactStrictMode: true,
   devIndicators: false,
   images: {
@@ -14,10 +13,11 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "eton-house.nyc3.digitaloceanspaces.com",
-        pathname: "/products/**",
+        pathname: "/**",
       },
     ],
   },
 };
 
 export default nextConfig;
+

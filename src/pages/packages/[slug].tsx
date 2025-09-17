@@ -1,30 +1,34 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
-import { useRouter } from 'next/router';
-import { Package } from "@/types/package";
-import { mockPackages } from "@/data/mockdata";
-import { createSlug, findPackageBySlug } from "@/utils/slugify";
+import { GetStaticPaths, GetStaticProps } from "next";
+import { useRouter } from "next/router";
 import PackageDetails from "@/components/packages/PackageDetails";
+import { Package } from "@/types/package";
+import makeRequest from "@/config/axios";
+import { useSinglePackage } from "@/services/package.service";
+import { useCartStore } from "@/store/cartStore";
 
 interface PackageDetailsPageProps {
-  package: Package | null;
+  slug: string;
 }
 
-const PackageDetailsPage: React.FC<PackageDetailsPageProps> = ({ package: pkg }) => {
+function PackageDetailsPage({ slug }: PackageDetailsPageProps) {
+  const addToCart = useCartStore((state) => state.addToCart);
   const router = useRouter();
 
-  // Handle loading state
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
 
-  // Handle package not found
-  if (!pkg) {
+  const { data: pkg, isLoading, isError } = useSinglePackage(slug);
+
+  if (isLoading) return <div className="w-full h-screen flex items-center justify-center lg:text-lg">Loading package...</div>;
+
+  if (isError || !pkg) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-semibold mb-4">Package Not Found</h1>
-          <button 
-            onClick={() => router.push('/packages')}
+          <button
+            onClick={() => router.push("/packages")}
             className="text-black-400 hover:underline"
           >
             ← Back to Packages
@@ -35,17 +39,32 @@ const PackageDetailsPage: React.FC<PackageDetailsPageProps> = ({ package: pkg })
   }
 
   const handleBack = () => {
-    router.push('/packages');
+    router.push("/packages");
   };
 
   const handleBuyAll = (pkg: Package) => {
-    console.log('Buy all clicked for package:', pkg.id);
-    // Add your buy all logic here
+    pkg.items.forEach((item) => {
+      addToCart({
+        id: item.id,
+        name: item.product,
+        image: item.product_image,
+        price: parseFloat(pkg.discounted_price) / pkg.items.length,
+        quantity: item.quantity,
+      });
+    });
   };
 
   const handleAddToCart = (productId: string, quantity: number) => {
-    console.log('Add to cart clicked:', { productId, quantity });
-    // Add your add to cart logic here
+    const item = pkg.items.find((i: any) => String(i.id) === productId);
+    if (!item) return;
+
+    addToCart({
+      id: item.id,
+      name: item.product,
+      image: item.product_image,
+      price: parseFloat(pkg.total_price) / pkg.items.length,
+      quantity,
+    });
   };
 
   return (
@@ -58,27 +77,40 @@ const PackageDetailsPage: React.FC<PackageDetailsPageProps> = ({ package: pkg })
   );
 };
 
-// Generate static paths for all packages at build time
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = mockPackages.map((pkg) => ({
-    params: { slug: createSlug(pkg.title) }
-  }));
+  try {
+    const res = await makeRequest({
+      url: "packages/",
+      requireToken: false,
+    });
 
-  return {
-    paths,
-    fallback: false
-  };
+    const packages: Package[] = res.results || [];
+
+    const paths = packages.map((pkg) => ({
+      params: { slug: pkg.slug },
+    }));
+
+    return {
+      paths,
+      fallback: true,
+    };
+  } catch (error) {
+    console.error("Error fetching packages:", error);
+    return {
+      paths: [],
+      fallback: true,
+    };
+  }
 };
 
-// Get package data at build time
 export const getStaticProps: GetStaticProps<PackageDetailsPageProps> = async ({ params }) => {
   const slug = params?.slug as string;
-  const pkg = findPackageBySlug(mockPackages, slug);
 
   return {
     props: {
-      package: pkg || null,
+      slug,
     },
+    revalidate: 60,
   };
 };
 

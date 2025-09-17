@@ -3,7 +3,7 @@ import PackageCard from "./PackageCard";
 
 interface PackageGridProps {
   packages: Package[];
-  onBuyAll: (pkgId: string) => void;
+  onBuyAll: (pkg: Package) => void;
 }
 
 const PackageGrid: React.FC<PackageGridProps> = ({ packages, onBuyAll }) => {
@@ -13,7 +13,7 @@ const PackageGrid: React.FC<PackageGridProps> = ({ packages, onBuyAll }) => {
         <PackageCard
           key={pkg.id}
           package={pkg}
-          onBuyAll={() => onBuyAll(pkg.id)}
+          onBuyAll={() => onBuyAll(pkg)}
         />
       ))}
     </div>
