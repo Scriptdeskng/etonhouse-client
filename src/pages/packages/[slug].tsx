@@ -1,3 +1,5 @@
+"use client"
+
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import PackageDetails from "@/components/packages/PackageDetails";
@@ -5,6 +7,8 @@ import { Package } from "@/types/package";
 import makeRequest from "@/config/axios";
 import { useSinglePackage } from "@/services/package.service";
 import { useCartStore } from "@/store/cartStore";
+import { useEffect } from "react";
+import useAuthStore from '@/store/authStore';
 
 interface PackageDetailsPageProps {
   slug: string;
@@ -13,6 +17,13 @@ interface PackageDetailsPageProps {
 function PackageDetailsPage({ slug }: PackageDetailsPageProps) {
   const addToCart = useCartStore((state) => state.addToCart);
   const router = useRouter();
+    const { isAuthenticated } = useAuthStore();
+  
+    useEffect(() => {
+      if (!isAuthenticated) {
+        router.push('/account?redirect=packages');
+      }
+    }, [isAuthenticated, router]);
 
   if (router.isFallback) {
     return <div>Loading...</div>;

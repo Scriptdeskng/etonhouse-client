@@ -13,7 +13,7 @@ const Home = () => {
 
   return (
     <Layout>
-      <div className="space-y-[18px] mt-10">
+      <div className="space-y-[18px]">
         <p className="text-lg text-black">
           Hello {user?.username} (not {user?.username}?{" "}
           <span

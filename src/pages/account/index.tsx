@@ -9,7 +9,7 @@ const Account = () => {
   return (
     <Entrance>
       <Navbar active={10} />
-      <div className="px-5 xl:px-20 lg:py-8 space-y-[50px]">
+      <div className="px-5 xl:px-20 lg:py-8 space-y-[50px] pt-5 max-w-[1536px] mx-auto">
         <Breadcrumbs
           history={[{ name: "Home", path: "/" }, { name: "Account" }]}
         />

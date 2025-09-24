@@ -1,3 +1,5 @@
+"use client";
+
 import PackageGrid from "@/components/packages/PackageGrid";
 import Entrance from "@/animated/Entrance";
 import Footer from "@/components/footer";
@@ -6,10 +8,21 @@ import { useAllPackages } from "@/services/package.service";
 import { useCartStore } from "@/store/cartStore";
 import { Package } from "@/types/package";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
+import { useRouter } from 'next/navigation';
+import useAuthStore from '@/store/authStore';
 
 const PackagesIndexPage: React.FC = () => {
   const { data, isLoading, isError } = useAllPackages({ page: 1 });
   const addToCart = useCartStore((state) => state.addToCart);
+  const router = useRouter();
+  const { isAuthenticated } = useAuthStore();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/account?redirect=packages');
+    }
+  }, [isAuthenticated, router]);
 
   const handleBuyAll = (pkg: Package) => {
     try {
@@ -22,7 +35,7 @@ const PackagesIndexPage: React.FC = () => {
           quantity: item.quantity,
         });
       });
-      
+
       toast.success(`${pkg.name} added to cart!`);
     } catch (error) {
       console.error("Error adding package to cart:", error);

@@ -3,13 +3,19 @@ import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const Sidebar = ({ active = "Dashboard" }: { active?: string }) => {
+interface SidebarProps {
+  active?: string;
+  onSelect?: () => void;
+}
+
+const Sidebar = ({ active = "Dashboard", onSelect }: SidebarProps) => {
   const { logoutUser } = useAuthStore();
   const router = useRouter();
 
   const links = [
     { name: "Dashboard", path: "/dashboard" },
     { name: "Orders", path: "/dashboard" },
+    { name: "My Gift Registry", path: "/dashboard/registry" },
     { name: "Saved items", path: "/dashboard" },
     { name: "Payment methods", path: "/dashboard" },
     { name: "Addresses", path: "/dashboard" },
@@ -30,8 +36,10 @@ const Sidebar = ({ active = "Dashboard" }: { active?: string }) => {
           <Link
             href={item.path}
             key={item.name}
+            onClick={onSelect}
             className={clsx(
               "text-lg text-[#616161]",
+              "border border-gray-200 rounded-md p-1 sm:p-0 sm:border-none sm:hover:bg-transparent",
               active === item.name && "font-medium text-[#414205]"
             )}
           >
