@@ -78,7 +78,7 @@ const Navbar = ({ active = 0 }: Props) => {
         <div className="hidden lg:flex">
           <NavIcon
             icon="profile"
-            path={isAuthenticated ? "/dashboard" : "/account"}
+            path={isAuthenticated ? "/profile" : "/account"}
           />
         </div>
 

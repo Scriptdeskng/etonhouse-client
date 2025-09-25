@@ -22,7 +22,7 @@ export const useLogin = (redirect?: string | null) => {
     onSuccess: (response) => {
       loginUser(response?.access, response?.user);
       toast.success("Login successful!");
-      route.push(`/${redirect ?? "dashboard"}`);
+      route.push(`/${redirect ?? "profile"}`);
     },
     onError: (error: any) => {
       toast.error(
@@ -50,7 +50,7 @@ export const useRegister = () => {
     onSuccess: (response) => {
       loginUser(response?.access, response?.user);
       toast.success("Registration successful!");
-      route.push("/dashboard");
+      route.push("/profile");
     },
     onError: (error: any) => {
       toast.error(

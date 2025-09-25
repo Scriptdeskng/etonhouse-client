@@ -25,7 +25,7 @@ const MyRegistries: React.FC = () => {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push('/account?redirect=registry/my-registries');
+      router.push('/account?redirect=profile/registry');
     }
   }, [isAuthenticated, router]);
 

@@ -106,7 +106,7 @@ const RegistryCatalog: React.FC = () => {
   };
 
   const handleBackToRegistry = () => {
-    router.push(`/dashboard/registry`);
+    router.push(`/profile/registry`);
   };
 
   const getTotalItemsAdded = () => {
@@ -228,7 +228,7 @@ const RegistryCatalog: React.FC = () => {
                       {getTotalItemsAdded()} items added to your registry
                     </p>
                     <button
-                      onClick={() => router.push('/dashboard/registry')}
+                      onClick={() => router.push('/profile/registry')}
                       className="bg-black-400 text-white px-6 py-2.5 rounded-md font-medium transition-colors"
                     >
                       View Registry

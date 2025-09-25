@@ -2,21 +2,19 @@ import Entrance from "@/animated/Entrance";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import Protected from "@/components/protected";
-import MyRegistries from "@/ui/dashboard/registry";
+import Favorites from "@/ui/profile/favourites";
 import Layout from "@/utils/layout";
 
-const Dashboard = () => {
+const Favorite = () => {
   return (
     <Protected>
-      <Entrance>
-        <Navbar active={10} />
+        <Navbar />
         <Layout>
-        <MyRegistries />
+        <Favorites />
         </Layout>
         <Footer />
-      </Entrance>
     </Protected>
   );
 };
 
-export default Dashboard;
+export default Favorite;

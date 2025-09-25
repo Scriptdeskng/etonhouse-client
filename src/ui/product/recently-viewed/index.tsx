@@ -49,6 +49,7 @@ const RecentlyViewed = () => {
                   price={Number(item?.current_price).toLocaleString("en-GB")}
                   key={item?.name}
                   variants={item?.variants}
+                  productId={item?.id}
                 />
               );
             })}
