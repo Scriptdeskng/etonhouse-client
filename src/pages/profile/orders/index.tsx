@@ -2,18 +2,19 @@ import Entrance from "@/animated/Entrance";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import Protected from "@/components/protected";
-import Home from "@/ui/dashboard/home";
+import Orders from "@/ui/profile/orders";
+import Layout from "@/utils/layout";
 
-const Dashboard = () => {
+const Order = () => {
   return (
     <Protected>
-      <Entrance>
-        <Navbar active={10} />
-        <Home />
+        <Navbar />
+        <Layout>
+        <Orders />
+        </Layout>
         <Footer />
-      </Entrance>
     </Protected>
   );
 };
 
-export default Dashboard;
+export default Order;

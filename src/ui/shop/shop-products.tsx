@@ -81,6 +81,7 @@ const ShopProducts = ({
                   price={Number(product?.current_price).toLocaleString("en-GB")}
                   variants={product?.variants}
                   key={product?.id}
+                  productId={product?.id}
                 />
               );
             })

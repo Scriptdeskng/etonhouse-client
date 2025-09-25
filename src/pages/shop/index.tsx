@@ -39,7 +39,7 @@ const Shop = () => {
   return (
     <Entrance>
       <Navbar active={2} />
-      <div className="w-full grid lg:grid-cols-[300px_auto] items-start">
+      <div className="w-full max-w-[1536px] mx-auto grid lg:grid-cols-[300px_auto] items-start">
         <ShopSidebar handleParams={handleParams} />
         <ShopProducts
           data={data}
