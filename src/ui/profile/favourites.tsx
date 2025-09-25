@@ -27,7 +27,7 @@ const Favorites = () => {
         id: item.product.id,
         name: item.product.name,
         image: item.product.featured_image,
-        price: item.product.price || 0,
+        price: item.base_price,
         quantity: 1,
       });
 
@@ -111,7 +111,7 @@ const Favorites = () => {
               </Link>
 
               <p className="text-sm text-black-400">
-                Added {new Date(item.created_at).toLocaleDateString()}
+                ₦{item.base_price.toLocaleString()}
               </p>
 
               <div className="flex items-center justify-between pt-5 gap-2">

@@ -119,35 +119,17 @@ export const useRemoveFromWishlist = () => {
 
 // Get user orders
 export const useGetUserOrders = () => {
-  const { token, user } = useAuthStore();
+  const { token } = useAuthStore();
 
   return useQuery({
-    queryKey: ["user-orders", user?.id],
-    queryFn: async () => {
-      const response = await makeRequest({
-        url: "orders/",
+    queryKey: ["user-orders"],
+    queryFn: () =>
+      makeRequest({
+        url: "my_orders/",
         requireToken: true,
         token,
-      });
-
-      const userOrders = response.results?.filter((order: any) => {
-        if (user?.id && order.user === user.id) {
-          return true;
-        }
-
-        if (user?.email && order.guest_email === user.email) {
-          return true;
-        }
-        return false;
-      });
-      
-      return {
-        ...response,
-        results: userOrders || [],
-        count: userOrders?.length || 0
-      };
-    },
-    enabled: !!token && !!user,
+      }),
+    enabled: !!token,
     retry: 1,
   });
 };
