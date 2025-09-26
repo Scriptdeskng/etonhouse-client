@@ -1,16 +1,35 @@
+import { useEffect } from "react";
 import { Order } from "@/types/order";
 import Input from "@/utils/inputs/input";
-import type { FieldErrors, UseFormRegister } from "react-hook-form";
+import useAuthStore from "@/store/authStore";
+import type { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
 
 const CheckUser = ({
   register,
   errors,
+  setValue,
 }: {
   register: UseFormRegister<Order>;
   errors: FieldErrors<Order>;
+  setValue: UseFormSetValue<Order>;
 }) => {
+  const { isAuthenticated, user } = useAuthStore();
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      setValue("email", user.email || "");
+      setValue("firstName", user.first_name || "");
+      setValue("lastName", user.last_name || "");
+      setValue("phone", user.phone || "");
+
+      setValue("country", "Nigeria");
+      
+    }
+  }, [isAuthenticated, user, setValue]);
+
   return (
     <div className="space-y-4">
+
       <Input
         label="Email address"
         type="email"
@@ -23,6 +42,7 @@ const CheckUser = ({
           },
         })}
         error={errors?.email}
+        disabled={isAuthenticated}
       />
 
       <Input
@@ -38,7 +58,7 @@ const CheckUser = ({
         label="Last Name"
         placeholder="Enter your last name"
         register={register("lastName", {
-          required: "First Name is required",
+          required: "Last Name is required",
         })}
         error={errors?.lastName}
       />

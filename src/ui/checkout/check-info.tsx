@@ -27,7 +27,8 @@ const CheckInfo = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors},
+    setValue,
+    formState: { errors },
   } = useForm<Order>({
     mode: "onBlur",
   });
@@ -98,7 +99,7 @@ const CheckInfo = () => {
       </div>
 
       <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 xl:gap-10">
-        <CheckUser register={register} errors={errors} />
+        <CheckUser register={register} errors={errors} setValue={setValue} />
 
         <CheckProducts />
       </div>
