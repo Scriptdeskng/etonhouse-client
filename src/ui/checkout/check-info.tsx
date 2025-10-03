@@ -8,9 +8,11 @@ import { Order } from "@/types/order";
 import Button from "@/utils/button";
 import toast from "react-hot-toast";
 import { useCreateOrder, usePayment } from "@/services/order.service";
+import { useCreateAddress, useGetDefaultAddress } from "@/services/profile.service";
 import clsx from "clsx";
 import { OrderConvert } from "@/helpers/orderConvert";
 import { useCartStore } from "@/store/cartStore";
+import useAuthStore from "@/store/authStore";
 
 const methods = [
   // { label: "Credit/Debit Card (Visa, MasterCard, Verve)", value: "Card" },
@@ -23,11 +25,15 @@ const methods = [
 
 const CheckInfo = () => {
   const { cart } = useCartStore();
+  const { isAuthenticated } = useAuthStore();
+  const { data: defaultAddress } = useGetDefaultAddress();
+  const createAddress = useCreateAddress();
 
   const {
     register,
     handleSubmit,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm<Order>({
     mode: "onBlur",
@@ -38,8 +44,8 @@ const CheckInfo = () => {
 
   const [paymentMethod, setPaymentMethod] = useState("paystack");
   const [checked, setChecked] = useState<boolean>(false);
-
-  function onSubmit(data: Order) {
+  const [saveAddress, setSaveAddress] = useState<boolean>(true);
+  async function onSubmit(data: Order) {
     if (paymentMethod.trim() === "") {
       toast.error("Select a payment method!");
       return;
@@ -51,6 +57,27 @@ const CheckInfo = () => {
     }
 
     const items = OrderConvert(cart, data, paymentMethod);
+
+    if (isAuthenticated && (saveAddress || !defaultAddress)) {
+      try {
+        await createAddress.mutateAsync({
+          label: "Checkout Address",
+          address_type: "home",
+          first_name: data.firstName,
+          last_name: data.lastName,
+          address_line1: data.address,
+          address_line2: "",
+          city: data.city,
+          state: data.state,
+          postal_code: data.postalCode,
+          country: data.country,
+          phone: data.phone,
+          is_default: !defaultAddress,
+        });
+      } catch (error) {
+        console.error("Failed to save address:", error);
+      }
+    }
 
     createOrder(items, {
       onSuccess: (res) => {
@@ -104,6 +131,21 @@ const CheckInfo = () => {
         <CheckProducts />
       </div>
 
+      {isAuthenticated && !defaultAddress && (
+        <div className="flex items-start gap-2">
+          <input
+            type="checkbox"
+            id="saveAddress"
+            checked={saveAddress}
+            onChange={(e) => setSaveAddress(e.target.checked)}
+            className="mt-1"
+          />
+          <label htmlFor="saveAddress" className="text-sm text-black-400">
+            Save this address for future orders
+          </label>
+        </div>
+      )}
+
       <div className="w-full h-14 bg-[#D6DDD6] flex items-center">
         <p className="pl-2 lg:pl-[30px] text-[#141414] font-bold">
           PAYMENT METHOD
@@ -141,6 +183,7 @@ const CheckInfo = () => {
           "px-8  !rounded-none !text-sm !h-11 !py-0 flex items-center justify-center max-w-[700px]",
           "bg-[#333333] text-white"
         )}
+        disabled={orderPending || payPending}
       />
     </form>
   );
