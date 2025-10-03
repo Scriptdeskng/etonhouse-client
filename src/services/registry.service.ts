@@ -28,7 +28,7 @@ export const useMyRegistries = () => {
     queryKey: ["my-registries"],
     queryFn: () =>
       makeRequest({
-        url: "registries/",
+        url: "registries/my_registries/",
         requireToken: true,
         token,
         params: { owner: 'me' }

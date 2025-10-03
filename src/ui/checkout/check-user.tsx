@@ -1,14 +1,53 @@
+import { useEffect } from "react";
 import { Order } from "@/types/order";
 import Input from "@/utils/inputs/input";
-import type { FieldErrors, UseFormRegister } from "react-hook-form";
+import useAuthStore from "@/store/authStore";
+import { useGetDefaultAddress } from "@/services/profile.service";
+import type { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
 
 const CheckUser = ({
   register,
   errors,
+  setValue,
 }: {
   register: UseFormRegister<Order>;
   errors: FieldErrors<Order>;
+  setValue: UseFormSetValue<Order>;
 }) => {
+  const { isAuthenticated, user } = useAuthStore();
+  const { data: defaultAddress, isLoading: addressLoading } = useGetDefaultAddress();
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      setValue("email", user.email || "");
+      setValue("firstName", user.first_name || "");
+      setValue("lastName", user.last_name || "");
+      setValue("phone", user.phone || "");
+      setValue("country", "Nigeria");
+    }
+  }, [isAuthenticated, user, setValue]);
+
+  useEffect(() => {
+    if (defaultAddress) {
+      setValue("firstName", defaultAddress.first_name || "");
+      setValue("lastName", defaultAddress.last_name || "");
+      setValue("phone", defaultAddress.phone || "");
+      setValue("address", defaultAddress.address_line1 || "");
+      setValue("city", defaultAddress.city || "");
+      setValue("state", defaultAddress.state || "");
+      setValue("postalCode", defaultAddress.postal_code || "");
+      setValue("country", defaultAddress.country || "Nigeria");
+    }
+  }, [defaultAddress, setValue]);
+
+  if (addressLoading) {
+    return (
+      <div className="space-y-4">
+        <div className="animate-pulse">Loading your details...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-4">
       <Input
@@ -23,6 +62,7 @@ const CheckUser = ({
           },
         })}
         error={errors?.email}
+        disabled={isAuthenticated}
       />
 
       <Input
@@ -38,7 +78,7 @@ const CheckUser = ({
         label="Last Name"
         placeholder="Enter your last name"
         register={register("lastName", {
-          required: "First Name is required",
+          required: "Last Name is required",
         })}
         error={errors?.lastName}
       />

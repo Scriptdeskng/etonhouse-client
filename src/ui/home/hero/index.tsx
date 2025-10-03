@@ -49,11 +49,11 @@ const Hero = () => {
       >
         {heroSlides.map((slide, idx) => (
           <SwiperSlide key={idx}>
-            <div className="w-full grid lg:grid-cols-2 items-center gap-4 xl:gap-16 px-5 py-7 xl:px-20 xl:py-28">
+            <div className="w-full grid lg:grid-cols-2 items-center gap-4 xl:gap-16 px-5 py-7 xl:px-20 xl:py-10">
               {/* Text Section */}
               <div className="w-[320px] sm:w-full flex flex-col items-start gap-5 md:gap-7.5">
                 <EnterFromX>
-                  <h1 className="text-2xl sm:text-3xl md:text-4xl xl:text-5xl leading-[150%] font-bold text-black-200">
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl leading-[150%] font-bold text-black-200">
                     {slide.title}
                   </h1>
                 </EnterFromX>

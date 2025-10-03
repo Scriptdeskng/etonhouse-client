@@ -9,6 +9,7 @@ interface Props {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: FieldError;
   register?: UseFormRegisterReturn;
+  disabled?: boolean;
 }
 
 const Input = ({
@@ -20,6 +21,7 @@ const Input = ({
   onChange,
   error,
   register,
+  disabled,
 }: Props) => {
   return (
     <div className="w-full flex flex-col gap-3.5">
@@ -37,6 +39,7 @@ const Input = ({
           value={value}
           onChange={onChange}
           {...register}
+          disabled={disabled}
           className="w-full border-[0.3px] border-[#616161] bg-[#FDFEFD4D] text-sm md:text-base h-9.5 md:h-14 rounded-[20px] px-5 placeholder:text-[#616161] outline-[#D6DDD6]"
         />
 
