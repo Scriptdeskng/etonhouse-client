@@ -19,9 +19,9 @@ const Footer = () => {
           </div>
 
           <div className="text-sm md:text-lg text-white font-medium space-y-4.5">
-            <p>📍 Showroom Locations: Lagos | Abuja </p>
-            <p>📞 Customer Support: +234 800 123 4567</p>
-            <p>📩 Email: hello@etonhouseng.com</p>
+            <p>📍 Showroom Locations: Lagos</p>
+            <p>📞 Customer Support: +2348090397777</p>
+            <p>📩 Email: customer@etonhouseng.com</p>
           </div>
         </div>
 
@@ -59,10 +59,10 @@ const Footer = () => {
             </h2>
 
             <div className="flex flex-col gap-5 text-sm md:text-base">
-              <Link href="/">LinkedIn</Link>
-              <Link href="/">Instagram</Link>
-              <Link href="/">Pinterest</Link>
-              <Link href="/">X</Link>
+              <Link href="https://www.linkedin.com/company/etonhouse-nigeria/" target="_blank">LinkedIn</Link>
+              <Link href="https://instagram.com/etonhouse" target="_blank">Instagram</Link>
+              <Link href="https://www.facebook.com/EtonhouseNG" target="_blank">Facebook</Link>
+              <Link href="https://api.whatsapp.com/send?phone=2348090397777" target="_blank">WhatsApp</Link>
             </div>
           </div>
         </div>

@@ -39,7 +39,7 @@ const Visit = () => {
               </div>
               <div className="w-full flex items-center justify-between py-3 xl:py-4 border-b border-[#616161]/50 font-medium text-black-400 xl:text-lg">
                 <p className="font-bold">Phone</p>
-                <p>+234 800 123 4567</p>
+                <p>+2348090397777</p>
               </div>
               <div className="w-full flex items-center justify-between py-3 xl:py-4 border-b border-[#616161]/50 font-medium text-black-400 xl:text-lg">
                 <p className="font-bold">Opening hours</p>
