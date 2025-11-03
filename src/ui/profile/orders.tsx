@@ -36,7 +36,7 @@ const Orders = () => {
     );
   }
 
-  const ordersList = orders?.results || [];
+  const ordersList = orders || [];
 
   if (ordersList.length === 0) {
     return (
@@ -100,9 +100,9 @@ const Orders = () => {
             Status
           </div>
 
-          <div className="pb-5 w-[20%] text-center border-b-2 border-b-black-100">
+          {/* <div className="pb-5 w-[20%] text-center border-b-2 border-b-black-100">
             Action
-          </div>
+          </div> */}
         </div>
 
         <div className="space-y-4">
@@ -156,14 +156,14 @@ const Orders = () => {
                   </span>
                 </div>
 
-                <div className="hidden xl:flex xl:items-center xl:justify-center xl:w-[15%] xl:px-2">
+                {/* <div className="hidden xl:flex xl:items-center xl:justify-center xl:w-[15%] xl:px-2">
                   <Link
                     href={`/track/${item.order_id}`}
                     className="inline-flex items-center text-[#2D54D3] underline text-sm hover:text-[#2D54D3]/80 transition-colors"
                   >
                     Track Order
                   </Link>
-                </div>
+                </div> */}
 
                 <div className="flex flex-row items-center justify-between mt-2 gap-2 xl:hidden">
                   <div
@@ -174,12 +174,12 @@ const Orders = () => {
                     {item.order_status_display || item.order_status}
                   </div>
 
-                  <Link
+                  {/* <Link
                     href="/track"
                     className="inline-flex items-center text-[#2D54D3] underline text-sm hover:text-[#2D54D3]/80 transition-colors"
                   >
                     Track Order
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </div>
