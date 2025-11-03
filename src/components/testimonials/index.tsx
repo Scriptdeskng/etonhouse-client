@@ -3,6 +3,7 @@ import Image from "next/image";
 
 const Testimonials = () => {
   return (
+    <div className="w-full max-w-[1536px] mx-auto">
     <PageTitle title="TESTIMONIALS" button={{ exists: false }}>
       <div className="w-full flex flex-col md:flex-row justify-center md:items-center gap-8">
         <div className="h-20 w-full sm:h-60 md:w-100 md:h-100 relative flex items-center gap-8 md:flex-none">
@@ -51,6 +52,7 @@ const Testimonials = () => {
         </div>
       </div>
     </PageTitle>
+    </div>
   );
 };
 

@@ -35,18 +35,22 @@ const BestSellers = () => {
   }, [data, all, active]);
 
   return (
-    <PageTitle title="BESTSELLERS" background="bg-grey-100" path="/shop">
-      {catsLoad ? (
-        <Skeleton className="w-1/3 lg:w-[45%]" />
-      ) : (
-        <Tabs active={active} setActive={setActive} tab={cats?.results ?? []} />
-      )}
+    <div className="bg-[#F6F6F6]">
+      <div className="w-full max-w-[1536px] mx-auto">
+        <PageTitle title="BESTSELLERS" background="bg-[#F6F6F6]" path="/shop">
+          {catsLoad ? (
+            <Skeleton className="w-1/3 lg:w-[45%]" />
+          ) : (
+            <Tabs active={active} setActive={setActive} tab={cats?.results ?? []} />
+          )}
 
-      <ProductSlider
-        products={products}
-        isLoading={isLoading || catsLoad || allLoad}
-      />
-    </PageTitle>
+          <ProductSlider
+            products={products}
+            isLoading={isLoading || catsLoad || allLoad}
+          />
+        </PageTitle>
+      </div>
+    </div>
   );
 };
 

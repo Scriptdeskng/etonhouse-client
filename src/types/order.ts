@@ -10,25 +10,22 @@ export interface Order {
   postalCode: string;
 }
 
-export interface OrderSchema {
+export type OrderSchema = {
   payment_method: string;
-  shipping_address: {
+  email: string;
+  items: { variant_id: number; quantity: number }[];
+  shipping_address_id?: number;
+  shipping_address?: {
     first_name: string;
     last_name: string;
     address_line1: string;
-    address_line2?: string;
     city: string;
-    state: string;
-    postal_code: string;
     country: string;
     phone: string;
+    state: string;
+    postal_code: string;
   };
-  email: string;
-  items: {
-    variant_id: number;
-    quantity: number;
-  }[];
-}
+};
 
 export interface Payment {
   email: string;

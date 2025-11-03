@@ -39,6 +39,22 @@ export const usePayment = () => {
   });
 };
 
+export const useVerifyPayment = () => {
+  const { token } = useAuthStore();
+
+  return useMutation({
+    mutationKey: ["verify-payment"],
+    mutationFn: async (reference: string) => {
+      return await makeRequest({
+        method: "GET",
+        url: `payments/verify/?reference=${reference}`,
+        requireToken: true,
+        token,
+      });
+    },
+  });
+};
+
 export const useGetOrderById = (id: string | null) => {
   const { token } = useAuthStore();
 

@@ -46,7 +46,7 @@ function ProductSlider({ products, isLoading }: Props) {
   };
 
   return (
-    <div className="relative w-full px-10">
+    <div className="relative w-full px-7 sm:px-10">
       <button
         onClick={() => sliderRef.current?.slickPrev()}
         className="absolute left-0 top-1/2 -translate-y-1/2 w-10 xl:w-12.5 h-10 xl:h-12.5 z-10 rounded-full bg-white flex items-center justify-center cursor-pointer"

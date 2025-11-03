@@ -4,12 +4,13 @@ import Image from "next/image";
 
 const Newsletter = () => {
   return (
+    <div className="w-full max-w-[1536px] mx-auto">
     <PageTitle
       title="NEWSLETTER"
       button={{ exists: true, text: "SUBSCRIBE", path: "/" }}
     >
       <div className="w-full grid lg:grid-cols-2 gap-8 xl:gap-20 items-center">
-        <div className="w-full flex flex-col gap-8 text-black">
+        <div className="w-full flex flex-col gap-5 text-black">
           <h3 className="text-lg sm:text-2xl font-bold">
             📩 Stay Inspired – Join Our Community
           </h3>
@@ -38,7 +39,7 @@ const Newsletter = () => {
           </div>
         </div>
 
-        <div className="w-full max-w-[550px] lg:max-w-full relative h-[195px] sm:h-[330px]">
+        <div className="w-full max-w-[573px] lg:max-w-full relative h-[195px] sm:h-[323px]">
           <Image
             src="/assets/png/newsletter.png"
             alt="Newsletter"
@@ -48,6 +49,7 @@ const Newsletter = () => {
         </div>
       </div>
     </PageTitle>
+    </div>
   );
 };
 

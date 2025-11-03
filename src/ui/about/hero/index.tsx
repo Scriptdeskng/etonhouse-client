@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const AboutHero = () => {
   return (
-    <div className="py-8 px-6 border-t border-black-200/80">
+    <div className="py-8 px-6">
       <div className="relative rounded-[20px] w-full h-[35vh] sm:h-[50vh] lg:h-[85vh]">
         <div className="absolute top-8 lg:top-16 xl:top-30 z-10 left-1/2 transform -translate-x-1/2">
           <Image

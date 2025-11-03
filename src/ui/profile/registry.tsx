@@ -4,17 +4,18 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Entrance from '@/animated/Entrance';
 import { FaShare, FaEdit, FaPlus, FaCalendar, FaCheck, FaTrash, FaLock, FaGlobe, FaGift } from 'react-icons/fa';
-import { useMyRegistries, useDeleteRegistry, useUpdateRegistry } from '@/services/registry.service';
+import { useMyRegistries, useDeleteRegistry } from '@/services/registry.service';
 import Skeleton from 'react-loading-skeleton';
 import toast from 'react-hot-toast';
 import { Registry, RegistryItem } from '@/types/registry';
 import RegistryEmptyState from '@/components/registry/RegistryEmptyState';
 import useAuthStore from '@/store/authStore';
 import ShareRegistryModal from '@/components/registry/ShareRegistryModal';
+import makeRequest from '@/config/axios';
 
 const MyRegistries: React.FC = () => {
   const router = useRouter();
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, token } = useAuthStore();
   const { data: registriesData, isLoading, error, refetch } = useMyRegistries();
   const deleteRegistryMutation = useDeleteRegistry();
 
@@ -22,6 +23,7 @@ const MyRegistries: React.FC = () => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const [registryToShare, setRegistryToShare] = useState<Registry | null>(null);
+  const [isUpdatingAccess, setIsUpdatingAccess] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -37,20 +39,33 @@ const MyRegistries: React.FC = () => {
   const handleUpdateRegistryAccess = async (isPublic: boolean) => {
     if (!registryToShare) return;
 
+    setIsUpdatingAccess(true);
     try {
-      const updateMutation = useUpdateRegistry(registryToShare.id);
-      await updateMutation.mutateAsync({
+      const formData = new FormData();
+      formData.append('is_public', String(isPublic));
+
+      await makeRequest({
+        url: `registries/${registryToShare.id}/`,
+        method: "PATCH",
+        data: formData,
+        requireToken: true,
+        token,
+        content_type: 'multipart/form-data',
+      });
+
+      setRegistryToShare({
+        ...registryToShare,
         is_public: isPublic
       });
 
-      if (registryToShare) {
-        setRegistryToShare({
-          ...registryToShare,
-          is_public: isPublic
-        });
-      }
-    } catch (error) {
+      toast.success('Registry access updated successfully');
+      refetch();
+    } catch (error: any) {
+      console.error('Error updating registry access:', error);
+      toast.error(error?.response?.data?.message || 'Failed to update registry access');
       throw error;
+    } finally {
+      setIsUpdatingAccess(false);
     }
   };
 
@@ -133,6 +148,10 @@ const MyRegistries: React.FC = () => {
     };
   };
 
+  const registries = Array.isArray(registriesData)
+    ? registriesData
+    : registriesData?.results || [];
+
   if (isLoading) {
     return (
       <Entrance>
@@ -149,6 +168,7 @@ const MyRegistries: React.FC = () => {
   }
 
   if (error) {
+    console.error('Registry fetch error:', error);
     return (
       <Entrance>
         <div>
@@ -167,7 +187,7 @@ const MyRegistries: React.FC = () => {
     );
   }
 
-  if (!registriesData?.results || registriesData.results.length === 0) {
+  if (!registries || registries.length === 0) {
     return (
       <Entrance>
         <div>
@@ -191,7 +211,7 @@ const MyRegistries: React.FC = () => {
       </div>
 
       <div className="space-y-8">
-        {registriesData.results.map((registry: Registry) => {
+        {registries.map((registry: Registry) => {
           const progress = calculateProgress(registry);
           const stats = getRegistryStats(registry);
           const daysUntilEvent = Math.ceil((new Date(registry.date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));

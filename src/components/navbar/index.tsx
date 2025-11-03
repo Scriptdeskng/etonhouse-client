@@ -1,13 +1,14 @@
 import EnterFromY from "@/animated/EnterFromY";
 import useAuthStore from "@/store/authStore";
 import { useCartStore } from "@/store/cartStore";
+import SearchOverlay from "@/ui/search/SearchOverlay";
 import Logo from "@/utils/logo";
 import NavIcon from "@/utils/navicon";
 import NavLink from "@/utils/navlink";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { FiMenu } from "react-icons/fi";
-import { IoClose } from "react-icons/io5";
+import { IoClose, IoSearchOutline } from "react-icons/io5";
 
 interface Props {
   active?: number;
@@ -21,12 +22,13 @@ const Navbar = ({ active = 0 }: Props) => {
     { text: "Home", path: "/" },
     { text: "About", path: "/about" },
     { text: "Shop", path: "/shop" },
-    { text: "Gallery", path: "/gallery" },
+    // { text: "Gallery", path: "/gallery" },
     { text: "Packages", path: "/packages" },
     { text: "Registry", path: "/registry" },
   ];
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [showSearch, setShowSearch] = useState<boolean>(false);
 
   return (
     <div className="w-full border-b border-black">
@@ -39,7 +41,7 @@ const Navbar = ({ active = 0 }: Props) => {
         </EnterFromY>
 
         <EnterFromY
-          className="hidden lg:flex items-center gap-15"
+          className="hidden lg:flex items-center gap-10"
           initial={active === 0 ? -30 : 0}
           duration={active === 0 ? 0.8 : 0}
         >
@@ -61,12 +63,12 @@ const Navbar = ({ active = 0 }: Props) => {
           initial={active === 0 ? -30 : 0}
           duration={active === 0 ? 0.8 : 0}
         >
-          <div className="hidden sm:flex">
-            <NavIcon icon="search" path="/" />
-          </div>
+          <button className="hidden sm:flex" onClick={() => setShowSearch(true)}>
+            <IoSearchOutline className="w-4.5 h-4.5 sm:w-6 sm:h-6 relative cursor-pointer" />
+          </button>
 
           <div className="hidden lg:flex">
-            <NavIcon icon="phone" path="/" />
+            <NavIcon icon="phone" path="/about" />
           </div>
 
           <div className="flex relative">
@@ -101,7 +103,7 @@ const Navbar = ({ active = 0 }: Props) => {
               transition={{ duration: 0.5 }}
               className="fixed top-0 left-0 w-full h-screen bg-black/50 z-50 p-5"
             >
-              <EnterFromY className="lg:hidden relative flex flex-col items-center gap-3 py-12 bg-white rounded-lg">
+              <EnterFromY className="lg:hidden relative flex flex-col items-center gap-5 py-12 bg-white rounded-lg cursor-pointer">
                 <button
                   className="absolute top-4 right-4 cursor-pointer"
                   onClick={() => setIsOpen(false)}
@@ -120,11 +122,22 @@ const Navbar = ({ active = 0 }: Props) => {
                     />
                   );
                 })}
+
+                <button className="hidden sm:flex gap-2 items-center cursor-pointer" onClick={() => setShowSearch(true)}>
+                  <IoSearchOutline className="w-4.5 h-4.5 sm:w-6 sm:h-6 relative cursor-pointer" />
+                  Search
+                </button>
               </EnterFromY>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
+
+      <AnimatePresence>
+        {showSearch && (
+          <SearchOverlay onClose={() => setShowSearch(false)} />
+        )}
+      </AnimatePresence>
     </div>
   );
 };

@@ -12,16 +12,18 @@ const ShopProducts = ({
   handleClear,
   handleParams,
   page,
+  currentSort,
 }: {
   data: any;
   isLoading: boolean;
   handleClear: () => void;
-  handleParams: (name: string, value: number) => void;
+  handleParams: (name: string, value: any) => void;
   page: number | undefined;
+  currentSort?: string;
 }) => {
   return (
-    <div className="w-full min-h-screen lg:border-l lg:border-[#141414CC]">
-      <div className="w-full border-t lg:border-b lg:border-r border-[#141414CC]">
+    <div className="w-full min-h-screen border-l">
+      <div className="w-full lg:border-b border-[#141414CC]">
         <div className="flex flex-col gap-4 py-6 px-5 md:hidden">
           <p className="text-xl font-medium text-black">Shop</p>
 
@@ -57,7 +59,7 @@ const ShopProducts = ({
             )}
           </p>
 
-          <Sort />
+          <Sort handleParams={handleParams} currentSort={currentSort} />
         </div>
       </div>
 

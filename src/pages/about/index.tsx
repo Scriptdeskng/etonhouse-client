@@ -10,10 +10,12 @@ const AboutPage = () => {
   return (
     <Entrance>
       <Navbar active={1} />
+      <div className="w-full max-w-[1536px] mx-auto">
       <AboutHero />
       <Story />
       <Process />
       <Visit />
+      </div>
       <Footer />
     </Entrance>
   );

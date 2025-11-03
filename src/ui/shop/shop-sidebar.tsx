@@ -5,12 +5,16 @@ import Image from "next/image";
 
 const ShopSidebar = ({
   handleParams,
+  selectedCategory,
+  selectedColor,
 }: {
   handleParams: (name: string, value: any) => void;
+  selectedCategory?: string;
+  selectedColor?: string;
 }) => {
   return (
     <div className="hidden lg:flex lg:flex-col w-full">
-      <div className="w-full px-5 xl:pl-10 xl:pr-6 py-12.5 border-y border-[#141414CC]">
+      <div className="w-full px-5 xl:pl-10 xl:pr-6 py-12.5 border-b border-[#141414CC]">
         <button className="w-full flex items-center gap-2.5 cursor-pointer">
           <Image
             src="/assets/svg/filter.svg"
@@ -24,11 +28,11 @@ const ShopSidebar = ({
       </div>
 
       <section className="p-5 py-8 xl:p-10">
-        <Category handleParams={handleParams} />
+        <Category handleParams={handleParams} selectedCategory={selectedCategory} />
 
         <Range handleParams={handleParams} />
 
-        <ColorScheme />
+        <ColorScheme handleParams={handleParams} selectedColor={selectedColor} />
       </section>
     </div>
   );

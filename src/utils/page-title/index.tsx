@@ -24,19 +24,19 @@ const PageTitle = ({
 }: Props) => {
   return (
     <div
-      className={`w-full px-5 py-10 xl:py-25 xl:px-16 flex flex-col gap-10 ${background}`}
+      className={`w-full px-5 py-10 xl:px-20 flex flex-col gap-10 ${background}`}
     >
       <div
-        className={`flex items-center justify-between lg:border-b lg:border-black lg:py-8 ${className}`}
+        className={`flex items-center justify-between lg:border-b lg:border-black lg:py-6 ${className}`}
       >
-        <h2 className="text-2xl lg:text-[32px] text-black font-medium">
+        <h2 className="text-xl text-black sm:text-2xl">
           {title}
         </h2>
 
         {button.exists && (
           <Link
             href={path ?? button.path ?? "/"}
-            className="hidden lg:flex items-center gap-1 cursor-pointer"
+            className="hidden text-sm lg:flex items-center gap-1 cursor-pointer"
           >
             <p>{button.text}</p>
             <FiArrowUpRight size={20} />

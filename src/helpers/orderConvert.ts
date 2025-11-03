@@ -1,29 +1,38 @@
 import { CartItem } from "@/types/cart";
-import { Order, OrderSchema } from "@/types/order";
+import { Order } from "@/types/order";
 
 export function OrderConvert(
   cart: CartItem[],
   data: Order,
-  method: string
-): OrderSchema {
-  const result = cart.map((item) => ({
+  method: string,
+  options: { addressId?: number; isUsingSavedAddress: boolean }
+) {
+  const items = cart.map((item) => ({
     variant_id: item.id,
     quantity: item.quantity,
   }));
 
-  return {
+  const basePayload: any = {
     payment_method: method,
     email: data.email,
-    shipping_address: {
-      address_line1: data.address,
-      city: data.city,
-      country: data.country,
+    items,
+  };
+
+  if (options.isUsingSavedAddress && options.addressId) {
+    basePayload.shipping_address_id = options.addressId;
+  } else {
+    basePayload.shipping_address = {
       first_name: data.firstName,
       last_name: data.lastName,
-      phone: data.phone,
+      address_line1: data.address,
+      address_line2: "",
+      city: data.city,
       state: data.state,
       postal_code: data.postalCode,
-    },
-    items: result,
-  };
+      country: data.country,
+      phone: data.phone,
+    };
+  }
+
+  return basePayload;
 }
