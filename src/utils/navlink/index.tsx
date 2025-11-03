@@ -11,7 +11,7 @@ const NavLink = ({ text, path, active, index }: Props) => {
   return (
     <Link
       href={path}
-      className={`text-lg ${
+      className={`text-[16px] ${
         active === index ? "text-black cursor-default" : "text-black-100"
       } font-medium`}
     >

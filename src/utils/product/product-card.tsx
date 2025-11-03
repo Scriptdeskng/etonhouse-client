@@ -12,9 +12,9 @@ const ProductCard = ({ id, name, image, price }: Props) => {
   return (
     <Link
       href={`/product/${id}`}
-      className="shrink-0 w-full max-w-[280px] xl:max-w-full space-y-4 mx-auto xl:mx-0"
+      className="shrink-0 w-full max-w-[280px] xl:max-w-full mx-auto xl:mx-0"
     >
-      <div className="shadow-xs w-full h-[400px] relative aspect-auto">
+      <div className="w-full h-[300px] flex items-center justify-center relative aspect-auto mb-2">
         <img
           src={image}
           alt={name}
@@ -23,9 +23,9 @@ const ProductCard = ({ id, name, image, price }: Props) => {
         />
       </div>
 
-      <p className="text-black font-bold capitalize">{name}</p>
+      <p className="text-black text-lg capitalize mb-2">{name}</p>
 
-      <p className="text-blue-100">₦{price}</p>
+      <p className="text-black-100">₦{price}</p>
     </Link>
   );
 };

@@ -36,7 +36,7 @@ const RegistrySidebar = ({
       <section className="p-5 py-8 xl:p-10">
         <Category handleParams={handleParams} />
         <Range handleParams={handleParams} />
-        <ColorScheme />
+        {/* <ColorScheme /> */}
       </section>
     </div>
   );

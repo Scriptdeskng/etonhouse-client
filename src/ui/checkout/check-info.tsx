@@ -45,8 +45,9 @@ const CheckInfo = () => {
   const [paymentMethod, setPaymentMethod] = useState("paystack");
   const [checked, setChecked] = useState<boolean>(false);
   const [saveAddress, setSaveAddress] = useState<boolean>(true);
+
   async function onSubmit(data: Order) {
-    if (paymentMethod.trim() === "") {
+    if (!paymentMethod.trim()) {
       toast.error("Select a payment method!");
       return;
     }
@@ -56,12 +57,13 @@ const CheckInfo = () => {
       return;
     }
 
-    const items = OrderConvert(cart, data, paymentMethod);
+    let addressId = defaultAddress?.id;
+    let isUsingSavedAddress = !!addressId;
 
-    if (isAuthenticated && (saveAddress || !defaultAddress)) {
+    if (isAuthenticated && !defaultAddress && saveAddress) {
       try {
-        await createAddress.mutateAsync({
-          label: "Checkout Address",
+        const res = await createAddress.mutateAsync({
+          label: `Checkout Address ${Date.now()}`,
           address_type: "home",
           first_name: data.firstName,
           last_name: data.lastName,
@@ -72,30 +74,42 @@ const CheckInfo = () => {
           postal_code: data.postalCode,
           country: data.country,
           phone: data.phone,
-          is_default: !defaultAddress,
+          is_default: true,
         });
-      } catch (error) {
-        console.error("Failed to save address:", error);
+
+        addressId = res?.id;
+        isUsingSavedAddress = true;
+        toast.success("Address saved successfully");
+      } catch (error: any) {
+        if (error?.response?.data?.label) {
+          toast.error("You already have an address with this label.");
+          return;
+        }
+        toast.error("Failed to save address!");
+        return;
       }
     }
 
-    createOrder(items, {
+    const orderPayload = OrderConvert(cart, data, paymentMethod, {
+      addressId,
+      isUsingSavedAddress,
+    });
+
+    createOrder(orderPayload, {
       onSuccess: (res) => {
         orderPayment(
           {
-            email: res?.guest_email,
+            email: res?.guest_email ?? data.email,
             order_id: res?.id,
             reference: res?.order_number,
           },
           {
             onSuccess: (response) => {
-              toast.success(
-                "Order placed successfully, Redirecting to payment page..."
-              );
+              toast.success("Redirecting to payment...");
               window.location = response?.data?.authorization_url;
             },
-            onError: () => {
-              toast.error("Error occurred while loading payment method!");
+            onError: (error) => {
+              toast.error("Error loading payment method!");
             },
           }
         );

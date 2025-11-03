@@ -29,50 +29,36 @@ export const TriggerIcon = ({
 
 const Category = ({
   handleParams,
+  selectedCategory,
 }: {
   handleParams: (name: string, value: any) => void;
+  selectedCategory?: string;
 }) => {
   const { data } = useAllCategories();
 
   return (
-    <details className="w-full pb-10 border-b border-[#61616199] group">
+    <details className="w-full pb-10 border-b border-[#61616199] group" open>
       <summary className="w-full flex items-center justify-between cursor-pointer">
         <h2 className="text-lg font-bold text-black">Product Categories</h2>
 
         <TriggerIcon open="group-open:hidden" close="group-open:block" />
       </summary>
 
-      <div className="mt-3.5 pr-1 flex flex-col gap-5">
+      <div className="mt-3.5 pr-1 flex flex-col gap-3">
         {data?.results?.map((item: any) => {
+          const isSelected = selectedCategory === item?.slug;
+          
           return (
-            <details className="w-full group/subgroup" key={item?.id}>
-              <summary className="w-full flex items-center justify-between cursor-pointer">
-                <h2 className="text-[#616161] capitalize">
-                  {item?.name?.split("-").join(" ")}
-                </h2>
-
-                <TriggerIcon
-                  size={18}
-                  open="group-open/subgroup:hidden"
-                  close="group-open/subgroup:block"
-                  handleOpen={() => handleParams("category", item?.slug)}
-                  handleClose={() => handleParams("category", undefined)}
-                />
-              </summary>
-
-              <div className="mt-3.5 flex flex-col gap-2">
-                {item?.subcategories?.map((data: any) => (
-                  <div
-                    role="button"
-                    key={data?.id}
-                    className="text-sm cursor-pointer"
-                    onClick={() => handleParams("subcategory", data?.slug)}
-                  >
-                    {data?.name}
-                  </div>
-                ))}
-              </div>
-            </details>
+            <div
+              key={item?.id}
+              role="button"
+              className={`text-base capitalize cursor-pointer transition-colors ${
+                isSelected ? "text-black font-medium" : "text-[#616161] hover:text-black"
+              }`}
+              onClick={() => handleParams("category", isSelected ? undefined : item?.slug)}
+            >
+              {item?.name?.split("-").join(" ")}
+            </div>
           );
         })}
       </div>

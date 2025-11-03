@@ -27,7 +27,7 @@ const CreateRegistry: React.FC = () => {
 
     const [formData, setFormData] = useState<{
         name: string;
-        type: 'wedding' | 'baby-shower' | 'birthday' | 'housewarming' | 'graduation' | 'other';
+        type: 'wedding' | 'housewarming' | 'other';
         date: string;
         description: string;
         coverImage: File | null;
@@ -89,13 +89,11 @@ const CreateRegistry: React.FC = () => {
     };
 
     const handleFiles = (file: File) => {
-        // Check file size (5MB max)
         if (file.size > 5 * 1024 * 1024) {
             toast.error('File size must be less than 5MB');
             return;
         }
 
-        // Check file type
         if (!file.type.startsWith('image/')) {
             toast.error('Please upload an image file');
             return;
@@ -120,7 +118,6 @@ const CreateRegistry: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Validation
         if (!formData.name.trim()) {
             toast.error('Registry name is required');
             return;
@@ -230,10 +227,7 @@ const CreateRegistry: React.FC = () => {
                                 required
                             >
                                 <option value="wedding">Wedding</option>
-                                <option value="baby-shower">Baby Shower</option>
-                                <option value="birthday">Birthday</option>
                                 <option value="housewarming">Housewarming</option>
-                                <option value="graduation">Graduation</option>
                                 <option value="other">Other</option>
                             </select>
                         </div>

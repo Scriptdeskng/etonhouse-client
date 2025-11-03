@@ -12,24 +12,24 @@ import Image from "next/image";
 
 const heroSlides = [
   {
-    title: "Elevate Your Space with Timeless Furniture",
-    subtitle: "Discover handcrafted pieces designed for modern living",
+    title: "Elevate Your Space with\nTimeless Furniture",
+    subtitle: "Discover handcrafted pieces\ndesigned for modern living",
     buttonText: "Shop now",
     buttonLink: "/shop",
     image: "/assets/webp/hero1.webp",
     imageAlt: "chair hero",
   },
   {
-    title: "Furnish Smarter: Bundle & Save",
-    subtitle: "Select entire packages for convenience & savings, or customize item by item",
+    title: "Furnish Smarter: Bundle &\nSave",
+    subtitle: "Select entire packages for savings\n& convenience, or customize item by item",
     buttonText: "Shop Packages",
     buttonLink: "/packages",
     image: "/assets/png/package-hero.png",
     imageAlt: "packages hero",
   },
   {
-    title: "Make Gifting Easy for Friends & Family",
-    subtitle: "From weddings to birthdays, make celebrations easier with a custom gift registry",
+    title: "Make Gifting Easy for\nFriends & Family",
+    subtitle: "From weddings to birthdays, make\ncelebrations easier with a\ncustom gift registry",
     buttonText: "Create a Registry",
     buttonLink: "/registry",
     image: "/assets/png/registry-banner.png",
@@ -49,24 +49,24 @@ const Hero = () => {
       >
         {heroSlides.map((slide, idx) => (
           <SwiperSlide key={idx}>
-            <div className="w-full grid lg:grid-cols-2 items-center gap-4 xl:gap-16 px-5 py-7 xl:px-20 xl:py-10">
+            <div className="w-full my-10 grid lg:grid-cols-2 items-center gap-10 sm:gap-16 px-5 py-7 xl:px-20 xl:py-10">
               {/* Text Section */}
-              <div className="w-[320px] sm:w-full flex flex-col items-start gap-5 md:gap-7.5">
+              <div className="w-[320px] sm:w-full flex flex-col items-start gap-3 md:gap-7.5">
                 <EnterFromX>
-                  <h1 className="text-2xl sm:text-3xl md:text-4xl leading-[150%] font-bold text-black-200">
+                  <h1 className="text-2xl md:text-4xl leading-[150%] font-bold text-black-200 whitespace-pre-line">
                     {slide.title}
                   </h1>
                 </EnterFromX>
 
                 <EnterFromY initial={30}>
-                  <p className="text-xl sm:text-2xl md:text-3xl xl:text-[32px] text-black-200 pr-4">
+                  <p className="text-lg sm:text-xl md:text-2xl text-black-200 pr-4 whitespace-pre-line">
                     {slide.subtitle}
                   </p>
                 </EnterFromY>
 
                 <ButtonLink
                   text={slide.buttonText}
-                  className="w-[110px] text-[8px] h-8 py-0 flex items-center justify-center"
+                  className="text-sm h-10 w-40 flex items-center justify-center sm:h-12 sm:w-48 xl:w-52"
                   path={slide.buttonLink}
                 />
               </div>
@@ -74,7 +74,7 @@ const Hero = () => {
               {/* Image Section */}
               <EnterFromX
                 initial={300}
-                className="relative mx-auto xl:mx-0 w-[280px] h-[280px] sm:w-100 sm:h-100 xl:w-[558px] xl:h-[558px]"
+                className="relative mx-auto xl:mx-0 w-[300px] h-[300px] sm:w-100 sm:h-100 lg:w-[629px] lg:h-[537px]"
               >
                 <Image
                   src={slide.image}

@@ -36,27 +36,28 @@ const NewArrivals = () => {
       Number(width) >= 1280
         ? 4
         : Number(width) >= 1024
-        ? 3
-        : Number(width) >= 768
-        ? 2
-        : 1,
+          ? 3
+          : Number(width) >= 768
+            ? 2
+            : 1,
     slidesToScroll: 1,
     arrows: false,
   };
 
   return (
-    <PageTitle title="NEW ARRIVALS" background="bg-white" path="/shop">
-      <div className="relative w-full px-10 xl:pb-8 xl:border-b xl:border-black">
-        <button
-          onClick={() => sliderRef.current?.slickPrev()}
-          className="absolute left-0 top-1/2 -translate-y-1/2 w-10 xl:w-12.5 h-10 xl:h-12.5 z-10 rounded-full bg-white flex xl:hidden items-center justify-center cursor-pointer shadow-md"
-        >
-          <FiArrowLeft className="text-black-300" size={20} />
-        </button>
+    <div className="w-full max-w-[1536px] mx-auto">
+      <PageTitle title="NEW ARRIVALS" background="bg-white" path="/shop">
+        <div className="relative w-full px-10">
+          <button
+            onClick={() => sliderRef.current?.slickPrev()}
+            className="absolute left-0 top-1/2 -translate-y-1/2 w-10 xl:w-12.5 h-10 xl:h-12.5 z-10 rounded-full bg-white flex xl:hidden items-center justify-center cursor-pointer shadow-md"
+          >
+            <FiArrowLeft className="text-black-300" size={20} />
+          </button>
 
-        <Slider {...settings} ref={sliderRef}>
-          {isLoading
-            ? Array(4)
+          <Slider {...settings} ref={sliderRef}>
+            {isLoading
+              ? Array(4)
                 .fill({})
                 .map((_, index) => (
                   <div key={index} className="p-5">
@@ -66,7 +67,7 @@ const NewArrivals = () => {
                     />
                   </div>
                 ))
-            : data?.results?.map((product: any) => (
+              : data?.results?.map((product: any) => (
                 <div key={product.name} className="p-5">
                   <ProductCard
                     id={product?.slug}
@@ -78,16 +79,17 @@ const NewArrivals = () => {
                   />
                 </div>
               ))}
-        </Slider>
+          </Slider>
 
-        <button
-          onClick={() => sliderRef.current?.slickNext()}
-          className="absolute right-0 top-1/2 -translate-y-1/2 w-10 xl:w-12.5 h-10 xl:h-12.5 z-10 rounded-full bg-white flex xl:hidden items-center justify-center cursor-pointer shadow-md"
-        >
-          <FiArrowRight className="text-black-300" size={20} />
-        </button>
-      </div>
-    </PageTitle>
+          <button
+            onClick={() => sliderRef.current?.slickNext()}
+            className="absolute right-0 top-1/2 -translate-y-1/2 w-10 xl:w-12.5 h-10 xl:h-12.5 z-10 rounded-full bg-white flex xl:hidden items-center justify-center cursor-pointer shadow-md"
+          >
+            <FiArrowRight className="text-black-300" size={20} />
+          </button>
+        </div>
+      </PageTitle>
+    </div>
   );
 };
 

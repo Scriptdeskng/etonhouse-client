@@ -1,7 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryOptions, QueryKey  } from "@tanstack/react-query";
 import makeRequest from "@/config/axios";
 
-export const useAllProducts = (params?: any) => {
+export const useAllProducts = (
+  params?: any,
+  options?: Omit<UseQueryOptions<any, Error, any, QueryKey>, "queryKey" | "queryFn">
+) => {
   return useQuery({
     queryKey: ["all-products", { params }],
     queryFn: () =>
@@ -11,6 +14,7 @@ export const useAllProducts = (params?: any) => {
         params,
       }),
     retry: 1,
+    ...options,
   });
 };
 

@@ -125,7 +125,7 @@ export const useGetUserOrders = () => {
     queryKey: ["user-orders"],
     queryFn: () =>
       makeRequest({
-        url: "my_orders/",
+        url: "orders/my_orders/",
         requireToken: true,
         token,
       }),

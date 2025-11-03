@@ -1,7 +1,7 @@
 import Entrance from "@/animated/Entrance";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
-import { useGetOrderById } from "@/services/order.service";
+import { useGetOrderById, useVerifyPayment } from "@/services/order.service";
 import { useCartStore } from "@/store/cartStore";
 import Confirm from "@/ui/confirmation/confirm";
 import Shipping from "@/ui/confirmation/shipping";
@@ -15,17 +15,27 @@ const Confirmation = () => {
 
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
+  const reference = searchParams.get("reference");
 
-  const { data, isLoading } = useGetOrderById(orderId);
+  const { mutate: verifyPayment } = useVerifyPayment();
+
+  const { data, isLoading, refetch } = useGetOrderById(orderId);
 
   useEffect(() => {
-    clearCart();
-  }, [clearCart]);
+    if (reference) {
+      verifyPayment(reference, {
+        onSuccess: () => {
+          clearCart();
+          refetch();
+        },
+      });
+    }
+  }, [reference, verifyPayment, clearCart, refetch]);
 
   return (
     <Entrance>
       <Navbar active={10} />
-      <div className="px-5 xl:px-20">
+      <div className="px-5 xl:px-20 max-w-[1536px] mx-auto pt-10">
         <Confirm isLoading={isLoading} data={data} />
         <Shipping isLoading={isLoading} data={data} />
         <Summary isLoading={isLoading} data={data} />

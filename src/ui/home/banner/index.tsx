@@ -15,15 +15,14 @@ const Banner = () => {
         />
 
         <p className="text-xs sm:text-lg leading-0 text-black-200">
-          <span className="hidden sm:inline">Hotline:</span> +234 345 789 2233
+          <span className="hidden sm:inline">Hotline:</span> +2348090397777
         </p>
       </div>
 
       <div className="hidden md:flex items-center gap-4.5">
-        <NavIcon icon="facebook" path="https://facebook.com" />
-        <NavIcon icon="linkedin" path="https://linkedin.com" />
-        <NavIcon icon="twitter" path="https://x.com" />
-        <NavIcon icon="instagram" path="https://instagram.com" />
+        <NavIcon icon="facebook" path="https://www.facebook.com/EtonhouseNG" />
+        <NavIcon icon="linkedin" path="https://www.linkedin.com/company/etonhouse-nigeria/" />
+        <NavIcon icon="instagram" path="https://instagram.com/etonhouse" />
       </div>
     </div>
     </div>
