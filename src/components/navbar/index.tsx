@@ -123,7 +123,7 @@ const Navbar = ({ active = 0 }: Props) => {
                   );
                 })}
 
-                <button className="hidden sm:flex gap-2 items-center cursor-pointer" onClick={() => setShowSearch(true)}>
+                <button className="text-black-100 flex gap-2 items-center cursor-pointer" onClick={() => setShowSearch(true)}>
                   <IoSearchOutline className="w-4.5 h-4.5 sm:w-6 sm:h-6 relative cursor-pointer" />
                   Search
                 </button>

@@ -26,11 +26,11 @@ const Steps = ({ id }: Props) => {
       </div>
 
       <div className="max-w-[700px] grid grid-cols-2 gap-4">
-        <ButtonLink
+        {/* <ButtonLink
           text="Track my order"
           path={`/track?orderId=${id}`}
           className="text-white !rounded-none !text-sm !h-11 !py-0 flex items-center justify-center"
-        />
+        /> */}
 
         <ButtonLink
           text="Continue shopping"
