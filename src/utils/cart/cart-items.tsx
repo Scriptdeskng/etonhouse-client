@@ -4,16 +4,22 @@ import Checkout from "./checkout";
 import { useCartStore } from "@/store/cartStore";
 import EmptyCart from "./empty-cart";
 import { useEffect, useState } from "react";
+import PackageCartCard from "./package-cart-card";
 
 const CartItems = () => {
-  const { cart, getTotalPrice } = useCartStore();
+  const { cart, packages, getCombinedTotalPrice, getCombinedItemCount } = useCartStore();
 
   const [total, setTotal] = useState<number>(0);
+  const [itemCount, setItemCount] = useState<number>(0);
 
   useEffect(() => {
-    const value = getTotalPrice();
-    setTotal(value);
-  }, [cart, getTotalPrice]);
+    const totalValue = getCombinedTotalPrice();
+    const count = getCombinedItemCount();
+    setTotal(totalValue);
+    setItemCount(count);
+  }, [cart, packages, getCombinedTotalPrice, getCombinedItemCount]);
+
+  const isEmpty = cart?.length < 1 && packages?.length < 1;
 
   return (
     <div className="pt-4 pb-24 space-y-[30px]">
@@ -33,10 +39,18 @@ const CartItems = () => {
       </div>
 
       <div className="lg:space-y-[14px]">
-        {cart?.length < 1 ? (
+        {isEmpty ? (
           <EmptyCart />
         ) : (
-          cart?.map((item: any) => <CartCard product={item} key={item?.id} />)
+          <>
+            {packages?.map((pkg: any) => (
+              <PackageCartCard key={pkg.id} package={pkg} />
+            ))}
+
+            {cart?.map((item: any) => (
+              <CartCard product={item} key={item?.id} />
+            ))}
+          </>
         )}
       </div>
 
@@ -55,7 +69,7 @@ const CartItems = () => {
       </div>
 
       <div className="w-full flex items-start gap-2 justify-between">
-        <Checkout total={total} count={cart?.length} />
+        <Checkout total={total} count={itemCount} />
 
         <div className="hidden md:inline">
           <CartCoupon />

@@ -15,12 +15,8 @@ import { useCartStore } from "@/store/cartStore";
 import useAuthStore from "@/store/authStore";
 
 const methods = [
-  // { label: "Credit/Debit Card (Visa, MasterCard, Verve)", value: "Card" },
-  // { label: "Bank Transfer", value: "Transfer" },
-  // { label: "Pay on Delivery (Available in select locations)", value: "Cash" },
-  // { label: "Mobile Wallet (Flutterwave, Paystack, etc.)", value: "Wallet" },
-  // { label: "Flutterwave", value: "flutterwave" },
-  { label: "Mobile Wallet (Paystack, etc.)", value: "paystack" },
+  { label: "Novac Payment (Recommended)", value: "nova" },
+  { label: "Mobile Wallet (Paystack)", value: "paystack" },
 ];
 
 const CheckInfo = () => {
@@ -42,7 +38,7 @@ const CheckInfo = () => {
   const { mutate: createOrder, isPending: orderPending } = useCreateOrder();
   const { mutate: orderPayment, isPending: payPending } = usePayment();
 
-  const [paymentMethod, setPaymentMethod] = useState("paystack");
+  const [paymentMethod, setPaymentMethod] = useState("nova");
   const [checked, setChecked] = useState<boolean>(false);
   const [saveAddress, setSaveAddress] = useState<boolean>(true);
 
@@ -102,6 +98,7 @@ const CheckInfo = () => {
             email: res?.guest_email ?? data.email,
             order_id: res?.id,
             reference: res?.order_number,
+            payment_method: paymentMethod,
           },
           {
             onSuccess: (response) => {
@@ -114,7 +111,8 @@ const CheckInfo = () => {
           }
         );
       },
-      onError: () => {
+      onError: (error) => {
+        console.log("Order creation error:", error.response.data);
         toast.error("Error occurred while creating order!");
       },
     });
@@ -176,6 +174,7 @@ const CheckInfo = () => {
             label={item.label}
             name="payment"
             value={item.value}
+            checked={paymentMethod === item.value}
             onChecked={(e) => setPaymentMethod(e.target.value)}
             key={item.value}
           />

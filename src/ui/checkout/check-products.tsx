@@ -3,14 +3,14 @@ import { useCartStore } from "@/store/cartStore";
 import { useEffect, useState } from "react";
 
 const CheckProducts = () => {
-  const { cart, getTotalPrice } = useCartStore();
+  const { cart, packages, getCombinedTotalPrice } = useCartStore();
 
   const [total, setTotal] = useState<number>(0);
 
   useEffect(() => {
-    const value = getTotalPrice();
+    const value = getCombinedTotalPrice();
     setTotal(value);
-  }, [getTotalPrice]);
+  }, [cart, packages, getCombinedTotalPrice]);
 
   const checking = [
     {
@@ -19,15 +19,15 @@ const CheckProducts = () => {
     },
     {
       title: "📦 SHIPPING",
-      value: "Enter your address to view shipping options.",
+      value: "",
     },
     {
       title: "🎁 DISCOUNT APPLIED",
-      value: " -₦10,000 (Promo Code: WELCOME10)",
+      value: packages?.length > 0 ? `₦${packages.reduce((sum, pkg) => sum + pkg.savedAmount, 0).toLocaleString("en-GB")}` : "None",
     },
     {
       title: "TOTAL",
-      value: `₦${Number(total - 10000).toLocaleString("en-GB")}`,
+      value: `₦${Number(total).toLocaleString("en-GB")}`,
     },
   ];
 
@@ -44,10 +44,41 @@ const CheckProducts = () => {
 
       <div className="w-full flex flex-col gap-5 lg:py-[30px] bg-[#FDFDFD] md:border-[0.5px] md:border-[#61616133]">
         <div className="lg:space-y-6">
+          {packages?.map((pkg: any) => (
+            <div
+              className="w-full grid grid-cols-[65%_1fr] gap-1 border-b-[0.6px] border-[#61616133] pt-4 pb-2.5 md:border-none lg:p-0"
+              key={`package-${pkg.id}`}
+            >
+              <div className="md:pl-2 lg:pl-4 flex flex-col md:flex-row lg:items-center gap-2.5 lg:gap-[30px]">
+                <img
+                  src={pkg?.image}
+                  alt={pkg?.name}
+                  width={80}
+                  height={80}
+                  className="object-contain"
+                />
+
+                <div className="flex flex-col gap-2.5 lg:gap-3">
+                  <p className="leading-[100%] text-[#333333] font-medium">
+                    {pkg?.name}
+                  </p>
+
+                  <div className="text-xs text-[#666666]">
+                    {pkg?.items?.length} items included
+                  </div>
+                </div>
+              </div>
+
+              <p className="pl-2.5 xl:pl-[30px] text-[#333333] text-end sm:text-start font-medium">
+                ₦{Number(pkg?.discountedPrice).toLocaleString()}
+              </p>
+            </div>
+          ))}
+
           {cart?.map((item: any) => (
             <div
               className="w-full grid grid-cols-[65%_1fr] gap-1 border-b-[0.6px] border-[#61616133] pt-4 pb-2.5 md:border-none lg:p-0"
-              key={item.id}
+              key={`item-${item.id}`}
             >
               <div className="md:pl-2 lg:pl-4 flex flex-col md:flex-row lg:items-center gap-2.5 lg:gap-[30px]">
                 <img
@@ -84,9 +115,8 @@ const CheckProducts = () => {
               </div>
               {
                 <div
-                  className={`w-full h-14 bg-[#F2F2F2] p-2 lg:pl-[30px] flex items-center ${
-                    index === 3 ? "font-bold" : "font-medium"
-                  }`}
+                  className={`w-full h-14 bg-[#F2F2F2] p-2 lg:pl-[30px] flex items-center ${index === 3 ? "font-bold" : "font-medium"
+                    }`}
                 >
                   {item.value}
                 </div>

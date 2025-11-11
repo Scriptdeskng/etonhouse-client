@@ -37,10 +37,10 @@ function ProductSlider({ products, isLoading }: Props) {
       Number(width) >= 1280
         ? 4
         : Number(width) >= 1024
-        ? 3
-        : Number(width) >= 768
-        ? 2
-        : 1,
+          ? 3
+          : Number(width) >= 768
+            ? 2
+            : 1,
     slidesToScroll: 1,
     arrows: false,
   };
@@ -57,27 +57,20 @@ function ProductSlider({ products, isLoading }: Props) {
       <Slider {...settings} ref={sliderRef}>
         {isLoading
           ? Array(4)
-              .fill({})
-              .map((_, index) => (
-                <div key={index} className="p-5">
-                  <Skeleton
-                    className="w-full max-w-[280px] xl:max-w-full h-[450px] pt-18 rounded-[20px]"
-                    key={index}
-                  />
-                </div>
-              ))
-          : products?.slice(0,8)?.map((product) => (
-              <div key={product.name} className="p-5">
-                <Product
-                  id={product?.slug}
-                  image={product?.images[0]?.image}
-                  title={product?.category?.name?.split("-").join(" ")}
-                  name={product?.name}
-                  price={Number(product?.current_price).toLocaleString("en-GB")}
-                  variants={product?.variants}
+            .fill({})
+            .map((_, index) => (
+              <div key={index} className="p-5">
+                <Skeleton
+                  className="w-full max-w-[280px] xl:max-w-full h-[450px] pt-18 rounded-[20px]"
+                  key={index}
                 />
               </div>
-            ))}
+            ))
+          : products?.slice(0, 8)?.map((product) => (
+            <div key={product.id || product.slug} className="p-5">
+              <Product product={product} />
+            </div>
+          ))}
       </Slider>
 
       <button

@@ -17,42 +17,32 @@ const RecentlyViewed = () => {
       <div className="px-5 xl:px-16 w-full hidden lg:grid grid-cols-4 gap-10 pb-20 border-b border-black">
         {isLoading
           ? Array(4)
-              .fill({})
-              .map((_, index) => (
-                <Skeleton height={380} className="w-full" key={index} />
-              ))
+            .fill({})
+            .map((_, index) => (
+              <Skeleton height={380} className="w-full" key={index} />
+            ))
           : data?.results?.slice(0, 4).map((item: any) => {
-              return (
-                <ProductCard
-                  id={item?.slug}
-                  name={item?.name}
-                  image={item?.images[0]?.image ?? null}
-                  price={Number(item?.current_price).toLocaleString("en-GB")}
-                  key={item?.id}
-                />
-              );
-            })}
+            return (
+              <ProductCard product={item} key={item?.id} />
+            );
+          })}
       </div>
 
       <div className="px-5 w-full lg:hidden grid grid-cols-2 gap-4">
         {isLoading
           ? Array(4)
-              .fill({})
-              .map((_, index) => (
-                <Skeleton height={280} className="w-full" key={index} />
-              ))
+            .fill({})
+            .map((_, index) => (
+              <Skeleton height={280} className="w-full" key={index} />
+            ))
           : data?.results?.slice(0, 2).map((item: any) => {
-              return (
-                <ResponsiveProduct
-                  name={item?.name}
-                  image={item?.images[0]?.image}
-                  price={Number(item?.current_price).toLocaleString("en-GB")}
-                  key={item?.name}
-                  variants={item?.variants}
-                  productId={item?.id}
-                />
-              );
-            })}
+            return (
+              <ResponsiveProduct
+                key={item?.id}
+                product={item}
+              />
+            );
+          })}
       </div>
     </PageTitle>
   );

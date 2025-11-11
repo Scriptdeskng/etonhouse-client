@@ -7,14 +7,13 @@ import Navbar from "@/components/navbar";
 import { useAllPackages } from "@/services/package.service";
 import { useCartStore } from "@/store/cartStore";
 import { Package } from "@/types/package";
-import toast from "react-hot-toast";
 import { useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import useAuthStore from '@/store/authStore';
 
 const PackagesIndexPage: React.FC = () => {
   const { data, isLoading, isError } = useAllPackages({ page: 1 });
-  const addToCart = useCartStore((state) => state.addToCart);
+  const addPackageToCart = useCartStore((state) => state.addPackageToCart);
   const router = useRouter();
   const { isAuthenticated } = useAuthStore();
 
@@ -24,22 +23,11 @@ const PackagesIndexPage: React.FC = () => {
     }
   }, [isAuthenticated, router]);
 
-  const handleBuyAll = (pkg: Package) => {
+  const handleBuyAll = async (pkg: Package) => {
     try {
-      pkg.items.forEach((item) => {
-        addToCart({
-          id: item.id,
-          name: item.product,
-          image: item.product_image,
-          price: parseFloat(pkg.discounted_price) / pkg.items.length,
-          quantity: item.quantity,
-        });
-      });
-
-      toast.success(`${pkg.name} added to cart!`);
+      await addPackageToCart(pkg);
     } catch (error) {
       console.error("Error adding package to cart:", error);
-      toast.error("Failed to add package to cart");
     }
   };
 
@@ -53,7 +41,7 @@ const PackagesIndexPage: React.FC = () => {
 
   return (
     <Entrance>
-      <Navbar active={4} />
+      <Navbar active={3} />
       <div className="container max-w-[1536px] mx-auto px-5 sm:px-10 lg:px-20 pt-10 pb-32">
         <div className="mb-8">
           <h1 className="text-2xl font-semibold mb-4">Packages</h1>

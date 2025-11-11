@@ -16,7 +16,9 @@ interface Props {
 
 const Navbar = ({ active = 0 }: Props) => {
   const { isAuthenticated } = useAuthStore();
-  const { cart } = useCartStore();
+  const { cart, packages } = useCartStore();
+
+  const totalCartItems = cart?.length + packages?.length;
 
   const links = [
     { text: "Home", path: "/" },
@@ -75,7 +77,7 @@ const Navbar = ({ active = 0 }: Props) => {
             <NavIcon icon="cart" path="/cart" />
 
             <div className="cursor-pointer absolute -top-3 -right-2 bg-[#333333] rounded-full text-white text-[8px] leading-none font-bold w-4 h-4 flex items-center justify-center">
-              {cart?.length}
+              {totalCartItems}
             </div>
           </div>
 

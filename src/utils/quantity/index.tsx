@@ -10,7 +10,7 @@ const Quantity = ({ count, setCount, size = "lg" }: Props) => {
   return (
     <div
       className={`flex items-center justify-between text-[#9E9E9E] border border-[#A3A3A3] ${
-        size === "lg" && "w-[95px] h-8 sm:w-[160px] sm:h-14 px-3"
+        size === "lg" && "w-[95px] h-8 sm:w-[160px] sm:h-12 px-3"
       } ${size === "sm" && "h-5 w-14 sm:h-8 sm:w-20 px-1"}`}
     >
       <button

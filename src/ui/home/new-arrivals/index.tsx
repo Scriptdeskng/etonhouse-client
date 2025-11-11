@@ -68,15 +68,8 @@ const NewArrivals = () => {
                   </div>
                 ))
               : data?.results?.map((product: any) => (
-                <div key={product.name} className="p-5">
-                  <ProductCard
-                    id={product?.slug}
-                    image={product?.images[0]?.image ?? null}
-                    name={product?.name}
-                    price={Number(product?.current_price).toLocaleString(
-                      "en-GB"
-                    )}
-                  />
+                <div key={product.id || product.slug} className="p-5">
+                  <ProductCard product={product} />
                 </div>
               ))}
           </Slider>

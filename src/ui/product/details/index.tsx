@@ -1,4 +1,4 @@
-import { Product } from "@/pages/product/[id]";
+import { Product } from "@/types/product";
 import DetailsImg from "./details-img";
 import DetailsInfo from "./details-info";
 import Link from "next/link";
@@ -35,7 +35,8 @@ const Details = ({ product, isLoading }: Props) => {
             <Skeleton width={100} height={64} count={4} />
           </div>
         ) : (
-          <DetailsImg images={product?.images} />
+          <DetailsImg images={product?.images.map(img => img.image)} />
+
         )}
       </div>
 

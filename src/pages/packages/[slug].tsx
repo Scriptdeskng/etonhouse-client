@@ -16,14 +16,15 @@ interface PackageDetailsPageProps {
 
 function PackageDetailsPage({ slug }: PackageDetailsPageProps) {
   const addToCart = useCartStore((state) => state.addToCart);
+  const addPackageToCart = useCartStore((state) => state.addPackageToCart);
   const router = useRouter();
-    const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated } = useAuthStore();
   
-    useEffect(() => {
-      if (!isAuthenticated) {
-        router.push('/account?redirect=packages');
-      }
-    }, [isAuthenticated, router]);
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/account?redirect=packages');
+    }
+  }, [isAuthenticated, router]);
 
   if (router.isFallback) {
     return <div>Loading...</div>;
@@ -53,16 +54,12 @@ function PackageDetailsPage({ slug }: PackageDetailsPageProps) {
     router.push("/packages");
   };
 
-  const handleBuyAll = (pkg: Package) => {
-    pkg.items.forEach((item) => {
-      addToCart({
-        id: item.id,
-        name: item.product,
-        image: item.product_image,
-        price: parseFloat(pkg.discounted_price) / pkg.items.length,
-        quantity: item.quantity,
-      });
-    });
+  const handleBuyAll = async (pkg: Package) => {
+    try {
+      await addPackageToCart(pkg);
+    } catch (error) {
+      console.error("Error adding package to cart:", error);
+    }
   };
 
   const handleAddToCart = (productId: string, quantity: number) => {
