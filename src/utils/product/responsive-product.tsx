@@ -69,7 +69,7 @@ const ResponsiveProduct = ({ product }: Props) => {
         <button
           onClick={handleToggleFavorite}
           disabled={addToWishlist.isPending || removeFromWishlist.isPending}
-          className="absolute top-3 right-3 text-black cursor-pointer z-50 p-1 hover:scale-110 transition-transform disabled:opacity-50"
+          className="absolute top-3 right-3 text-black cursor-pointer z-20 p-1 hover:scale-110 transition-transform disabled:opacity-50"
         >
           {isProductFavorite ? (
             <FaHeart size={16} className="text-red-500" />

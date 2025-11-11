@@ -160,7 +160,7 @@ const ProductVariantSelector = ({
   ];
 
   const content = (
-    <div className={`${isModal ? "bg-white" : "w-full"}`}>
+    <div className={`${isModal ? "bg-white" : "w-full p-6 lg:py-10 lg:px-20"}`}>
       {isModal && (
         <div className="flex items-center justify-end mb-2 pb-4">
           <button
@@ -329,7 +329,6 @@ const ProductVariantSelector = ({
     </div >
   );
 
-  // --- Modal portal ---
   if (isModal) {
     return createPortal(
       <div className="fixed inset-0 z-50 overflow-y-auto bg-black/50 flex items-center justify-center p-4">
