@@ -112,7 +112,6 @@ const CheckInfo = () => {
         );
       },
       onError: (error) => {
-        console.log("Order creation error:", error.response.data);
         toast.error("Error occurred while creating order!");
       },
     });

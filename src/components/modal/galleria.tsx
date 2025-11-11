@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Product } from "@/pages/product/[id]";
+import { Product } from "@/types/product";
 import Modal from "@/utils/modal";
 import Link from "next/link";
 import { MdClose } from "react-icons/md";
@@ -34,12 +34,12 @@ const Galleria = ({ product, open, handleClose }: Props) => {
         </p>
 
         <div className="w-full h-[300px] md:h-[360px] lg:h-[450px] relative">
-          <img
+          {/* <img
             src={product?.images?.[0]}
             alt="enlarged"
             className="object-contain h-full w-full"
             loading="eager"
-          />
+          /> */}
         </div>
       </div>
     </Modal>
