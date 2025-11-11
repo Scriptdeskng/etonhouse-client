@@ -58,7 +58,7 @@ const ProductCard = ({ product }: Props) => {
           </div>
 
           <div className="w-full flex items-center justify-between mt-5">
-            <p className="text-black font-semibold text-lg">{product.price_range}</p>
+            <p className="text-black font-semibold text-lg">₦{product.price_range}</p>
 
             <button className="cursor-pointer" onClick={handleAddClick}>
               <Image
