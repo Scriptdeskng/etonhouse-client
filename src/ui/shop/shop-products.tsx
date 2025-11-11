@@ -77,13 +77,8 @@ const ShopProducts = ({
             data?.results?.map((product: any) => {
               return (
                 <ResponsiveProduct
-                  id={product?.slug}
-                  name={product?.name}
-                  image={product?.images[0]?.image}
-                  price={Number(product?.current_price).toLocaleString("en-GB")}
-                  variants={product?.variants}
                   key={product?.id}
-                  productId={product?.id}
+                  product={product}
                 />
               );
             })

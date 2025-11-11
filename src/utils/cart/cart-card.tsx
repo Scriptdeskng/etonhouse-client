@@ -16,14 +16,14 @@ const CartCard = ({
       <div className="flex items-center gap-2.5 lg:gap-[30px] lg:pl-[30px]">
         <img
           src={product?.image}
-          alt={product?.name}
+          alt={product?.slug}
           width={80}
           height={80}
           className="object-contain"
         />
 
         <div className="flex flex-col gap-2.5 lg:gap-5">
-          <p className="md:text-xl leading-[100%] font-medium text-[#333333] capitalize">
+          <p className="xl:text-lg leading-[100%] font-medium text-[#333333] capitalize">
             {product?.name}
           </p>
 

@@ -5,51 +5,36 @@ const Testimonials = () => {
   return (
     <div className="w-full max-w-[1536px] mx-auto">
     <PageTitle title="TESTIMONIALS" button={{ exists: false }}>
-      <div className="w-full flex flex-col md:flex-row justify-center md:items-center gap-8">
-        <div className="h-20 w-full sm:h-60 md:w-100 md:h-100 relative flex items-center gap-8 md:flex-none">
-          <div className="w-20 h-20 sm:w-60 sm:h-60 md:w-full md:h-full relative">
-            <Image
-              src="/assets/webp/testimonial.webp"
-              alt="User"
-              fill
-              quality={100}
-              className="object-cover"
-            />
-          </div>
-
-          <div className="md:absolute md:left-0 md:bottom-3">
-            <p className="text-lg sm:text-2xl md:text-xl lg:text-2xl text-blue-200 font-bold">
-              John Doe
-            </p>
-            <p className="text-sm sm:text-base md:text-sm lg:text-base text-[#5F6470]">
-              SomeCompany LLC.
-            </p>
-          </div>
-        </div>
-
-        <div className="relative flex flex-col items-start">
+      <div className="flex flex-col gap-10 items-center md:flex-row justify-center">
+        <div className="w-full lg:w-1/2">
           <Image
-            src="/assets/svg/left-quote.svg"
-            alt="Left Quote"
-            width={53}
-            height={46}
-            className="hidden lg:flex"
-          />
+            src="/assets/testimonials/testimonial.png"
+            alt="Testimonials"
+            width={500}
+            height={500}
+            className="w-full h-auto lg:w-[600px] object-cover">
+          </Image>
+        </div>
 
-          <p className="lg:mt-3.5 xl:ml-10 w-full max-w-125.5 text-sm sm:text-2xl md:text-xl xl:text-2xl text-black xl:text-blue-200 pr-4 sm:pr-12 md:pr-0">
-            The quality of the furniture exceeded my expectations! The delivery
-            was smooth, and the design fits perfectly in my home.
-          </p>
+        <div className="w-full lg:w-1/2 flex flex-col-reverse gap-5 lg:flex-col">
+          <div>
+            <p>“Eton House furniture completely transformed my living room. The quality is outstanding, and it arrived exactly as pictured.”</p>
 
-          <div className="self-end -mr-10 hidden xl:flex">
-            <Image
-              src="/assets/svg/right-quote.svg"
-              alt="Left Quote"
-              width={53}
-              height={46}
-            />
+            <div className="flex flex-row items-center gap-3 my-3">
+              <div className="h-0.25 w-8 bg-black" />
+              <Image src="/assets/testimonials/header.png" alt="Quote" width={24} height={24} className="object-cover" />
+              <p>Amaka O., Lagos</p>
+            </div>
+          </div>
+
+          <div className="flex flex-row gap-5">
+            <Image src="/assets/testimonials/frame1.png" alt="Frame 1" width={75} height={50} className="" />
+            <Image src="/assets/testimonials/frame2.png" alt="Frame 2" width={75} height={50} className="" />
+            <Image src="/assets/testimonials/frame3.png" alt="Frame 3" width={75} height={50} className="" />
           </div>
         </div>
+
+
       </div>
     </PageTitle>
     </div>

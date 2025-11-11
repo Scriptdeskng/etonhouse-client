@@ -31,4 +31,5 @@ export interface Payment {
   email: string;
   reference: string;
   order_id: number;
+  payment_method?: string;
 }
