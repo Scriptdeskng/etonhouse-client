@@ -86,10 +86,14 @@ const CheckInfo = () => {
       }
     }
 
-    const orderPayload = OrderConvert(cart, data, paymentMethod, {
-      addressId,
-      isUsingSavedAddress,
-    });
+    const cartStore = useCartStore.getState();
+
+    const orderPayload = OrderConvert(
+      { cart: cartStore.cart, packages: cartStore.packages },
+      data,
+      paymentMethod,
+      { addressId, isUsingSavedAddress }
+    );
 
     createOrder(orderPayload, {
       onSuccess: (res) => {

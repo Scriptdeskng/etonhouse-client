@@ -19,8 +19,12 @@ const CheckProducts = () => {
     },
     {
       title: "📦 SHIPPING",
-      value: "",
+      value: "Calculated at checkout",
     },
+    // {
+    //   title: "💳 TAX",
+    //   value: "Calculated at checkout",
+    // },
     {
       title: "🎁 DISCOUNT APPLIED",
       value: packages?.length > 0 ? `₦${packages.reduce((sum, pkg) => sum + pkg.savedAmount, 0).toLocaleString("en-GB")}` : "None",

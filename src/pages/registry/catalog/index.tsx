@@ -53,22 +53,24 @@ const RegistryCatalog: React.FC = () => {
     return () => clearTimeout(timer);
   }, [searchInput]);
 
-  const handleAddToRegistry = async (productId: string, quantity: number) => {
+  const handleAddToRegistry = async (
+    productId: string,
+    quantity: number,
+    variantId: number,
+    finalPrice: number
+  ) => {
     if (!registryId) {
       toast.error('Registry ID is missing');
       return;
     }
 
     try {
-      const product = productsData?.results?.find((p: any) => p.id === productId);
-      const variantId = product?.variants?.[0]?.id;
-
       await addItemMutation.mutateAsync({
         registryId,
         data: {
           product_id: Number(productId),
           product_variant_id: variantId,
-          product_price: parseFloat(product?.current_price) || 0,
+          product_price: finalPrice,
           quantity_requested: quantity,
         }
       });
@@ -143,7 +145,7 @@ const RegistryCatalog: React.FC = () => {
 
                 {getTotalItemsAdded() > 0 && (
                   <div className="text-black-400 border w-32 sm:w-44 flex items-center justify-center border-text-100 text-sm sm:text-base py-1 sm:py-2 rounded-full gap-1">
-                    <span className="font-medium">{getTotalItemsAdded()} items </span>  added
+                    <span className="font-medium">{getTotalItemsAdded()} items </span> added
                   </div>
                 )}
               </div>
@@ -191,7 +193,8 @@ const RegistryCatalog: React.FC = () => {
                     id={product.id}
                     name={product.name}
                     image={product.images?.[0]?.image || '/placeholder.png'}
-                    price={Number(product.current_price)}
+                    price_range={product.price_range}
+                    product={product}
                     onAddToRegistry={handleAddToRegistry}
                   />
                 ))

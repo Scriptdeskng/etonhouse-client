@@ -45,7 +45,6 @@ const ShareRegistryModal: React.FC<ShareRegistryModalProps> = ({
       setCopied(true);
       toast.success('Link copied to clipboard!');
       
-      // Reset copied state after 2 seconds
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
       toast.error('Failed to copy link');

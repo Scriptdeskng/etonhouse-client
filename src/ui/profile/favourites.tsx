@@ -111,7 +111,7 @@ const Favorites = () => {
               </Link>
 
               <p className="text-sm text-black-400">
-                ₦{item.base_price.toLocaleString()}
+                ₦{item.price_range}
               </p>
 
               <div className="flex items-center justify-between pt-5 gap-2">
