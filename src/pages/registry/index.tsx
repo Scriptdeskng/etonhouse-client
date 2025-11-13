@@ -155,8 +155,6 @@ const CreateRegistry: React.FC = () => {
             }
 
             const response = await createRegistryMutation.mutateAsync(registryData);
-
-            console.log('Registry created successfully:', response);
             toast.success('Registry created successfully!');
 
             router.push(`/registry/catalog?registryId=${response.id}`);
