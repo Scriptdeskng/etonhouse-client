@@ -1,16 +1,30 @@
-import { CartItem } from "@/types/cart";
+import { CartItem, PackageCartItem } from "@/types/cart";
 import { Order } from "@/types/order";
 
+interface CartStore {
+  cart: CartItem[];
+  packages: PackageCartItem[];
+}
+
 export function OrderConvert(
-  cart: CartItem[],
+  cartStore: CartStore,
   data: Order,
   method: string,
   options: { addressId?: number; isUsingSavedAddress: boolean }
 ) {
-  const items = cart.map((item) => ({
+  const regularItems = cartStore.cart.map((item) => ({
     variant_id: item.id,
     quantity: item.quantity,
   }));
+
+  const packageItems = cartStore.packages.flatMap((pkg) =>
+    pkg.items.map((item) => ({
+      variant_id: item.id,
+      quantity: item.quantity,
+    }))
+  );
+
+  const items = [...regularItems, ...packageItems];
 
   const basePayload: any = {
     payment_method: method,

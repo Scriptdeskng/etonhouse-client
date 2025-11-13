@@ -12,7 +12,7 @@ interface CartStore {
   clearCart: () => void;
   getTotalItems: () => number;
   getTotalPrice: () => number;
-  
+
   packages: PackageCartItem[];
   addPackageToCart: (pkg: any) => Promise<void>;
   removePackageFromCart: (packageId: number) => void;
@@ -27,9 +27,9 @@ export const useCartStore = create<CartStore>()(
   persist(
     (set, get) => ({
       cart: [],
-      
+
       packages: [],
-      
+
       addToCart: (item) =>
         set((state) => {
           const quantityToAdd = item.quantity || 1;
@@ -82,7 +82,7 @@ export const useCartStore = create<CartStore>()(
 
       addPackageToCart: async (pkg) => {
         const state = get();
-        
+
         if (state.isPackageInCart(pkg.id)) {
           toast.error('This package is already in your cart');
           return;
@@ -104,7 +104,12 @@ export const useCartStore = create<CartStore>()(
             originalPrice: parseFloat(pkg.total_price),
             discountedPrice: parseFloat(pkg.discounted_price),
             savedAmount: parseFloat(pkg.total_price) - parseFloat(pkg.discounted_price),
-            items: pkg.items,
+            items: response.cart.items.map((item: any) => ({
+              id: item.product_variant.id,
+              product: item.product_variant.product.name,
+              product_image: item.product_variant.product.featured_image,
+              quantity: item.quantity,
+            })),
             addedAt: new Date().toISOString(),
           };
 
@@ -115,7 +120,8 @@ export const useCartStore = create<CartStore>()(
           toast.success(`${pkg.name} added to cart!`);
         } catch (error: any) {
           console.error('Error adding package to cart:', error);
-          
+          console.error('Error response:', error.response?.data);
+
           if (error.response?.data) {
             const errorData = error.response.data;
             const errorMessage = Object.values(errorData).join(', ') || 'Failed to add package to cart';
@@ -123,7 +129,7 @@ export const useCartStore = create<CartStore>()(
           } else {
             toast.error('Failed to add package to cart');
           }
-          
+
           throw error;
         }
       },

@@ -103,7 +103,7 @@ const ViewRegistry: React.FC = () => {
   if (isLoading) {
     return (
       <Entrance>
-        <Navbar active={5} />
+        <Navbar active={4} />
         <div className="min-h-screen bg-gray-50">
           <Skeleton height={500} />
           <div className="max-w-[1200px] mx-auto px-5 py-12">
@@ -123,7 +123,7 @@ const ViewRegistry: React.FC = () => {
   if (error || !registry) {
     return (
       <Entrance>
-        <Navbar active={5} />
+        <Navbar active={4} />
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Registry Not Found</h2>
@@ -137,10 +137,9 @@ const ViewRegistry: React.FC = () => {
 
   return (
     <Entrance>
-      <Navbar active={5} />
+      <Navbar active={4} />
 
       <div className="min-h-screen py-10 px-5 sm:px-10 lg:px-20 max-w-[1536px] mx-auto">
-        {/* Hero Section with Cover Image */}
         <div className="relative h-[200px] lg:h-[300px] overflow-hidden rounded-2xl">
           <div
             className="absolute inset-0 bg-cover bg-center"
@@ -170,7 +169,6 @@ const ViewRegistry: React.FC = () => {
           </div>
         </div>
 
-        {/* Registry Items */}
         <div className="py-12">
 
           {registry.items.length === 0 ? (
@@ -189,7 +187,6 @@ const ViewRegistry: React.FC = () => {
                     key={item.id}
                     className="relative overflow-hidden border border-gray-200"
                   >
-                    {/* Product Image */}
                     <div className="relative h-[180px] sm:h-[220px] lg:h-[330px]">
                       <Image
                         src={item.product_image || '/placeholder.png'}
@@ -200,7 +197,6 @@ const ViewRegistry: React.FC = () => {
                       />
                     </div>
 
-                    {/* Product Details */}
                     <div className="p-4 space-y-3">
                       <div>
                         <h3 className="text-black-400">{item.product}</h3>
@@ -215,7 +211,6 @@ const ViewRegistry: React.FC = () => {
                         </div>
                       )}
 
-                      {/* Action Section - Only for visitors */}
                       {!isOwner && !isFulfilled && (
                         <div className="space-y-3 pt-2">
 
@@ -241,7 +236,6 @@ const ViewRegistry: React.FC = () => {
                             </button>
                           </div>
 
-                          {/* Quantity Status */}
                           <div className="text-sm">
                             {isFulfilled ? (
                               <p className="text-sm text-black-100">
@@ -265,7 +259,6 @@ const ViewRegistry: React.FC = () => {
                       )}
                     </div>
 
-                    {/* Fulfilled Overlay */}
                     {!isOwner && isFulfilled && (
                       <div className="border border-[#8D8F08]/15 px-3 py-1 rounded-full absolute top-2 left-2  flex items-center gap-2 text-[#717309]">
                         <span className="text-sm">Fulfilled</span>

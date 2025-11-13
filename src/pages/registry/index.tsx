@@ -154,11 +154,6 @@ const CreateRegistry: React.FC = () => {
                 registryData.cover_image = formData.coverImage;
             }
 
-            console.log('Submitting registry data:', {
-                ...registryData,
-                cover_image: registryData.cover_image ? 'File included' : 'No file'
-            });
-
             const response = await createRegistryMutation.mutateAsync(registryData);
 
             console.log('Registry created successfully:', response);
@@ -192,7 +187,7 @@ const CreateRegistry: React.FC = () => {
 
     return (
         <Entrance>
-            <Navbar active={5} />
+            <Navbar active={4} />
             <div className="max-w-[1536px] mx-auto px-5 sm:px-10 lg:px-20 pt-10 pb-32">
                 <h1 className="text-2xl font-bold text-gray-900 lg:text-3xl">Create Your Gift Registry</h1>
 

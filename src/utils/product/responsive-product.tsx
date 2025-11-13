@@ -100,7 +100,6 @@ const ResponsiveProduct = ({ product }: Props) => {
         <p className="text-sm lg:text-base text-black-400">₦{product.price_range}</p>
 
         <div className="w-full flex items-end justify-between">
-          {/* Quantity kept in case you still want users to set amount before opening modal */}
           <div className="text-xs text-gray-600">Qty: {count}</div>
 
           <button
