@@ -61,25 +61,19 @@ const ViewRegistry: React.FC = () => {
     }
   };
 
-  const handleBuyGift = (item: RegistryItem) => {
+  const handleBuyGift = (item: any) => {
     if (isOwner) return;
 
     const quantity = selectedQuantities[item.id] || 1;
 
-    addToCart({
-      id: item.id,
-      name: `${item.product}`,
-      image: item.product_image || '/placeholder.png',
-      price: Number(item.product_price),
-      quantity: quantity
+    router.push({
+      pathname: '/registry/checkout',
+      query: {
+        registryId,
+        itemId: item.id,
+        quantity
+      }
     });
-
-    toast.success(`Added ${quantity} ${item.product} to cart`);
-
-    setSelectedQuantities(prev => ({
-      ...prev,
-      [item.id]: 1
-    }));
   };
 
   const handleShare = () => {
@@ -199,7 +193,7 @@ const ViewRegistry: React.FC = () => {
 
                     <div className="p-4 space-y-3">
                       <div>
-                        <h3 className="text-black-400">{item.product}</h3>
+                        <h3 className="text-black-400 truncate ">{item.product}</h3>
                         <p className="font-semibold text-black-400 mt-2">
                           ₦{Number(item.product_price).toLocaleString('en-GB')}
                         </p>
@@ -243,7 +237,7 @@ const ViewRegistry: React.FC = () => {
                               </p>
                             ) : (
                               <p className="text-black-100">
-                                ( {remaining} of {item.quantity_requested} still needed )
+                                ( {remaining} still needed )
                               </p>
                             )}
                           </div>

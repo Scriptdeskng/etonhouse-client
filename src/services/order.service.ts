@@ -70,3 +70,33 @@ export const useGetOrderById = (id: string | null) => {
     retry: 1,
   });
 };
+
+// For registry purchases
+export const useInitializePayment = () => {
+  const { token } = useAuthStore();
+
+  return useMutation({
+    mutationFn: (data: {
+      email: string;
+      order_id: number;
+      reference: string;
+      payment_method: string;
+      amount: number;
+      metadata?: any;
+    }) => {
+
+      return makeRequest({
+        url: "payments/initialize/",
+        method: "POST",
+        data,
+        requireToken: true,
+        token,
+      });
+    },
+    onError: (error: any) => {
+      console.error('Payment initialization failed:', error);
+      console.error('Error response:', error?.response?.data);
+      console.error('Error status:', error?.response?.status);
+    },
+  });
+};

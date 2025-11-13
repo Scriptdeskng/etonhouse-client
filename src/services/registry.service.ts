@@ -238,6 +238,38 @@ export const useCreatePurchase = () => {
   });
 };
 
+export const useCreateRegistryPurchase = () => {
+  const queryClient = useQueryClient();
+  const { token } = useAuthStore();
+  
+  return useMutation({
+    mutationFn: (data: {
+      registry_item: number;
+      buyer: string;
+      message: string;
+      quantity: number;
+    }) => {
+      
+      return makeRequest({
+        url: "purchases/",
+        method: "POST",
+        data,
+        requireToken: true,
+        token,
+      });
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["registry-purchases"] });
+      queryClient.invalidateQueries({ queryKey: ["registry"] });
+    },
+    onError: (error: any) => {
+      console.error('Purchase creation failed:', error);
+      console.error('Error response:', error?.response?.data);
+      console.error('Error status:', error?.response?.status);
+    },
+  });
+};
+
 export const useFulfillPurchase = () => {
   const queryClient = useQueryClient();
   const { token } = useAuthStore();
