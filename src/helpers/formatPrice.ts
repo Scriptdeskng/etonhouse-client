@@ -14,6 +14,9 @@ export const formatPriceRange = (priceRange: string): string => {
 };
 
 export const formatPrice = (price: string | number): string => {
-  const numPrice = Math.floor(typeof price === 'string' ? parseFloat(price) : price);
-  return numPrice.toLocaleString('en-US');
+  const numPrice = typeof price === 'string' ? parseFloat(price) : price;
+  return '₦' + numPrice.toLocaleString('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
 };
