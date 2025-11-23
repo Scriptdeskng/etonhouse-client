@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ProductVariantSelector from "@/components/product/ProductVariant";
 import { Product } from "@/types/product";
+import {formatPriceRange} from "@/helpers/formatPrice";
 
 interface Props {
   product: Product;
@@ -58,7 +59,7 @@ const ProductCard = ({ product }: Props) => {
           </div>
 
           <div className="w-full flex items-center justify-between mt-5">
-            <p className="text-black font-semibold text-lg">₦{product.price_range}</p>
+            <p className="text-black font-semibold text-lg">{formatPriceRange(product.price_range)}</p>
 
             <button className="cursor-pointer" onClick={handleAddClick}>
               <Image

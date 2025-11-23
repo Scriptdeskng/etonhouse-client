@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import Link from "next/link";
 import { Product } from "@/types/product";
 import ProductVariantSelector from "@/components/product/ProductVariant";
+import {formatPriceRange} from "@/helpers/formatPrice";
 
 interface Props {
   product: Product;
@@ -97,7 +98,7 @@ const ResponsiveProduct = ({ product }: Props) => {
           {product.name}
         </Link>
 
-        <p className="text-sm lg:text-base text-black-400">₦{product.price_range}</p>
+        <p className="text-sm lg:text-base text-black-400 line-clamp-1">{formatPriceRange(product.price_range)}</p>
 
         <div className="w-full flex items-end justify-between">
           <div className="text-xs text-gray-600">Qty: {count}</div>
