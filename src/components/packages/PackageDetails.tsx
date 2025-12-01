@@ -5,6 +5,7 @@ import Navbar from "../navbar";
 import Entrance from "@/animated/Entrance";
 import Footer from "../footer";
 import { IoMdPricetag } from "react-icons/io";
+import { formatPrice } from "@/helpers/formatPrice";
 
 const PackageDetails: React.FC<{
   package: Package;
@@ -72,16 +73,16 @@ const PackageDetails: React.FC<{
           <div className="mb-4">
             <div className="text-black-400 flex items-center text-lg font-medium gap-1">
               <IoMdPricetag className="text-[#EBB371] text-2xl" />
-              <span>₦{totalAmount.toFixed(2)} (Individually)</span>
+              <span>{formatPrice(totalAmount)} (Individually)</span>
             </div>
 
             <div className="text-black-400 flex items-center text-lg font-medium gap-1">
               <IoMdPricetag className="text-[#EBB371] text-2xl" />
-              <span>₦{discountedAmount.toFixed(2)} (Bundle Price)</span>
+              <span>{formatPrice(discountedAmount)} (Bundle Price)</span>
             </div>
 
             <div className="text-sm mt-4 text-black-100">
-              (Save ₦{savedAmount.toFixed(2)} when you buy the full set)
+              (Save {formatPrice(savedAmount)} when you buy the full set)
             </div>
           </div>
 

@@ -1,3 +1,4 @@
+import { formatPrice } from "@/helpers/formatPrice";
 import { Package } from "@/types/package";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,12 +26,12 @@ const PackageCard: React.FC<{
       <div className="mb-4">
         <div className="text-black-400 flex items-center text-lg font-medium gap-1">
           <IoMdPricetag className="text-[#EBB371] text-2xl" />
-          <span>₦{totalAmount.toFixed(2)} (Individually)</span>
+          <span>{formatPrice(totalAmount)} (Individually)</span>
         </div>
 
         <div className="text-black-400 flex items-center text-lg font-medium gap-1">
           <IoMdPricetag className="text-[#EBB371] text-2xl" />
-          <span>₦{discountedAmount.toFixed(2)} (Bundle Price)</span>
+          <span>{formatPrice(discountedAmount)} (Bundle Price)</span>
         </div>
       </div>
 

@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { Product } from "@/types/product";
+import {formatPriceRange} from "@/helpers/formatPrice";
 
 interface Props {
   product: Product;
@@ -23,7 +24,7 @@ const ProductCard = ({ product }: Props) => {
 
       <p className="text-black text-lg capitalize mb-2">{product.name}</p>
 
-      <p className="text-black-100">₦{product.price_range}</p>
+      <p className="text-black-100 line-clamp-1">{formatPriceRange(product.price_range)}</p>
     </Link>
   );
 };

@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
       {
         protocol: "http",
         hostname: "api.etonhouseng.com",
-        pathname: "/media/products/**",
+        pathname: "/media/**",
       },
       {
         protocol: "https",

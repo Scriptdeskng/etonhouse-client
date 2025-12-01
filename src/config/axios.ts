@@ -28,7 +28,7 @@ Api.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error?.status === 401) {
+    if (error?.response?.status === 401 && error?.config?.headers?.Authorization) {
       toast.error("Unauthorized User");
       const authStore = useAuthStore.getState();
       authStore.logoutUser();
@@ -47,8 +47,12 @@ const makeRequest = async ({
   content_type = "application/json",
   token,
 }: ApiRequestParams): Promise<any> => {
+  const headers: any = {
+    "Content-Type": content_type,
+  };
+
   if (requireToken && token) {
-    Api.defaults.headers.Authorization = `Bearer ${token}`;
+    headers.Authorization = `Bearer ${token}`;
   }
 
   const response = await Api({
@@ -56,9 +60,7 @@ const makeRequest = async ({
     url,
     data,
     params,
-    headers: {
-      "Content-Type": content_type,
-    },
+    headers,
   });
 
   return response.data;
