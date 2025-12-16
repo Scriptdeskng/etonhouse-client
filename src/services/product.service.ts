@@ -70,3 +70,19 @@ export const useProductByCategory = (slug: string, params?: any) => {
     retry: 1,
   });
 };
+
+export const useNewArrivals = () => {
+  return useQuery({
+    queryKey: ["new-arrivals"],
+    queryFn: () =>
+      makeRequest({
+        url: "products/products/",
+        requireToken: false,
+        params: {
+          ordering: "-created_at", 
+          page_size: 8
+        },
+      }),
+    retry: 1,
+  });
+};

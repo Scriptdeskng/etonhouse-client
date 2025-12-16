@@ -35,9 +35,9 @@ function ProductSlider({ products, isLoading }: Props) {
     speed: 500,
     slidesToShow:
       Number(width) >= 1280
-        ? 4
+        ? 3.5
         : Number(width) >= 1024
-          ? 3
+          ? 2.5
           : Number(width) >= 768
             ? 2
             : 1,
