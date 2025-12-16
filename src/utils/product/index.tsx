@@ -28,7 +28,7 @@ const ProductCard = ({ product }: Props) => {
 
   return (
     <>
-      <div className="shrink-0 w-full max-w-[300px] xl:max-w-full max-h-[386px] rounded-[20px] grid grid-rows-2 mx-auto xl:mx-0 bg-white">
+      <div className="shrink-0 w-full max-w-[350px] xl:max-w-full max-h-[356px] rounded-[20px] grid grid-rows-2 mx-auto xl:mx-0 bg-white">
         <Link href={`/product/${product.slug}`} className="rounded-t-[20px] relative">
           <img
             src={featuredImage}
@@ -38,7 +38,7 @@ const ProductCard = ({ product }: Props) => {
           />
         </Link>
 
-        <div className="max-h-[180px] px-2 pt-11 flex flex-col rounded-b-[20px]">
+        <div className="px-2 pt-15 flex flex-col rounded-b-[20px]">
           <div className="flex flex-col gap-1.5 items-start">
             <p className="text-grey-200 capitalize">{product.category?.name}</p>
 
@@ -48,18 +48,10 @@ const ProductCard = ({ product }: Props) => {
             >
               {product.name}
             </Link>
-
-            <Image
-              src="/assets/svg/star.svg"
-              alt="stars"
-              width={104}
-              height={18}
-              quality={100}
-            />
           </div>
 
           <div className="w-full flex items-center justify-between mt-5">
-            <p className="text-black font-semibold text-lg">{formatPriceRange(product.price_range)}</p>
+            <p className="text-black font-semibold truncate">{formatPriceRange(product.price_range)}</p>
 
             <button className="cursor-pointer" onClick={handleAddClick}>
               <Image

@@ -1,8 +1,5 @@
 import ProductSlider from "@/components/slider";
-import {
-  useAllProducts,
-  useProductByCategory,
-} from "@/services/product.service";
+import { useProductByCategory } from "@/services/product.service";
 import PageTitle from "@/utils/page-title";
 import Tabs from "@/utils/tabs";
 import { useEffect, useState } from "react";
@@ -14,8 +11,6 @@ const BestSellers = () => {
   const [products, setProducts] = useState<any[]>([]);
 
   const { data, isLoading } = useProductByCategory(active);
-
-  const { data: all, isLoading: allLoad } = useAllProducts();
   const { data: cats, isLoading: catsLoad } = useAllCategories();
 
   useEffect(() => {
@@ -25,14 +20,11 @@ const BestSellers = () => {
   }, [cats]);
 
   useEffect(() => {
-    if (data) {
-      if (data?.results?.length < 1) {
-        setProducts(all?.results);
-        return;
-      }
-      setProducts(data?.results);
+    if (data?.results) {
+      const shuffled = [...data.results].sort(() => Math.random() - 0.5);
+      setProducts(shuffled);
     }
-  }, [data, all, active]);
+  }, [data, active]);
 
   return (
     <div className="bg-[#F6F6F6]">
@@ -44,10 +36,16 @@ const BestSellers = () => {
             <Tabs active={active} setActive={setActive} tab={cats?.results ?? []} />
           )}
 
-          <ProductSlider
-            products={products}
-            isLoading={isLoading || catsLoad || allLoad}
-          />
+          {!isLoading && products.length === 0 ? (
+            <div className="text-center py-10">
+              <p className="text-gray-500">No products available in this category</p>
+            </div>
+          ) : (
+            <ProductSlider
+              products={products}
+              isLoading={isLoading || catsLoad}
+            />
+          )}
         </PageTitle>
       </div>
     </div>
