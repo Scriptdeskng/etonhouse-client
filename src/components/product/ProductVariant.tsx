@@ -34,24 +34,20 @@ const ProductVariantSelector = ({
   const router = useRouter();
   const { addToCart } = useCartStore();
 
-  const availableColors = useMemo(() => {
-    const colors = product?.variants?.map((v) => v.color) || [];
-    return Array.from(new Map(colors.map((c) => [c.id, c])).values());
-  }, [product?.variants]);
-
   const availableSizes = useMemo(() => {
     const sizes = product?.variants?.map((v) => v.size) || [];
     return Array.from(new Map(sizes.map((s) => [s.id, s])).values());
   }, [product?.variants]);
 
-  const filteredVariants = useMemo(() => {
-    if (!product?.variants) return [];
-    return product.variants.filter((variant) => {
-      const colorMatch = !selectedColor || variant.color.id === selectedColor.id;
-      const sizeMatch = !selectedSize || variant.size.id === selectedSize.id;
-      return colorMatch && sizeMatch;
-    });
-  }, [product?.variants, selectedColor, selectedSize]);
+  const availableColors = useMemo(() => {
+    if (!selectedSize || !product?.variants) return [];
+    
+    const colorsForSize = product.variants
+      .filter((v) => v.size.id === selectedSize.id)
+      .map((v) => v.color);
+    
+    return Array.from(new Map(colorsForSize.map((c) => [c.id, c])).values());
+  }, [product?.variants, selectedSize]);
 
   const selectedVariant = useMemo(() => {
     if (!selectedColor || !selectedSize) return null;
@@ -63,8 +59,7 @@ const ProductVariantSelector = ({
   }, [product?.variants, selectedColor, selectedSize]);
 
   const priceInfo = useMemo(() => {
-    const variants =
-      filteredVariants.length > 0 ? filteredVariants : product?.variants || [];
+    const variants = product?.variants || [];
     if (variants.length === 0) return null;
     const prices = variants.map((v) => parseFloat(v.current_price));
     const minPrice = Math.min(...prices);
@@ -80,7 +75,7 @@ const ProductVariantSelector = ({
         ? parseFloat(selectedVariant.current_price).toLocaleString()
         : null,
     };
-  }, [filteredVariants, product?.variants, selectedVariant]);
+  }, [product?.variants, selectedVariant]);
 
   const stockInfo = useMemo(() => {
     if (selectedVariant) {
@@ -89,20 +84,19 @@ const ProductVariantSelector = ({
         isAvailable: selectedVariant.stock > 0 || selectedVariant.allow_backorders,
       };
     }
-    const totalStock = filteredVariants.reduce((sum, v) => sum + v.stock, 0);
     return {
-      stock: totalStock,
-      isAvailable:
-        totalStock > 0 || filteredVariants.some((v) => v.allow_backorders),
+      stock: 0,
+      isAvailable: false,
     };
-  }, [selectedVariant, filteredVariants]);
+  }, [selectedVariant]);
 
   useEffect(() => {
-    if (product?.variants && product.variants.length > 0 && !selectedColor) {
-      setSelectedColor(product.variants[0].color);
-      setSelectedSize(product.variants[0].size);
+    if (product?.variants && product.variants.length > 0 && !selectedSize) {
+      const firstVariant = product.variants[0];
+      setSelectedSize(firstVariant.size);
+      setSelectedColor(firstVariant.color);
     }
-  }, [product?.variants, selectedColor]);
+  }, [product?.variants, selectedSize]);
 
   useEffect(() => {
     if (product?.images && product.images.length > 0) {
@@ -111,13 +105,18 @@ const ProductVariantSelector = ({
     }
   }, [product?.images]);
 
-  const handleColorSelect = (color: Color) => {
-    setSelectedColor(color);
-    const validVariant = product.variants.find((v) => v.color.id === color.id);
-    if (validVariant) setSelectedSize(validVariant.size);
+  const handleSizeSelect = (size: Size) => {
+    setSelectedSize(size);
+    
+    const variantForSize = product.variants.find((v) => v.size.id === size.id);
+    if (variantForSize) {
+      setSelectedColor(variantForSize.color);
+    }
   };
 
-  const handleSizeSelect = (size: Size) => setSelectedSize(size);
+  const handleColorSelect = (color: Color) => {
+    setSelectedColor(color);
+  };
 
   const handleAdd = () => {
     if (!selectedVariant) {
@@ -207,7 +206,7 @@ const ProductVariantSelector = ({
           </p>
           {!selectedVariant && <p className="text-sm text-gray-500 mt-1">Select options to see exact price</p>}
 
-          {stockInfo && (
+          {stockInfo && selectedVariant && (
             <div className="flex items-center gap-2">
               <div className={`w-fit rounded-full border py-1 px-4 ${stockInfo.isAvailable ? "border-[#257B13] bg-[#F5FFF9] text-[#257B13]" : "border-red-500 bg-red-100 text-red-500"}`}>
                 <span className="text-sm">{stockInfo.isAvailable ? `${stockInfo.stock} in stock` : "Out of stock"}</span>
@@ -215,42 +214,57 @@ const ProductVariantSelector = ({
             </div>
           )}
 
-          {availableColors.length > 0 && (
+                    {availableColors.length > 0 && (
             <div className="space-y-3 mt-5">
+              <label className="block text-sm font-medium text-black-400">Select Color</label>
               <div className="flex gap-3 flex-wrap">
-                {availableColors.map((color) => (
-                  <button
-                    key={color.id}
-                    onClick={() => handleColorSelect(color)}
-                    className={`w-6 h-6 border cursor-pointer ${selectedColor?.id === color.id ? "border-gray-300 hover:border-gray-400" : ""} transition-all`}
-                    style={{ backgroundColor: color.hex_code }}
-                    title={color.name}
-                  />
-                ))}
+                {availableColors.map((color) => {
+                  const variant = product.variants.find(
+                    (v) => v.color.id === color.id && v.size.id === selectedSize?.id
+                  );
+                  const isAvailable = variant && (variant.stock > 0 || variant.allow_backorders);
+                  
+                  return (
+                    <button
+                      key={color.id}
+                      onClick={() => handleColorSelect(color)}
+                      disabled={!isAvailable}
+                      className={`w-6 h-6 border cursor-pointer transition-all ${
+                        selectedColor?.id === color.id 
+                          ? "border-black-400" 
+                          : isAvailable
+                          ? "border-gray-300 hover:border-gray-400"
+                          : "opacity-40 cursor-not-allowed"
+                      }`}
+                      style={{ backgroundColor: color.hex_code }}
+                      title={color.name}
+                    />
+                  );
+                })}
               </div>
             </div>
           )}
 
           {availableSizes.length > 0 && (
             <div className="space-y-3 mt-5">
+              <label className="block text-sm font-medium text-black-400">Select Size</label>
               <div className="flex gap-3 flex-wrap">
                 {availableSizes.map((size) => {
                   const isAvailable = product.variants.some(
-                    (v) => v.size.id === size.id &&
-                      (!selectedColor || v.color.id === selectedColor.id) &&
-                      (v.stock > 0 || v.allow_backorders)
+                    (v) => v.size.id === size.id && (v.stock > 0 || v.allow_backorders)
                   );
                   return (
                     <button
                       key={size.id}
                       onClick={() => handleSizeSelect(size)}
                       disabled={!isAvailable}
-                      className={`h-10 w-28 sm:w-32 border-2 text-sm font-medium transition-all ${selectedSize?.id === size.id
+                      className={`h-10 w-28 sm:w-32 border-2 text-sm font-medium transition-all ${
+                        selectedSize?.id === size.id
                           ? "border-black-200 bg-black-200 text-white"
                           : isAvailable
                             ? "border-black-200"
                             : "border-gray-200 text-gray-400 cursor-not-allowed line-through"
-                        }`}
+                      }`}
                     >
                       {size.name}
                     </button>
@@ -287,7 +301,7 @@ const ProductVariantSelector = ({
             </div>
           )}
 
-          < div className="space-y-4 pt-4">
+          <div className="space-y-4 pt-4">
             {sections.map((section) => (
               <div key={section.key}>
                 <button
@@ -328,7 +342,7 @@ const ProductVariantSelector = ({
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 
   if (isModal) {
@@ -346,5 +360,3 @@ const ProductVariantSelector = ({
 };
 
 export default ProductVariantSelector;
-
-
