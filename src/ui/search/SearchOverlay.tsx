@@ -64,9 +64,6 @@ const SearchOverlay = ({ onClose }: Props) => {
                                 />
                                 <div>
                                     <p className="text-sm font-medium">{product.name}</p>
-                                    <p className="text-xs text-gray-500">
-                                        ₦{Number(product.current_price).toLocaleString("en-NG")}
-                                    </p>
                                 </div>
                             </Link>
                         ))}
