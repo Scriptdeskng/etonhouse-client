@@ -235,8 +235,10 @@ const ProductVariantSelector = ({
             <div className="space-y-3 mt-5">
               <div className="flex gap-3 flex-wrap">
                 {availableSizes.map((size) => {
-                  const isAvailable = filteredVariants.some(
-                    (v) => v.size.id === size.id && (v.stock > 0 || v.allow_backorders)
+                  const isAvailable = product.variants.some(
+                    (v) => v.size.id === size.id &&
+                      (!selectedColor || v.color.id === selectedColor.id) &&
+                      (v.stock > 0 || v.allow_backorders)
                   );
                   return (
                     <button
@@ -244,10 +246,10 @@ const ProductVariantSelector = ({
                       onClick={() => handleSizeSelect(size)}
                       disabled={!isAvailable}
                       className={`h-10 w-28 sm:w-32 border-2 text-sm font-medium transition-all ${selectedSize?.id === size.id
-                        ? "border-black-200 bg-black-200 text-white"
-                        : isAvailable
-                          ? "border-black-200"
-                          : "border-gray-200 text-gray-400 cursor-not-allowed line-through"
+                          ? "border-black-200 bg-black-200 text-white"
+                          : isAvailable
+                            ? "border-black-200"
+                            : "border-gray-200 text-gray-400 cursor-not-allowed line-through"
                         }`}
                     >
                       {size.name}
