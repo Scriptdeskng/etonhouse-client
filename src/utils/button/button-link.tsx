@@ -10,7 +10,7 @@ const ButtonLink = ({ path, text, className }: Props) => {
   return (
     <Link
       href={path}
-      className={`bg-black-200 text-white rounded-[40px] sm:text-lg lg:text-xl cursor-pointer ${className}`}
+      className={`bg-black-200 rounded-[40px] sm:text-lg lg:text-xl cursor-pointer ${className}`}
     >
       {text}
     </Link>
