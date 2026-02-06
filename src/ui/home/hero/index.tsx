@@ -68,7 +68,7 @@ const Hero = () => {
               <div className="relative z-10 h-full flex items-center px-5 sm:px-10 md:px-16 lg:px-20 xl:px-24">
                 <div className="w-full max-w-2xl flex flex-col items-start gap-4 md:gap-6 mb-[10vh]">
                   <EnterFromX>
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl leading-16 font-bold text-white whitespace-pre-line">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl md:leading-16 font-bold text-white whitespace-pre-line">
                       {slide.title}
                     </h1>
                   </EnterFromX>
