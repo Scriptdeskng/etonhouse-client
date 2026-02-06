@@ -43,7 +43,7 @@ const Newsletter = () => {
                 className="!py-4 !text-base w-full max-w-[570px] !bg-white !text-black hover:!bg-gray-100 transition-colors"
               />
 
-              <div className="flex flex-col gap-3 sm:gap-4 mt-4 text-white">
+              <div className="hidden md:flex flex-col gap-3 sm:gap-4 mt-4 text-white">
                 <p className="text-sm sm:text-base">✅ Exclusive Discounts – Get special member-only offers</p>
                 <p className="text-sm sm:text-base">✅ Design Inspiration – Fresh styling ideas for your space</p>
                 <p className="text-sm sm:text-base">✅ Early Access – Shop new collections before anyone else</p>
