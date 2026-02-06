@@ -4,7 +4,7 @@ import Image from "next/image";
 const Banner = () => {
   return (
     <div className="w-full bg-beige-100">
-    <div className="max-w-[1536px] mx-auto px-5 xl:px-20 py-3 flex items-center justify-between">
+    <div className="max-w-[1536px] mx-auto px-5 xl:px-20 py-2 flex items-center justify-between">
       <div className="flex items-center gap-3">
         <Image
           src="/assets/svg/phone.svg"

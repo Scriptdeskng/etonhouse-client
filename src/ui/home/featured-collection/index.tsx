@@ -1,12 +1,25 @@
 import Link from "next/link";
+import Image from "next/image";
 import PageTitle from "@/utils/page-title";
 
 const FeaturedCollections = () => {
   const category = [
-    { title: "LIGHTS", bg: "cat1" },
-    { title: "SOFAS", bg: "cat2" },
-    { title: "KITCHEN", bg: "cat3" },
-    { title: "TABLES", bg: "cat4" },
+    { 
+      title: "RUGS", 
+      image: "/assets/newassets/rugs.png"
+    },
+    { 
+      title: "SOFAS", 
+      image: "/assets/newassets/sofa.jpg"
+    },
+    { 
+      title: "ACCESSORIES", 
+      image: "/assets/newassets/accessory.jpg"
+    },
+    { 
+      title: "TABLES", 
+      image: "/assets/newassets/tables.jpg"
+    },
   ];
 
   return (
@@ -23,9 +36,18 @@ const FeaturedCollections = () => {
                 <Link
                   href="/shop"
                   key={item.title}
-                  className={`shrink-0 w-full max-w-[250px] md:max-w-full h-[310px] xl:h-[400px] flex items-center justify-center rounded-lg ${item.bg}`}
+                  className="shrink-0 w-full max-w-[250px] md:max-w-full h-[310px] xl:h-[400px] relative flex items-center justify-center rounded-lg overflow-hidden group"
                 >
-                  <p className="text-lg xl:text-[32px] text-white">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  
+                  <div className="absolute inset-0 bg-black/40" />
+                  
+                  <p className="relative z-10 text-lg xl:text-[32px] text-white font-semibold">
                     {item.title}
                   </p>
                 </Link>

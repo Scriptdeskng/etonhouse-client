@@ -16,15 +16,15 @@ const heroSlides = [
     subtitle: "Discover handcrafted pieces\ndesigned for modern living",
     buttonText: "Shop now",
     buttonLink: "/shop",
-    image: "/assets/webp/hero1.webp",
+    image: "/assets/newassets/timeless.png",
     imageAlt: "chair hero",
   },
   {
-    title: "Furnish Smarter: Bundle &\nSave",
+    title: "Furnish Smarter: \nBundle & Save",
     subtitle: "Select entire packages for savings\n& convenience, or customize item by item",
     buttonText: "Shop Packages",
     buttonLink: "/packages",
-    image: "/assets/png/package-hero.png",
+    image: "/assets/newassets/furnish.png",
     imageAlt: "packages hero",
   },
   {
@@ -32,7 +32,7 @@ const heroSlides = [
     subtitle: "From weddings to birthdays, make\ncelebrations easier with a\ncustom gift registry",
     buttonText: "Create a Registry",
     buttonLink: "/registry",
-    image: "/assets/png/registry-banner.png",
+    image: "/assets/newassets/registry.png",
     imageAlt: "Family Image",
   },
 ];
@@ -45,45 +45,47 @@ const Hero = () => {
         autoplay={{ delay: 5000 }}
         pagination={{ clickable: true }}
         loop
-        className="w-full"
+        className="w-full h-screen max-h-[90vh]"
       >
         {heroSlides.map((slide, idx) => (
           <SwiperSlide key={idx}>
-            <div className="w-full my-10 grid lg:grid-cols-2 items-center gap-10 sm:gap-16 px-5 py-7 xl:px-20 xl:py-10">
-              {/* Text Section */}
-              <div className="w-[320px] sm:w-full flex flex-col items-start gap-3 md:gap-7.5">
-                <EnterFromX>
-                  <h1 className="text-2xl md:text-4xl leading-[150%] font-bold text-black-200 whitespace-pre-line">
-                    {slide.title}
-                  </h1>
-                </EnterFromX>
+            <div className="relative w-full h-screen max-h-[100vh]">
+              {/* Background Image */}
+              <Image
+                src={slide.image}
+                alt={slide.imageAlt}
+                fill
+                loading="eager"
+                quality={100}
+                className="object-cover"
+                priority={idx === 0}
+              />
+              
+              {/* Dark Overlay for better text readability */}
+              <div className="absolute inset-0 bg-black/40" />
 
-                <EnterFromY initial={30}>
-                  <p className="text-lg sm:text-xl md:text-2xl text-black-200 pr-4 whitespace-pre-line">
-                    {slide.subtitle}
-                  </p>
-                </EnterFromY>
+              {/* Text Content Overlay */}
+              <div className="relative z-10 h-full flex items-center px-5 sm:px-10 md:px-16 lg:px-20 xl:px-24">
+                <div className="w-full max-w-2xl flex flex-col items-start gap-4 md:gap-6 mb-[10vh]">
+                  <EnterFromX>
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl leading-16 font-bold text-white whitespace-pre-line">
+                      {slide.title}
+                    </h1>
+                  </EnterFromX>
 
-                <ButtonLink
-                  text={slide.buttonText}
-                  className="text-sm h-10 w-40 flex items-center justify-center sm:h-12 sm:w-48 xl:w-52"
-                  path={slide.buttonLink}
-                />
+                  <EnterFromY initial={30}>
+                    <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 whitespace-pre-line">
+                      {slide.subtitle}
+                    </p>
+                  </EnterFromY>
+
+                  <ButtonLink
+                    text={slide.buttonText}
+                    className="text-sm bg-white text-black sm:text-base h-12 w-44 flex items-center justify-center sm:h-14 sm:w-52 md:h-16 md:w-56 font-medium"
+                    path={slide.buttonLink}
+                  />
+                </div>
               </div>
-
-              {/* Image Section */}
-              <EnterFromX
-                initial={300}
-                className="relative mx-auto xl:mx-0 w-[300px] h-[300px] sm:w-100 sm:h-100 lg:w-[629px] lg:h-[537px]"
-              >
-                <Image
-                  src={slide.image}
-                  alt={slide.imageAlt}
-                  fill
-                  loading="eager"
-                  quality={100}
-                />
-              </EnterFromX>
             </div>
           </SwiperSlide>
         ))}
