@@ -13,21 +13,33 @@ const Story = () => {
         <div className="flex flex-col items-start gap-7.5">
           <div className="flex flex-col gap-6 lg:gap-13 text-black md:text-xl">
             <p>
-              At EtonHouse, we believe that furniture is more than just
-              decor—it’s the foundation of a home. What started as a small
-              family-owned workshop has grown into a trusted destination for
-              premium, handcrafted furniture
+              At EtonHouse, we believe furniture is more than décor. It is the
+              foundation of a home and a true expression of lifestyle. What
+              began as a small, family-owned workshop has evolved into Eton
+              House Nigeria, an indigenous company established in 2000, and
+              today a trusted destination for premium, handcrafted home and
+              office furniture.
             </p>
 
             <p>
-              With a passion for design and a commitment to quality, we create
-              timeless pieces that blend style, comfort, and durability. Every
-              product is crafted with care, ensuring that your space reflects
-              your personality and lifestyle
+              Driven by a passion for design and an uncompromising commitment to
+              quality, we specialize in the manufacturing of high-quality
+              furniture and finishes. Our team is made up of trained design
+              professionals and highly skilled craftsmen who, supported by
+              cutting-edge technology, bring timeless pieces to life while
+              blending style, comfort, and durability. From bespoke furniture to
+              full turnkey projects, we deliver exceptional solutions for
+              hotels, luxury apartments, and small to large-scale homes and
+              offices. Every piece we create is crafted with care, ensuring each
+              space reflects the personality, taste, and lifestyle of those who
+              live and work in it.
             </p>
           </div>
 
-          <Button text="View catalog" className="px-6 md:px-20 text-sm hidden xl:flex" />
+          <Button
+            text="View catalog"
+            className="px-6 md:px-20 text-sm hidden xl:flex"
+          />
         </div>
 
         <div className="w-full h-[300px] md:h-[505px] relative">
