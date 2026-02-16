@@ -9,11 +9,9 @@ const Register = () => {
   const register = useRegister();
 
   const [form, setForm] = useState({
-    username: "",
     first_name: "",
     last_name: "",
     email: "",
-    phone: "",
     password: "",
   });
 
@@ -30,11 +28,9 @@ const Register = () => {
       await registerSchema.validate(form, { abortEarly: true });
 
       register.mutate({
-        username: form.username.trim(),
         first_name: form.first_name.trim(),
         last_name: form.last_name.trim(),
         email: form.email.trim().toLowerCase(),
-        phone: form.phone,
         password: form.password,
         password2: form.password,
       });
@@ -48,12 +44,6 @@ const Register = () => {
       <p className="sm:text-xl font-bold text-[#333333]">REGISTER</p>
 
       <div className="space-y-5">
-        <Input
-          name="username"
-          placeholder="Enter username"
-          value={form.username}
-          onChange={handleChange}
-        />
 
         <Input
           name="first_name"
@@ -73,13 +63,6 @@ const Register = () => {
           name="email"
           placeholder="Enter email address"
           value={form.email}
-          onChange={handleChange}
-        />
-
-        <Input
-          name="phone"
-          placeholder="Enter phone number"
-          value={form.phone}
           onChange={handleChange}
         />
 
