@@ -17,7 +17,7 @@ const Visit = () => {
         <div className="w-full grid md:grid-cols-2 bg-[#FBFBFB]">
           <Link href="https://www.google.com/maps/dir/?api=1&destination=59A+Mainland+Way,+Dolphine+Estate,+Lagos+106104,+Lagos" target="_blank" rel="noopener noreferrer" className="w-full h-[270px] md:h-auto relative">
             <Image
-              src="/assets/webp/showroom2.webp"
+              src="/assets/png/eton-house.png"
               alt="Lagos Showroom"
               fill
               className="object-cover"
