@@ -5,20 +5,20 @@ import PageTitle from "@/utils/page-title";
 const FeaturedCollections = () => {
   const category = [
     { 
-      title: "RUGS", 
-      image: "/assets/newassets/rugs.png"
+      title: "LIVING ROOM", 
+      image: "/assets/features/2.jpg"
     },
     { 
-      title: "SOFAS", 
-      image: "/assets/newassets/sofa.jpg"
+      title: "BEDROOM", 
+      image: "/assets/features/4.jpg"
+    },
+    { 
+      title: "DINNING", 
+      image: "/assets/features/1.jpg"
     },
     { 
       title: "ACCESSORIES", 
-      image: "/assets/newassets/accessory.jpg"
-    },
-    { 
-      title: "TABLES", 
-      image: "/assets/newassets/tables.jpg"
+      image: "/assets/features/3.jpg"
     },
   ];
 

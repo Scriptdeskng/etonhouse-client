@@ -32,7 +32,7 @@ const heroSlides = [
     subtitle: "From weddings to birthdays, make\ncelebrations easier with a\ncustom gift registry",
     buttonText: "Create a Registry",
     buttonLink: "/registry",
-    image: "/assets/newassets/registry.png",
+    image: "/assets/hero/1.png",
     imageAlt: "Family Image",
   },
 ];
