@@ -6,6 +6,8 @@ import Skeleton from "react-loading-skeleton";
 import EmptyProducts from "../product/empty";
 import Pagination from "@/components/pagination";
 
+const PAGE_SIZE = 10;
+
 const ShopProducts = ({
   data,
   isLoading,
@@ -21,6 +23,10 @@ const ShopProducts = ({
   page: number | undefined;
   currentSort?: string;
 }) => {
+  const currentPage = Number(page) || 1;
+  const rangeStart = (currentPage - 1) * PAGE_SIZE + 1;
+  const rangeEnd = Math.min(currentPage * PAGE_SIZE, data?.count);
+
   return (
     <div className="w-full min-h-screen border-l">
       <div className="w-full lg:border-b border-[#141414CC]">
@@ -40,7 +46,7 @@ const ShopProducts = ({
               {isLoading ? (
                 <Skeleton width={150} />
               ) : (
-                `1-${data?.results?.length}/${data?.count}`
+                `${rangeStart}-${rangeEnd}/${data?.count}`
               )}
             </p>
           </div>
@@ -51,11 +57,7 @@ const ShopProducts = ({
             {isLoading ? (
               <Skeleton width={150} />
             ) : (
-              `Showing ${page === 1 ? page : 1 + 18 * (Number(page) - 1)} – ${
-                page === 1
-                  ? data?.results?.length
-                  : data?.results?.length + 18 * (Number(page) - 1)
-              } of ${data?.count} results`
+              `Showing ${rangeStart} – ${rangeEnd} of ${data?.count} results`
             )}
           </p>
 
@@ -66,7 +68,7 @@ const ShopProducts = ({
       <div className="w-full px-5 pb-14 lg:pb-0 lg:pl-7.5 pt-12.5 lg:pr-4.5">
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5 lg:pr-16 xl:pr-24">
           {isLoading ? (
-            Array(18)
+            Array(PAGE_SIZE)
               .fill({})
               .map((_, index) => (
                 <Skeleton className="w-full h-[280px]" key={index} />
@@ -74,14 +76,9 @@ const ShopProducts = ({
           ) : data?.results?.length < 1 ? (
             <EmptyProducts clearFilters={handleClear} />
           ) : (
-            data?.results?.map((product: any) => {
-              return (
-                <ResponsiveProduct
-                  key={product?.id}
-                  product={product}
-                />
-              );
-            })
+            data?.results?.map((product: any) => (
+              <ResponsiveProduct key={product?.id} product={product} />
+            ))
           )}
         </div>
 
@@ -90,7 +87,7 @@ const ShopProducts = ({
             <Pagination
               page={page ?? 1}
               setPage={(value) => handleParams("page", value)}
-              total={Math.ceil(data?.count / 18)}
+              total={Math.ceil(data?.count / PAGE_SIZE)}
             />
           </div>
         )}
