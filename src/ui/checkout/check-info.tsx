@@ -16,7 +16,7 @@ import useAuthStore from "@/store/authStore";
 
 const methods = [
   { label: "Novac Payment (Recommended)", value: "nova" },
-  { label: "Mobile Wallet (Paystack)", value: "paystack" },
+  // { label: "Mobile Wallet (Paystack)", value: "paystack" },
 ];
 
 const CheckInfo = () => {
