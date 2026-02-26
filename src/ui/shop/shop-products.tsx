@@ -8,6 +8,29 @@ import Pagination from "@/components/pagination";
 
 const PAGE_SIZE = 10;
 
+interface Subcategory {
+  id: number;
+  name: string;
+  slug: string;
+  description?: string;
+  image?: string;
+  category: number;
+  product_count?: string;
+}
+
+interface ShopProductsProps {
+  data: any;
+  isLoading: boolean;
+  handleClear: () => void;
+  handleParams: (name: string, value: any) => void;
+  page: number | undefined;
+  currentSort?: string;
+  subcategories?: Subcategory[];
+  subcategoriesLoading?: boolean;
+  selectedSubcategory?: string;
+  selectedCategory?: string;
+}
+
 const ShopProducts = ({
   data,
   isLoading,
@@ -15,17 +38,22 @@ const ShopProducts = ({
   handleParams,
   page,
   currentSort,
-}: {
-  data: any;
-  isLoading: boolean;
-  handleClear: () => void;
-  handleParams: (name: string, value: any) => void;
-  page: number | undefined;
-  currentSort?: string;
-}) => {
+  subcategories,
+  subcategoriesLoading,
+  selectedSubcategory,
+  selectedCategory,
+}: ShopProductsProps) => {
   const currentPage = Number(page) || 1;
   const rangeStart = (currentPage - 1) * PAGE_SIZE + 1;
   const rangeEnd = Math.min(currentPage * PAGE_SIZE, data?.count);
+
+  const hasSubcategories =
+    !!selectedCategory &&
+    (subcategoriesLoading || (subcategories && subcategories.length > 0));
+
+  const handleSubcategoryClick = (slug: string) => {
+    handleParams("subcategory", selectedSubcategory === slug ? undefined : slug);
+  };
 
   return (
     <div className="w-full min-h-screen border-l">
@@ -64,6 +92,42 @@ const ShopProducts = ({
           <Sort handleParams={handleParams} currentSort={currentSort} />
         </div>
       </div>
+
+      {hasSubcategories && (
+        <div className="w-full px-5 lg:pl-10 xl:pr-30 py-4 border-b border-[#14141433]">
+          {subcategoriesLoading ? (
+            <div className="grid grid-cols-3 md:flex md:flex-row gap-2">
+              {Array(6)
+                .fill(null)
+                .map((_, i) => (
+                  <Skeleton key={i} height={34} borderRadius={4} />
+                ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-3 md:flex md:flex-row md:flex-wrap gap-2">
+              {subcategories?.map((sub) => {
+                const isActive = selectedSubcategory === sub.slug;
+                return (
+                  <button
+                    key={sub.id}
+                    onClick={() => handleSubcategoryClick(sub.slug)}
+                    className={`
+                      px-4 py-2 text-xs sm:text-sm border transition-colors duration-150 whitespace-nowrap
+                      ${
+                        isActive
+                          ? "bg-black text-white border-black"
+                          : "bg-white text-black border-[#61616166] hover:border-black"
+                      }
+                    `}
+                  >
+                    {sub.name}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
 
       <div className="w-full px-5 pb-14 lg:pb-0 lg:pl-7.5 pt-12.5 lg:pr-4.5">
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5 lg:pr-16 xl:pr-24">

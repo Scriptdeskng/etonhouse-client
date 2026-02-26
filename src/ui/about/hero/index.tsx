@@ -2,9 +2,9 @@ import Image from "next/image";
 
 const AboutHero = () => {
   return (
-    <div className="py-8 px-6">
-      <div className="relative rounded-[20px] w-full h-[35vh] sm:h-[50vh] lg:h-[85vh]">
-        <div className="absolute top-8 lg:top-16 xl:top-30 z-10 left-1/2 transform -translate-x-1/2">
+    <div className="md:py-8 md:px-6">
+      <div className="relative w-full h-[70vh] sm:h-[50vh] lg:h-[85vh] md:rounded-[20px] overflow-hidden ">
+        <div className="absolute top-12 lg:top-16 xl:top-24 z-10 left-1/2 transform -translate-x-1/2">
           <Image
             src="/assets/webp/logo-black.webp"
             alt="About Hero"
@@ -15,11 +15,12 @@ const AboutHero = () => {
         </div>
 
         <Image
-          src="/assets/webp/about-hero.webp"
+          src="/assets/about/aboutHero.jpg"
           alt="About Hero"
           fill
           quality={100}
           loading="eager"
+          className="object-cover md:rounded-4xl"
         />
       </div>
     </div>

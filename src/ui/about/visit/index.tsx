@@ -123,7 +123,7 @@ const Visit = () => {
             </p>
 
             <div>
-              <div className="w-full flex items-center justify-between py-3 xl:py-4 border-b border-[#616161]/50 font-medium text-black-400 xl:text-lg">
+              <div className="w-full hidden sm:flex items-center justify-between py-3 xl:py-4 border-b border-[#616161]/50 font-medium text-black-400 xl:text-lg">
                 <p className="font-bold">Location</p>
                 <p>59A Mainland way, Dolphin estate, Ikoyi</p>
               </div>
