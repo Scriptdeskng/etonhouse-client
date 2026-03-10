@@ -5,17 +5,21 @@ import { FaAngleRight } from "react-icons/fa6";
 import Skeleton from "react-loading-skeleton";
 import EmptyProducts from "../product/empty";
 import Pagination from "@/components/pagination";
+import { useEffect, useRef, useState } from "react";
 
 const PAGE_SIZE = 10;
+
+interface Category {
+  id: number;
+  name: string;
+  slug: string;
+}
 
 interface Subcategory {
   id: number;
   name: string;
   slug: string;
-  description?: string;
-  image?: string;
   category: number;
-  product_count?: string;
 }
 
 interface ShopProductsProps {
@@ -25,10 +29,12 @@ interface ShopProductsProps {
   handleParams: (name: string, value: any) => void;
   page: number | undefined;
   currentSort?: string;
+  categories?: Category[];
+  categoriesLoading?: boolean;
+  selectedCategory?: string;
   subcategories?: Subcategory[];
   subcategoriesLoading?: boolean;
   selectedSubcategory?: string;
-  selectedCategory?: string;
 }
 
 const ShopProducts = ({
@@ -38,25 +44,125 @@ const ShopProducts = ({
   handleParams,
   page,
   currentSort,
-  subcategories,
+  categories = [],
+  categoriesLoading,
+  selectedCategory,
+  subcategories = [],
   subcategoriesLoading,
   selectedSubcategory,
-  selectedCategory,
 }: ShopProductsProps) => {
   const currentPage = Number(page) || 1;
   const rangeStart = (currentPage - 1) * PAGE_SIZE + 1;
   const rangeEnd = Math.min(currentPage * PAGE_SIZE, data?.count);
 
-  const hasSubcategories =
-    !!selectedCategory &&
-    (subcategoriesLoading || (subcategories && subcategories.length > 0));
+  const subcatRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
 
-  const handleSubcategoryClick = (slug: string) => {
-    handleParams("subcategory", selectedSubcategory === slug ? undefined : slug);
+  useEffect(() => {
+    const activeKey = selectedSubcategory ?? "__all__";
+    const el = subcatRefs.current[activeKey];
+    if (el) {
+      setIndicatorStyle({ left: el.offsetLeft, width: el.offsetWidth });
+    }
+  }, [selectedSubcategory, subcategories]);
+
+  const handleCategoryClick = (slug: string | undefined) => {
+    handleParams("category", slug);
+  };
+
+  const handleSubcategoryClick = (slug: string | undefined) => {
+    handleParams("subcategory", slug);
   };
 
   return (
     <div className="w-full min-h-screen border-l">
+
+      <div className="w-full px-5 lg:pl-10 lg:pr-10 pt-8 pb-5">
+        {categoriesLoading ? (
+          <div className="flex gap-2 flex-wrap">
+            {Array(5).fill(null).map((_, i) => (
+              <Skeleton key={i} width={90} height={34} borderRadius={4} />
+            ))}
+          </div>
+        ) : (
+          <div className="flex gap-2 flex-wrap">
+            <button
+              onClick={() => handleCategoryClick(undefined)}
+              className={`px-4 py-1.5 text-sm border transition-colors duration-150 cursor-pointer ${
+                !selectedCategory
+                  ? "bg-black text-white border-black"
+                  : "bg-white text-black border-[#61616166] hover:border-black"
+              }`}
+            >
+              All
+            </button>
+
+            {categories.map((cat) => {
+              const isActive = selectedCategory === cat.slug;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => handleCategoryClick(isActive ? undefined : cat.slug)}
+                  className={`px-4 py-1.5 text-sm border transition-colors duration-150 cursor-pointer capitalize ${
+                    isActive
+                      ? "bg-black text-white border-black"
+                      : "bg-white text-black border-[#61616166] hover:border-black"
+                  }`}
+                >
+                  {cat.name}
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {selectedCategory && (
+        <div className="w-full px-5 lg:pl-10 lg:pr-10 pb-2">
+          {subcategoriesLoading ? (
+            <div className="flex gap-6">
+              {Array(4).fill(null).map((_, i) => (
+                <Skeleton key={i} width={80} height={28} />
+              ))}
+            </div>
+          ) : subcategories.length > 0 ? (
+            <div className="relative">
+              <div className="flex gap-6 overflow-x-auto scrollbar-hide">
+                {subcategories.map((sub) => {
+                  const isActive = selectedSubcategory === sub.slug;
+                  return (
+                    <button
+                      key={sub.id}
+                      ref={(el) => { subcatRefs.current[sub.slug] = el; }}
+                      onClick={() =>
+                        handleSubcategoryClick(isActive ? undefined : sub.slug)
+                      }
+                      className={`pb-3 text-sm whitespace-nowrap transition-colors duration-150 cursor-pointer ${
+                        isActive
+                          ? "text-black font-medium"
+                          : "text-[#616161] hover:text-black"
+                      }`}
+                    >
+                      {sub.name}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-[#61616133]" />
+
+              <div
+                className="absolute bottom-0 h-[2px] bg-black transition-all duration-300 ease-in-out"
+                style={{
+                  left: indicatorStyle.left,
+                  width: indicatorStyle.width,
+                }}
+              />
+            </div>
+          ) : null}
+        </div>
+      )}
+
       <div className="w-full lg:border-b border-[#141414CC]">
         <div className="flex flex-col gap-4 py-6 px-5 md:hidden">
           <p className="text-xl font-medium text-black">Shop</p>
@@ -92,42 +198,6 @@ const ShopProducts = ({
           <Sort handleParams={handleParams} currentSort={currentSort} />
         </div>
       </div>
-
-      {hasSubcategories && (
-        <div className="w-full px-5 lg:pl-10 xl:pr-30 py-4 border-b border-[#14141433]">
-          {subcategoriesLoading ? (
-            <div className="grid grid-cols-3 md:flex md:flex-row gap-2">
-              {Array(6)
-                .fill(null)
-                .map((_, i) => (
-                  <Skeleton key={i} height={34} borderRadius={4} />
-                ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-3 md:flex md:flex-row md:flex-wrap gap-2">
-              {subcategories?.map((sub) => {
-                const isActive = selectedSubcategory === sub.slug;
-                return (
-                  <button
-                    key={sub.id}
-                    onClick={() => handleSubcategoryClick(sub.slug)}
-                    className={`
-                      px-4 py-2 text-xs sm:text-sm border transition-colors duration-150 whitespace-nowrap
-                      ${
-                        isActive
-                          ? "bg-black text-white border-black"
-                          : "bg-white text-black border-[#61616166] hover:border-black"
-                      }
-                    `}
-                  >
-                    {sub.name}
-                  </button>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      )}
 
       <div className="w-full px-5 pb-14 lg:pb-0 lg:pl-7.5 pt-12.5 lg:pr-4.5">
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5 lg:pr-16 xl:pr-24">

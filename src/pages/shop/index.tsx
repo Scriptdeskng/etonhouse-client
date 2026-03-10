@@ -3,6 +3,7 @@ import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import Showroom from "@/components/showroom";
 import { useAllProducts, useCategoryDetail } from "@/services/product.service";
+import { useAllCategories } from "@/services/category.service";
 import { ShopParams } from "@/types/product";
 import ShopProducts from "@/ui/shop/shop-products";
 import ShopSidebar from "@/ui/shop/shop-sidebar";
@@ -12,7 +13,6 @@ import { useMemo, useState } from "react";
 const Shop = () => {
   const searchParams = useSearchParams();
   const searchQuery = searchParams?.get("search") || undefined;
-
   const urlCategory = searchParams?.get("category") || undefined;
   const urlSubcategory = searchParams?.get("subcategory") || undefined;
 
@@ -29,10 +29,11 @@ const Shop = () => {
 
   const { data, isLoading } = useAllProducts(params);
 
-  const {
-    data: categoryDetail,
-    isLoading: categoryDetailLoading,
-  } = useCategoryDetail(params.category ?? "");
+  const { data: categoriesData, isLoading: categoriesLoading } = useAllCategories();
+  const categories = categoriesData?.results ?? [];
+
+  const { data: categoryDetail, isLoading: categoryDetailLoading } =
+    useCategoryDetail(params.category ?? "");
 
   const subcategories = useMemo(() => {
     if (!categoryDetail) return [];
@@ -77,7 +78,6 @@ const Shop = () => {
       <div className="w-full max-w-[1536px] mx-auto grid lg:grid-cols-[300px_auto] items-start">
         <ShopSidebar
           handleParams={handleParams}
-          selectedCategory={params.category}
           selectedColor={params.color}
         />
         <ShopProducts
@@ -87,10 +87,12 @@ const Shop = () => {
           handleParams={handleParams}
           page={params.page}
           currentSort={params.ordering}
+          categories={categories}
+          categoriesLoading={categoriesLoading}
+          selectedCategory={params.category}
           subcategories={subcategories}
           subcategoriesLoading={!!params.category && categoryDetailLoading}
           selectedSubcategory={params.subcategory}
-          selectedCategory={params.category}
         />
       </div>
       <Showroom />
