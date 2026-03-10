@@ -5,6 +5,7 @@ import { FaAngleRight } from "react-icons/fa6";
 import Skeleton from "react-loading-skeleton";
 import EmptyProducts from "../product/empty";
 import Pagination from "@/components/pagination";
+import { useEffect, useRef, useState } from "react";
 
 const PAGE_SIZE = 10;
 
@@ -54,6 +55,21 @@ const ShopProducts = ({
   // const rangeStart = (currentPage - 1) * PAGE_SIZE + 1;
   // const rangeEnd = Math.min(currentPage * PAGE_SIZE, data?.count);
 
+  const subcatRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
+
+  useEffect(() => {
+    const activeKey = selectedSubcategory;
+    if (!activeKey) {
+      setIndicatorStyle({ left: 0, width: 0 });
+      return;
+    }
+    const el = subcatRefs.current[activeKey];
+    if (el) {
+      setIndicatorStyle({ left: el.offsetLeft, width: el.offsetWidth });
+    }
+  }, [selectedSubcategory, subcategories]);
+
   const handleCategoryClick = (slug: string | undefined) => {
     handleParams("category", slug);
   };
@@ -65,6 +81,7 @@ const ShopProducts = ({
   return (
     <div className="w-full min-h-screen border-l">
 
+      {/* Categories — wrap on mobile */}
       <div className="w-full px-5 lg:pl-10 lg:pr-10 pt-8 pb-10">
         {categoriesLoading ? (
           <div className="flex gap-2 flex-wrap">
@@ -105,32 +122,48 @@ const ShopProducts = ({
         )}
       </div>
 
+      {/* Subcategories — horizontally scrollable, sliding underline */}
       {selectedCategory && (
         <div className="w-full px-5 lg:pl-10 lg:pr-10 pb-8">
           {subcategoriesLoading ? (
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex gap-6">
               {Array(4).fill(null).map((_, i) => (
-                <Skeleton key={i} width={90} height={34} borderRadius={4} />
+                <Skeleton key={i} width={80} height={28} />
               ))}
             </div>
           ) : subcategories.length > 0 ? (
-            <div className="flex flex-wrap gap-2">
-              {subcategories.map((sub) => {
-                const isActive = selectedSubcategory === sub.slug;
-                return (
-                  <button
-                    key={sub.id}
-                    onClick={() => handleSubcategoryClick(sub.slug)}
-                    className={`px-4 py-1.5 text-sm border transition-colors duration-150 cursor-pointer capitalize ${
-                      isActive
-                        ? "text-black border-black"
-                        : "text-[#616161] border-[#61616166] hover:border-black hover:text-black"
-                    }`}
-                  >
-                    {sub.name}
-                  </button>
-                );
-              })}
+            <div className="relative">
+              <div className="flex gap-6 overflow-x-auto scrollbar-hide">
+                {subcategories.map((sub) => {
+                  const isActive = selectedSubcategory === sub.slug;
+                  return (
+                    <button
+                      key={sub.id}
+                      ref={(el) => { subcatRefs.current[sub.slug] = el; }}
+                      onClick={() => handleSubcategoryClick(sub.slug)}
+                      className={`pb-3 text-sm whitespace-nowrap transition-colors duration-150 cursor-pointer capitalize ${
+                        isActive
+                          ? "text-black font-bold"
+                          : "text-[#616161] hover:text-black"
+                      }`}
+                    >
+                      {sub.name}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Static bottom border */}
+              <div className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-[#61616133]" />
+
+              {/* Sliding active indicator */}
+              <div
+                className="absolute bottom-0 h-[2px] bg-black transition-all duration-300 ease-in-out"
+                style={{
+                  left: indicatorStyle.left,
+                  width: indicatorStyle.width,
+                }}
+              />
             </div>
           ) : null}
         </div>
