@@ -79,7 +79,7 @@ const ShopProducts = ({
   };
 
   return (
-    <div className="w-full min-h-screen border-l">
+    <div className="w-full min-w-0 overflow-x-hidden min-h-screen border-l">
 
       {/* Categories — wrap on mobile */}
       <div className="w-full px-5 lg:pl-10 lg:pr-10 pt-8 pb-10">
@@ -124,7 +124,7 @@ const ShopProducts = ({
 
       {/* Subcategories — horizontally scrollable, sliding underline */}
       {selectedCategory && (
-        <div className="w-full min-w-0 overflow-hidden px-5 lg:pl-10 lg:pr-10 pb-8">
+        <div className="w-full px-5 lg:pl-10 lg:pr-10 pb-8">
           {subcategoriesLoading ? (
             <div className="flex gap-6">
               {Array(4).fill(null).map((_, i) => (
@@ -132,8 +132,8 @@ const ShopProducts = ({
               ))}
             </div>
           ) : subcategories.length > 0 ? (
-            <div className="relative min-w-0">
-              <div className="flex gap-6 overflow-x-auto scrollbar-hide w-full">
+            <div className="relative">
+              <div className="flex gap-6 overflow-x-auto scrollbar-hide">
                 {subcategories.map((sub) => {
                   const isActive = selectedSubcategory === sub.slug;
                   return (
