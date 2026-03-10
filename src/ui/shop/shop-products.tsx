@@ -124,7 +124,7 @@ const ShopProducts = ({
 
       {/* Subcategories — horizontally scrollable, sliding underline */}
       {selectedCategory && (
-        <div className="w-full px-5 lg:pl-10 lg:pr-10 pb-8">
+        <div className="w-full px-5 lg:pl-10 lg:pr-10 pb-4">
           {subcategoriesLoading ? (
             <div className="flex gap-6">
               {Array(4).fill(null).map((_, i) => (
@@ -132,8 +132,11 @@ const ShopProducts = ({
               ))}
             </div>
           ) : subcategories.length > 0 ? (
-            <div className="relative">
-              <div className="flex gap-6 overflow-x-auto scrollbar-hide">
+            /* Static border sits on this wrapper */
+            <div className="border-b border-[#61616133]">
+              {/* relative is on the scroll container so offsetLeft of buttons
+                  and the absolute indicator share the same coordinate space */}
+              <div className="relative flex gap-6 overflow-x-auto scrollbar-hide">
                 {subcategories.map((sub) => {
                   const isActive = selectedSubcategory === sub.slug;
                   return (
@@ -151,26 +154,23 @@ const ShopProducts = ({
                     </button>
                   );
                 })}
+
+                {/* Sliding active indicator — inside the scroll container */}
+                <div
+                  className="absolute bottom-0 h-[2px] bg-black transition-all duration-300 ease-in-out"
+                  style={{
+                    left: indicatorStyle.left,
+                    width: indicatorStyle.width,
+                  }}
+                />
               </div>
-
-              {/* Static bottom border */}
-              <div className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-[#61616133]" />
-
-              {/* Sliding active indicator */}
-              <div
-                className="absolute bottom-0 h-[2px] bg-black transition-all duration-300 ease-in-out"
-                style={{
-                  left: indicatorStyle.left,
-                  width: indicatorStyle.width,
-                }}
-              />
             </div>
           ) : null}
         </div>
       )}
 
       <div className="w-full">
-        <div className="flex flex-col gap-4 py-6 px-5 md:hidden">
+        <div className="flex flex-col gap-2 py-4 px-5 md:hidden">
           <p className="text-xl font-medium text-black">Shop</p>
 
           <div className="w-full flex items-center justify-between">
@@ -205,7 +205,7 @@ const ShopProducts = ({
         </div> */}
       </div>
 
-      <div className="w-full px-5 pb-14 lg:pb-0 lg:pl-7.5 pt-12.5 lg:pr-4.5">
+      <div className="w-full px-5 pb-14 lg:pb-0 lg:pl-7.5 pt-6 lg:pr-4.5">
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5 lg:pr-16 xl:pr-24">
           {isLoading ? (
             Array(PAGE_SIZE)
