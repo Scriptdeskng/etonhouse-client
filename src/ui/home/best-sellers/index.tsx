@@ -33,12 +33,20 @@ const BestSellers = () => {
           {catsLoad ? (
             <Skeleton className="w-1/3 lg:w-[45%]" />
           ) : (
-            <Tabs active={active} setActive={setActive} tab={cats?.results ?? []} />
+            <div className="w-full overflow-x-auto scrollbar-hide">
+              <Tabs
+                active={active}
+                setActive={setActive}
+                tab={cats?.results ?? []}
+              />
+            </div>
           )}
 
           {!isLoading && products.length === 0 ? (
             <div className="text-center py-10">
-              <p className="text-gray-500">No products available in this category</p>
+              <p className="text-gray-500">
+                No products available in this category
+              </p>
             </div>
           ) : (
             <ProductSlider
