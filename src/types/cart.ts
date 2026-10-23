@@ -21,6 +21,8 @@ export interface PackageCartItem {
     product: string;
     product_image: string;
     quantity: number;
+    size?: string | null;
+    color?: string | null;
   }>;
   addedAt: string;
 }

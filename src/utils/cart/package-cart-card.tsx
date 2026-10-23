@@ -91,6 +91,12 @@ const PackageCartCard = ({ package: pkg }: { package: any }) => {
                                     <p className="text-sm md:text-base font-medium text-[#333333] capitalize">
                                         {item.product}
                                     </p>
+                                    {item.size && (
+                                        <p className="text-xs text-[#616161] mt-1">
+                                            Size: {item.size}
+                                            {item.color && ` · ${item.color}`}
+                                        </p>
+                                    )}
                                     <p className="text-xs text-[#616161] mt-1">
                                         Quantity: {item.quantity}
                                     </p>

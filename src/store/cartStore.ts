@@ -89,7 +89,7 @@ export const useCartStore = create<CartStore>()(
         }
 
         try {
-          const response = await makeRequest({
+          await makeRequest({
             url: `packages/${pkg.slug}/checkout/`,
             method: 'POST',
             requireToken: true,
@@ -104,11 +104,13 @@ export const useCartStore = create<CartStore>()(
             originalPrice: parseFloat(pkg.total_price),
             discountedPrice: parseFloat(pkg.discounted_price),
             savedAmount: parseFloat(pkg.total_price) - parseFloat(pkg.discounted_price),
-            items: response.cart.items.map((item: any) => ({
-              id: item.product_variant.id,
-              product: item.product_variant.product.name,
-              product_image: item.product_variant.product.featured_image,
+            items: pkg.items.map((item: any) => ({
+              id: item.variant_id,
+              product: item.product,
+              product_image: item.product_image,
               quantity: item.quantity,
+              size: item.size,
+              color: item.color,
             })),
             addedAt: new Date().toISOString(),
           };

@@ -32,6 +32,10 @@ export function OrderConvert(
     items,
   };
 
+  if (cartStore.packages.length) {
+    basePayload.package_slugs = cartStore.packages.map((pkg) => pkg.packageSlug);
+  }
+
   if (options.isUsingSavedAddress && options.addressId) {
     basePayload.shipping_address_id = options.addressId;
   } else {

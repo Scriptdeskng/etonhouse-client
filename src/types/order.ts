@@ -14,6 +14,7 @@ export type OrderSchema = {
   payment_method: string;
   email: string;
   items: { variant_id: number; quantity: number }[];
+  package_slugs?: string[];
   shipping_address_id?: number;
   shipping_address?: {
     first_name: string;

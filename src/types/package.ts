@@ -2,6 +2,10 @@ export interface PackageItem {
   id: number;
   product: string;
   product_image: string;
+  variant_id: number;
+  size: string | null;
+  color: string | null;
+  price: string | null;
   quantity: number;
 }
 

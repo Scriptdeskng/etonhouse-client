@@ -115,6 +115,12 @@ const PackageDetails: React.FC<{
                     <h3 className="font-semibold text-black-400">
                       {item.product}
                     </h3>
+                    {item.size && (
+                      <p className="text-black-100 text-sm">
+                        Size: {item.size}
+                        {item.color && ` · ${item.color}`}
+                      </p>
+                    )}
                     <p className="text-black-100 text-sm">
                       Quantity: {item.quantity}
                     </p>

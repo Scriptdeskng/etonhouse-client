@@ -67,10 +67,10 @@ function PackageDetailsPage({ slug }: PackageDetailsPageProps) {
     if (!item) return;
 
     addToCart({
-      id: item.id,
+      id: item.variant_id,
       name: item.product,
       image: item.product_image,
-      price: parseFloat(pkg.total_price) / pkg.items.length,
+      price: parseFloat(item.price ?? "0"),
       quantity,
     });
   };
