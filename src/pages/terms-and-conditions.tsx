@@ -1,6 +1,7 @@
 import Entrance from "@/animated/Entrance";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
+import SEO from "@/components/seo";
 
 const sections = [
   {
@@ -144,6 +145,11 @@ const sections = [
 const TermsAndConditionsPage = () => {
   return (
     <Entrance>
+      <SEO
+        title="Terms & Conditions"
+        description="Read the Eton House Terms & Conditions for purchases, delivery, returns, warranties and customer responsibilities."
+        canonicalPath="/terms-and-conditions"
+      />
       <Navbar />
 
       <main className="bg-[#f7f7f7] px-5 py-12 md:py-20 xl:px-20">

@@ -12,6 +12,7 @@ import Skeleton from 'react-loading-skeleton';
 import { FaArrowLeft, FaSearch } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 import RegistrySidebar from '@/components/registry/RegistrySidebar';
+import SEO from '@/components/seo';
 
 const RegistryCatalog: React.FC = () => {
   const searchParams = useSearchParams();
@@ -115,8 +116,9 @@ const RegistryCatalog: React.FC = () => {
     return Object.values(addedItems).reduce((sum, qty) => sum + qty, 0);
   };
 
-  return (
+    return (
     <Entrance>
+            <SEO title="Gift Registry Catalog" noIndex />
       <Navbar active={5} />
 
       <div className="w-full grid max-w-[1536px] mx-auto lg:grid-cols-[300px_auto] items-start">

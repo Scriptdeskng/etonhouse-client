@@ -6,6 +6,7 @@ import Details from "@/ui/product/details";
 import RecentlyViewed from "@/ui/product/recently-viewed";
 import Recommended from "@/ui/product/recommended";
 import { useRouter } from "next/router";
+import SEO from "@/components/seo";
 
 const ProductDetails = () => {
   const router = useRouter();
@@ -14,6 +15,12 @@ const ProductDetails = () => {
 
   return (
     <Entrance>
+      <SEO
+        title={data?.name || "Furniture Product"}
+        description={data?.description || "Explore furniture from Eton House Nigeria."}
+        canonicalPath={`/product/${id || ""}`}
+        image={data?.images?.[0]?.image}
+      />
       <Navbar active={2} />
       <Details product={data} isLoading={isLoading} />
       <RecentlyViewed />

@@ -9,6 +9,7 @@ import { useSinglePackage } from "@/services/package.service";
 import { useCartStore } from "@/store/cartStore";
 import { useEffect } from "react";
 import useAuthStore from '@/store/authStore';
+import SEO from '@/components/seo';
 
 interface PackageDetailsPageProps {
   slug: string;
@@ -76,12 +77,19 @@ function PackageDetailsPage({ slug }: PackageDetailsPageProps) {
   };
 
   return (
-    <PackageDetails
+    <>
+      <SEO
+        title={pkg.name || "Furniture Package"}
+        description={pkg.description || "Explore curated furniture packages from Eton House Nigeria."}
+        canonicalPath={`/packages/${slug}`}
+      />
+      <PackageDetails
       package={pkg}
       onBack={handleBack}
       onBuyAll={handleBuyAll}
       onAddToCart={handleAddToCart}
-    />
+      />
+    </>
   );
 };
 

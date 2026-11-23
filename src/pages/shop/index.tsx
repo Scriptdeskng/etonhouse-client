@@ -9,6 +9,7 @@ import ShopProducts from "@/ui/shop/shop-products";
 import ShopSidebar from "@/ui/shop/shop-sidebar";
 import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
+import SEO from "@/components/seo";
 
 const Shop = () => {
   const searchParams = useSearchParams();
@@ -74,6 +75,11 @@ const Shop = () => {
 
   return (
     <Entrance>
+      <SEO
+        title="Shop Furniture"
+        description="Explore Eton House furniture, home accessories and curated pieces for modern Nigerian homes."
+        canonicalPath="/shop"
+      />
       <Navbar active={2} />
       <div className="w-full max-w-[1536px] mx-auto grid lg:grid-cols-[300px_auto] items-start">
         <ShopSidebar

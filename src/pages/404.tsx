@@ -3,11 +3,13 @@ import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import Button from "@/utils/button";
 import Link from "next/link";
+import SEO from "@/components/seo";
 
 const NotFoundPage = () => {
   return (
     <Entrance>
       <div className="flex min-h-screen flex-col">
+        <SEO title="Page Not Found" noIndex />
         <Navbar />
         <main className="flex flex-1 items-center justify-center bg-[#f7f7f7] px-5 py-20 text-center xl:px-20">
           <div className="max-w-2xl">

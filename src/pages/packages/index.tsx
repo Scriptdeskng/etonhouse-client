@@ -10,6 +10,7 @@ import { Package } from "@/types/package";
 import { useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import useAuthStore from '@/store/authStore';
+import SEO from '@/components/seo';
 
 const PackagesIndexPage: React.FC = () => {
   const { data, isLoading, isError } = useAllPackages({ page: 1 });
@@ -41,6 +42,11 @@ const PackagesIndexPage: React.FC = () => {
 
   return (
     <Entrance>
+      <SEO
+        title="Furniture Packages"
+        description="Furnish entire rooms with Eton House furniture packages and save on curated sets."
+        canonicalPath="/packages"
+      />
       <Navbar active={3} />
       <div className="container max-w-[1536px] mx-auto px-5 sm:px-10 lg:px-20 pt-10 pb-32">
         <div className="mb-8">

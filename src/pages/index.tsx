@@ -9,10 +9,16 @@ import BestSellers from "@/ui/home/best-sellers";
 import FeaturedCollections from "@/ui/home/featured-collection";
 import Hero from "@/ui/home/hero";
 import NewArrivals from "@/ui/home/new-arrivals";
+import SEO from "@/components/seo";
 
 const Home = () => {
   return (
     <Entrance>
+      <SEO
+        title="Timeless Furniture for Modern Living"
+        description="Shop timeless furniture, curated collections, furniture packages and gift registries from Eton House Nigeria."
+        canonicalPath="/"
+      />
       <Navbar />
       <Banner />
       <Hero />
