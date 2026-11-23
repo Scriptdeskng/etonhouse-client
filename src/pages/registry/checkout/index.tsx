@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import Entrance from '@/animated/Entrance';
 import Footer from '@/components/footer';
+import Link from 'next/link';
 import Navbar from '@/components/navbar';
 import Input from '@/utils/inputs/input';
 import Button from '@/utils/button';
@@ -279,7 +280,17 @@ const RegistryCheckout: React.FC = () => {
                         <div className="bg-white rounded-lg border border-gray-200 p-6 space-y-4">
                             <Checkbox
                                 id="terms"
-                                label="I agree to the Terms & Conditions"
+                                label={
+                                    <>
+                                        I agree to the{' '}
+                                        <Link
+                                            href="/terms-and-conditions"
+                                            className="underline underline-offset-2 hover:text-black-100"
+                                        >
+                                            Terms & Conditions
+                                        </Link>
+                                    </>
+                                }
                                 name="terms"
                                 value={agreedToTerms}
                                 onChecked={(e) => setAgreedToTerms(e.target.checked)}

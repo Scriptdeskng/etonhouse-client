@@ -7,10 +7,11 @@ import "swiper/css/pagination";
 
 import EnterFromX from "@/animated/EnterFromX";
 import EnterFromY from "@/animated/EnterFromY";
+import { useActiveBanners } from "@/services/banner.service";
 import ButtonLink from "@/utils/button/button-link";
 import Image from "next/image";
 
-const heroSlides = [
+const fallbackSlides = [
   {
     title: "Elevate Your Space with\nTimeless Furniture",
     subtitle: "Discover handcrafted pieces\ndesigned for modern living",
@@ -38,6 +39,27 @@ const heroSlides = [
 ];
 
 const Hero = () => {
+  const { data: activeBanners } = useActiveBanners();
+
+  const apiSlides = activeBanners
+    ?.filter((banner) => banner.is_active && banner.image)
+    .map((banner) => {
+      const mentionsPackages = banner.description
+        ?.toLowerCase()
+        .includes("package");
+
+      return {
+        title: banner.title,
+        subtitle: banner.description,
+        buttonText: banner.button_text || (mentionsPackages ? "Shop Packages" : "Shop now"),
+        buttonLink: banner.button_link || (mentionsPackages ? "/packages" : "/shop"),
+        image: banner.image,
+        imageAlt: `${banner.title} banner`,
+      };
+    });
+
+  const heroSlides = apiSlides?.length ? apiSlides : fallbackSlides;
+
   return (
     <div className="w-full max-w-[1536px] mx-auto">
       <Swiper

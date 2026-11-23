@@ -35,6 +35,7 @@ const Footer = () => {
             <div className="flex flex-col gap-5 text-sm md:text-base">
               <Link href="/">🏠 Home</Link>
               <Link href="/shop">🛒 Shop Furniture</Link>
+              <Link href="/terms-and-conditions">📜 Terms & Conditions</Link>
               {/* <Link href="/">🏢 Showrooms & In Situ</Link>
               <Link href="/">🎁 Gift Cards</Link>
               <Link href="/">🆘 Help & FAQs</Link> */}

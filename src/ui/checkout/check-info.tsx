@@ -13,6 +13,7 @@ import clsx from "clsx";
 import { OrderConvert } from "@/helpers/orderConvert";
 import { useCartStore } from "@/store/cartStore";
 import useAuthStore from "@/store/authStore";
+import Link from "next/link";
 
 const methods = [
   { label: "Novac Payment (Recommended)", value: "nova" },
@@ -186,7 +187,17 @@ const CheckInfo = () => {
 
       <Checkbox
         id="terms"
-        label="I agree to the Terms & Conditions"
+        label={
+          <>
+            I agree to the{" "}
+            <Link
+              href="/terms-and-conditions"
+              className="underline underline-offset-2 hover:text-black-100"
+            >
+              Terms & Conditions
+            </Link>
+          </>
+        }
         name="terms"
         value={checked}
         onChecked={(e) => setChecked(e.target.checked)}

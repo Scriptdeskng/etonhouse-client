@@ -1,7 +1,9 @@
+import type { ReactNode } from "react";
+
 interface Props {
   id: string;
   name: string;
-  label: string;
+  label: ReactNode;
   value: boolean;
   onChecked: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -18,7 +20,7 @@ const Checkbox = ({ id, name, label, value, onChecked }: Props) => {
         onChange={onChecked}
       />
 
-      <p className="text-sm md:text-lg leading-[100%] text-black">{label}</p>
+      <span className="text-sm md:text-lg leading-[100%] text-black">{label}</span>
     </div>
   );
 };
