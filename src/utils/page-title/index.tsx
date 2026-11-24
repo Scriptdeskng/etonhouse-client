@@ -35,7 +35,7 @@ const PageTitle = ({
 
         {button.exists && (
           <Link
-            href={path ?? button.path ?? "/"}
+            href={button.path ?? path ?? "/"}
             className="hidden text-sm lg:flex items-center gap-1 cursor-pointer"
           >
             <p>{button.text}</p>

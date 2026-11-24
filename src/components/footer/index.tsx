@@ -20,7 +20,7 @@ const Footer = () => {
           </div>
 
           <div className="text-sm md:text-lg text-white font-medium space-y-4.5">
-            <p>📍 Showroom Location: 59A Mainland Way, Dolphine Estate, Lagos</p>
+            <p>📍 Showroom Location: 59A Mainland Way, Dolphin Estate, Lagos</p>
             <p>📞 Customer Support: +2348090397777</p>
             <p>📩 Email: customer@etonhouseng.com</p>
           </div>

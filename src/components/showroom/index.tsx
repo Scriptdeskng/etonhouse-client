@@ -99,7 +99,7 @@ const Showroom = () => {
             </p>
 
             <p className="text-sm text-center lg:text-base">
-              📅 Monday – Saturday | {formatTime(primaryShowroom.opening_time)} – {formatTime(primaryShowroom.closing_time)}
+              📅 Mon - Fri | 9am - 5pm
             </p>
 
             {primaryShowroom.google_map_link && (

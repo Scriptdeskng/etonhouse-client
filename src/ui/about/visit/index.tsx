@@ -13,7 +13,7 @@ const images = [
   { src: "/assets/carousel/4.jpg", alt: "Lagos Showroom - View 4" },
 ];
 
-const MAPS_URL = "https://www.google.com/maps/dir/?api=1&destination=59A+Mainland+Way,+Dolphine+Estate,+Lagos+106104,+Lagos";
+const MAPS_URL = "https://www.google.com/maps/dir/?api=1&destination=59A+Mainland+Way,+Dolphin+Estate,+Lagos+106104,+Lagos";
 
 const ShowroomCarousel = () => {
   const [current, setCurrent] = useState(0);
@@ -133,7 +133,7 @@ const Visit = () => {
               </div>
               <div className="w-full flex items-center justify-between py-3 xl:py-4 border-b border-[#616161]/50 font-medium text-black-400 xl:text-lg">
                 <p className="font-bold">Opening hours</p>
-                <p>Mon-Sat: 9AM - 7PM</p>
+                <p>Mon - Fri: 9am - 5pm</p>
               </div>
             </div>
 

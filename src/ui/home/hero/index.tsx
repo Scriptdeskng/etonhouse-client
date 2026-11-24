@@ -52,7 +52,7 @@ const Hero = () => {
         title: banner.title,
         subtitle: banner.description,
         buttonText: banner.button_text || (mentionsPackages ? "Shop Packages" : "Shop now"),
-        buttonLink: banner.button_link || (mentionsPackages ? "/packages" : "/shop"),
+        buttonLink: banner.button_link?.trim() || "/shop",
         image: banner.image,
         imageAlt: `${banner.title} banner`,
       };

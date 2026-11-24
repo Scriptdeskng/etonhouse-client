@@ -1,14 +1,18 @@
 import RadioInput from "@/utils/inputs/radio";
 import CheckProducts from "./check-products";
 import CheckUser from "./check-user";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Checkbox from "@/utils/inputs/checkbox";
 import { useForm } from "react-hook-form";
 import { Order } from "@/types/order";
 import Button from "@/utils/button";
 import toast from "react-hot-toast";
 import { useCreateOrder, usePayment } from "@/services/order.service";
-import { useCreateAddress, useGetDefaultAddress } from "@/services/profile.service";
+import {
+  useCreateAddress,
+  useGetAddresses,
+  useGetDefaultAddress,
+} from "@/services/profile.service";
 import clsx from "clsx";
 import { OrderConvert } from "@/helpers/orderConvert";
 import { useCartStore } from "@/store/cartStore";
@@ -21,16 +25,16 @@ const methods = [
 ];
 
 const CheckInfo = () => {
-  const { cart } = useCartStore();
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, user } = useAuthStore();
   const { data: defaultAddress } = useGetDefaultAddress();
+  const { data: addressesData } = useGetAddresses();
   const createAddress = useCreateAddress();
+  const addresses = addressesData?.results || [];
 
   const {
     register,
     handleSubmit,
     setValue,
-    getValues,
     formState: { errors },
   } = useForm<Order>({
     mode: "onBlur",
@@ -42,6 +46,47 @@ const CheckInfo = () => {
   const [paymentMethod, setPaymentMethod] = useState("nova");
   const [checked, setChecked] = useState<boolean>(false);
   const [saveAddress, setSaveAddress] = useState<boolean>(true);
+  const [selectedAddressId, setSelectedAddressId] = useState<string>("");
+
+  const selectAddress = (addressId: string) => {
+    setSelectedAddressId(addressId);
+    if (!addressId) {
+      setValue("firstName", user?.first_name || "");
+      setValue("lastName", user?.last_name || "");
+      setValue("phone", user?.phone || "");
+      setValue("address", "");
+      setValue("city", "");
+      setValue("state", "");
+      setValue("postalCode", "");
+      setValue("country", "Nigeria");
+      return;
+    }
+
+    const address = addresses.find((item: any) => String(item.id) === addressId);
+    if (!address) return;
+    setValue("firstName", address.first_name || "");
+    setValue("lastName", address.last_name || "");
+    setValue("phone", address.phone || "");
+    setValue("address", address.address_line1 || "");
+    setValue("city", address.city || "");
+    setValue("state", address.state || "");
+    setValue("postalCode", address.postal_code || "");
+    setValue("country", address.country || "Nigeria");
+  };
+
+  useEffect(() => {
+    if (defaultAddress?.id && !selectedAddressId) {
+      setSelectedAddressId(String(defaultAddress.id));
+      setValue("firstName", defaultAddress.first_name || "");
+      setValue("lastName", defaultAddress.last_name || "");
+      setValue("phone", defaultAddress.phone || "");
+      setValue("address", defaultAddress.address_line1 || "");
+      setValue("city", defaultAddress.city || "");
+      setValue("state", defaultAddress.state || "");
+      setValue("postalCode", defaultAddress.postal_code || "");
+      setValue("country", defaultAddress.country || "Nigeria");
+    }
+  }, [defaultAddress, selectedAddressId, setValue]);
 
   async function onSubmit(data: Order) {
     if (!paymentMethod.trim()) {
@@ -54,10 +99,10 @@ const CheckInfo = () => {
       return;
     }
 
-    let addressId = defaultAddress?.id;
+    let addressId = selectedAddressId ? Number(selectedAddressId) : undefined;
     let isUsingSavedAddress = !!addressId;
 
-    if (isAuthenticated && !defaultAddress && saveAddress) {
+    if (isAuthenticated && !selectedAddressId && saveAddress) {
       try {
         const res = await createAddress.mutateAsync({
           label: `Checkout Address ${Date.now()}`,
@@ -71,7 +116,7 @@ const CheckInfo = () => {
           postal_code: data.postalCode,
           country: data.country,
           phone: data.phone,
-          is_default: true,
+          is_default: false,
         });
 
         addressId = res?.id;
@@ -110,13 +155,13 @@ const CheckInfo = () => {
               toast.success("Redirecting to payment...");
               window.location = response?.data?.authorization_url;
             },
-            onError: (error) => {
+            onError: () => {
               toast.error("Error loading payment method!");
             },
           }
         );
       },
-      onError: (error) => {
+      onError: () => {
         toast.error("Error occurred while creating order!");
       },
     });
@@ -141,13 +186,35 @@ const CheckInfo = () => {
         </p>
       </div>
 
+      {isAuthenticated && addresses.length > 0 && (
+        <div className="max-w-xl space-y-2">
+          <label htmlFor="checkout-address" className="block text-sm font-medium text-[#333333]">
+            Delivery address
+          </label>
+          <select
+            id="checkout-address"
+            value={selectedAddressId}
+            onChange={(event) => selectAddress(event.target.value)}
+            className="w-full border border-gray-300 bg-white px-3 py-3"
+          >
+            <option value="">Add a new delivery address</option>
+            {addresses.map((address: any) => (
+              <option key={address.id} value={String(address.id)}>
+                {address.label || address.address_type || "Saved address"} — {address.address_line1}, {address.city}
+                {address.is_default ? " (Default)" : ""}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
       <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 xl:gap-10">
         <CheckUser register={register} errors={errors} setValue={setValue} />
 
         <CheckProducts />
       </div>
 
-      {isAuthenticated && !defaultAddress && (
+      {isAuthenticated && !selectedAddressId && (
         <div className="flex items-start gap-2">
           <input
             type="checkbox"
@@ -192,6 +259,8 @@ const CheckInfo = () => {
             I agree to the{" "}
             <Link
               href="/terms-and-conditions"
+              target="_blank"
+              rel="noopener noreferrer"
               className="underline underline-offset-2 hover:text-black-100"
             >
               Terms & Conditions
