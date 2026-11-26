@@ -1,14 +1,20 @@
 import ColorScheme from "@/components/color-scheme";
 import Range from "@/components/range";
 import Image from "next/image";
+import { useAvailableColors } from "@/services/product.service";
+import { ShopParams } from "@/types/product";
 
 const ShopSidebar = ({
   handleParams,
   selectedColor,
+  colorParams,
 }: {
   handleParams: (name: string, value: any) => void;
   selectedColor?: string;
+  colorParams: ShopParams;
 }) => {
+  const { data: colors = [], isLoading: colorsLoading } = useAvailableColors(colorParams);
+
   return (
     <div className="hidden lg:flex lg:flex-col w-full">
       <div className="w-full px-5 xl:pl-10 xl:pr-6 py-12.5 border-b border-[#141414CC]">
@@ -27,7 +33,12 @@ const ShopSidebar = ({
       <section className="p-5 py-8 xl:p-10">
         <Range handleParams={handleParams} />
 
-        <ColorScheme handleParams={handleParams} selectedColor={selectedColor} />
+        <ColorScheme
+          handleParams={handleParams}
+          selectedColor={selectedColor}
+          colors={colors}
+          isLoading={colorsLoading}
+        />
       </section>
     </div>
   );

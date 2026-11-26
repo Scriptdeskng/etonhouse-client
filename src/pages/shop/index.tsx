@@ -85,6 +85,7 @@ const Shop = () => {
         <ShopSidebar
           handleParams={handleParams}
           selectedColor={params.color}
+          colorParams={params}
         />
         <ShopProducts
           data={data}

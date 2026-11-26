@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import Skeleton from "react-loading-skeleton";
 import { Product, Color, Size } from "@/types/product";
 import { createPortal } from "react-dom";
+import ColorSwatches from "@/components/color-scheme/ColorSwatches";
 
 interface Props {
   product: Product;
@@ -214,35 +215,20 @@ const ProductVariantSelector = ({
             </div>
           )}
 
-                    {availableColors.length > 0 && (
-            <div className="space-y-3 mt-5">
-              <label className="block text-sm font-medium text-black-400">Select Color</label>
-              <div className="flex gap-3 flex-wrap">
-                {availableColors.map((color) => {
-                  const variant = product.variants.find(
-                    (v) => v.color.id === color.id && v.size.id === selectedSize?.id
-                  );
-                  const isAvailable = variant && (variant.stock > 0 || variant.allow_backorders);
-                  
-                  return (
-                    <button
-                      key={color.id}
-                      onClick={() => handleColorSelect(color)}
-                      disabled={!isAvailable}
-                      className={`w-6 h-6 border cursor-pointer transition-all ${
-                        selectedColor?.id === color.id 
-                          ? "border-black-400" 
-                          : isAvailable
-                          ? "border-gray-300 hover:border-gray-400"
-                          : "opacity-40 cursor-not-allowed"
-                      }`}
-                      style={{ backgroundColor: color.hex_code }}
-                      title={color.name}
-                    />
-                  );
-                })}
-              </div>
-            </div>
+          {availableColors.length > 0 && (
+            <ColorSwatches
+              label="Select color"
+              colors={availableColors}
+              selectedColorId={selectedColor?.id}
+              onSelect={handleColorSelect}
+              isDisabled={(color) => {
+                const variant = product.variants.find(
+                  (item) =>
+                    item.color.id === color.id && item.size.id === selectedSize?.id
+                );
+                return !variant || !(variant.stock > 0 || variant.allow_backorders);
+              }}
+            />
           )}
 
           {availableSizes.length > 0 && (

@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { createPortal } from 'react-dom';
 import { X, Plus, Minus } from 'lucide-react';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6';
+import ColorSwatches from '@/components/color-scheme/ColorSwatches';
 
 interface Color {
   id: number;
@@ -246,20 +247,12 @@ const RegistryProductCard: React.FC<RegistryProductCardProps> = ({
             )}
 
             {availableColors.length > 0 && (
-              <div className="space-y-3 mt-5">
-                <label className="text-sm font-medium text-gray-700">Color</label>
-                <div className="flex gap-3 flex-wrap">
-                  {availableColors.map((color) => (
-                    <button
-                      key={color.id}
-                      onClick={() => handleColorSelect(color)}
-                      className={`w-6 h-6 border cursor-pointer ${selectedColor?.id === color.id ? "border-gray-300 hover:border-gray-400" : ""} transition-all`}
-                      style={{ backgroundColor: color.hex_code }}
-                      title={color.name}
-                    />
-                  ))}
-                </div>
-              </div>
+              <ColorSwatches
+                label="Color"
+                colors={availableColors}
+                selectedColorId={selectedColor?.id}
+                onSelect={handleColorSelect}
+              />
             )}
 
             {availableSizes.length > 0 && (

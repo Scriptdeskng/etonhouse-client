@@ -1,5 +1,34 @@
 import { useQuery, UseQueryOptions, QueryKey  } from "@tanstack/react-query";
 import makeRequest from "@/config/axios";
+import { ShopParams } from "@/types/product";
+
+export interface AvailableColor {
+  id: number;
+  name: string;
+  hex_code: string;
+}
+
+export const useAvailableColors = (params?: ShopParams) => {
+  const filters = {
+    category: params?.category,
+    subcategory: params?.subcategory,
+    search: params?.search,
+    price_min: params?.price_min,
+    price_max: params?.price_max,
+  };
+
+  return useQuery<AvailableColor[]>({
+    queryKey: ["available-colors", filters],
+    queryFn: () =>
+      makeRequest({
+        url: "products/products/available_colors/",
+        requireToken: false,
+        params: filters,
+      }),
+    retry: 1,
+    staleTime: 5 * 60 * 1000,
+  });
+};
 
 export const useAllProducts = (
   params?: any,
